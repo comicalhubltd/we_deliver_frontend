@@ -15,17 +15,19 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import PropTypes from "prop-types";
-// import { getStudentByClass } from "../../redux/reducer/driverSlice";
+import PreviewIcon from "@mui/icons-material/Preview";
+import {
+ getCustomerRejectedDelivery, getCustomerAllDelivery
+ 
+} from "../../redux/reducer/deliveryRequestSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { deleteStudent } from "../../redux/reducer/driverSlice";
-import StudentActionMenu from "../utility/StudentActionMenu";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
+import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
-import { deleteSchool } from "../../redux/reducer/customerSlice";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+
 
 // Import for dashboard Below
 
@@ -39,7 +41,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-// import { getSchoolAlongWithDetails } from "../../redux/reducer/customerSlice";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 
 import {
   Drawer,
@@ -74,7 +76,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const SchoolsAdmin = () => {
+const CustomerRejected = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -102,58 +104,54 @@ const SchoolsAdmin = () => {
 
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
-  const schoolState = useSelector((state) => state.schools);
-  const { schools, fetchingStatus } = schoolState;
-  const rows = Array.isArray(schools) ? schools : [];
+  const deliveryState = useSelector((state) => state.deliveryRequests);
+  const { customerRejectedDelivery, customerDeliveryRequests,  fetchingStatus } =
+    deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const { className } = useParams();
-  const params = useParams();
+
+  
+  const logout = () => {
+    localStorage.removeItem("token");
+   navigate("/customer/login");
+    
+  };
 
   useEffect(() => {
     fetchData();
-  }, []);
+
+  }, [location.pathname]);
 
   const fetchData = () => {
-    // dispatch(getSchoolAlongWithDetails());
+    dispatch(getCustomerRejectedDelivery());
+    dispatch(getCustomerAllDelivery());
   };
 
-  const authenticated = false;
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
-  };
+  const rows = Array.isArray(customerRejectedDelivery) ? customerRejectedDelivery : [];
 
-  console.log("ROWS " + rows);
-
+ 
   const handleDelete = async (id) => {
-    // Filter out the deleted row
-    rows.filter((row) => row.id !== id);
-    // const result = await dispatch(deleteSchool(id)).unwrap();
-  };
+     // Filter out the deleted row
+     rows.filter((row) => row.id !== id);
+     dispatch(deleteDeliveryRequest(id));
+   };
+ 
+    const handleEdit = (id) => {
+     // Implement edit functionality
+     navigate(`/delivery/update-delivery/${id}`);
+   };
+ 
+    const handleViewDetails = (id) => {
+      navigate(`/delivery/delivery-details/${id}`);
+   };
+ 
 
-  const handleEdit = (id) => {
-    // Implement edit functionality
-    navigate(`/delivery/edit/${id}`);
-  };
-
-  const handleViewDetails = (id) => {
-    // Implement view functionality
-    navigate(`/delivery/view/${id}`);
-  };
-
-  const handleActivation = (id) => {
-    // Implement edit functionality
-    navigate(`/admin/school-activator/${id}`);
-  };
-
-  const backToStudentsClasses = () => {
-    navigate("/student/view-students");
+  const navigateToAddSSSClasses = () => {
+    navigate("/class/add-sss-class");
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -226,7 +224,7 @@ const SchoolsAdmin = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -298,7 +296,8 @@ const SchoolsAdmin = () => {
               {/* Drawer Content */}
               <List>
                 {/* Dashboard Navbar Content */}
-                <div
+                {/* Dashboard Navbar Content */}
+            <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
                   className={[
@@ -318,7 +317,7 @@ const SchoolsAdmin = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#dashboard"></use>
+                        <use href="../images/sprite.svg#dashboard"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -337,26 +336,186 @@ const SchoolsAdmin = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/admin/home"
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
-                    <a
-                      href="/admin/schools"
+                 
+                  </div>
+                </div>
+
+        
+          
+
+              
+                {/* Delivery Request  Navbar Content */}
+                
+                {/* Delivery Request  Navbar Content */}
+              
+                {/* Delivery Request  Navbar Content */}
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleChevron("chevron-4")}
+                  className={[
+                    navbar["collapsible"],
+                    navbar[
+                      activeChevron === "chevron-4"
+                        ? "collapsible--expanded"
+                        : null
+                    ],
+                  ].join(" ")}
+                >
+                  <header className={navbar["collapsible__header"]}>
+                    <div className={navbar["collapsible__icon"]}>
+                      <svg
+                        class={[
+                          navbar["collapsible--icon"],
+                          navbar["icon--primary"],
+                        ].join(" ")}
+                      >
+                        <use href="../images/sprite.svg#request"></use>
+                      </svg>
+                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                    </div>
+
+                    <span
+                      onClick={() => toggleChevron("chevron-4")}
+                      className={navbar["icon-container"]}
+                    >
+                      <svg
+                        className={[
+                          navbar["icon"],
+                          navbar["icon--primary"],
+                          navbar["icon--white"],
+                          navbar["collapsible--chevron"],
+                        ].join(" ")}
+                      >
+                        <use href="../images/sprite.svg#chevron"></use>
+                      </svg>
+                    </span>
+                  </header>
+ <div className={navbar["collapsible__content--drawer"]}>
+
+                   <a
+                      href="/delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Schools
+                      Pending
+                    </a>
+
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
+
+
+                    <a
+                      href="/delivery/customer-on-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      On Transit 
+                    </a>
+
+
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Arrived
+                    </a>
+
+
+
+                    
+                    <a
+                      href="/delivery/customer-delivered"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Delivered
+                    </a>
+
+
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
                     </a>
                   </div>
                 </div>
+
+
+                {/* Location Navbar Content */}
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleChevron("chevron-6")}
+                  className={[
+                    navbar["collapsible"],
+                    navbar[
+                      activeChevron === "chevron-6"
+                        ? "collapsible--expanded"
+                        : null
+                    ],
+                  ].join(" ")}
+                >
+                  <header className={navbar["collapsible__header"]}>
+                    <div className={navbar["collapsible__icon"]}>
+                      <svg
+                        class={[
+                          navbar["collapsible--icon"],
+                          navbar["icon--primary"],
+                        ].join(" ")}
+                      >
+                        <use href="../images/sprite.svg#location"></use>
+                      </svg>
+                      <p className={navbar["collapsible__heading"]}>Locations</p>
+                    </div>
+
+                    <span
+                      onClick={() => toggleChevron("chevron-6")}
+                      className={navbar["icon-container"]}
+                    >
+                      <svg
+                        className={[
+                          navbar["icon"],
+                          navbar["icon--primary"],
+                          navbar["icon--white"],
+                          navbar["collapsible--chevron"],
+                        ].join(" ")}
+                      >
+                        <use href="../images/sprite.svg#chevron"></use>
+                      </svg>
+                    </span>
+                  </header>
+
+                  <div className={navbar["collapsible__content--drawer"]}>
+                    <a
+                      href="/location/show-locations"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Live Location
+                    </a>
+                  </div>
+                </div>
+
+
+                
+              
 
                 {/* Profile Navbar Content */}
                 <div
@@ -403,7 +562,7 @@ const SchoolsAdmin = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/admin/profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -433,110 +592,178 @@ const SchoolsAdmin = () => {
               }}
             >
               <div className={dashboard["secondary--container"]}>
+                <div
+                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
+                >
+                  <div
+                    class={[
+                      dashboard["card--count"],
+                      dashboard["card--primary"],
+                    ].join(" ")}
+                  >
+                    <div class={dashboard["card_body"]}>
+                      <div class={dashboard["card_button_and_icon"]}>
+                        <span class={dashboard["icon-container"]}>
+                          <svg
+                            class={[
+                              dashboard["icon--big"],
+                              dashboard["icon--primary"],
+                            ].join(" ")}
+                          >
+                            <use href="../images/sprite.svg#request"></use>
+                          </svg>
+                        </span>
+
+                        <span
+                          class={[dashboard["badge"], dashboard[""]].join(" ")}
+                        >
+                          {customerRejectedDelivery.length}
+                        </span>
+                      </div>
+                     Rejected Request
+                    </div>
+                  </div>
+
+                  <div
+                    class={[
+                      dashboard["card--count"],
+                      dashboard["card--primary"],
+                    ].join(" ")}
+                  >
+                    <div class={dashboard["card_body"]}>
+                      <div class={dashboard["card_button_and_icon"]}>
+                        <span class={dashboard["icon-container"]}>
+                          <svg
+                            class={[
+                              dashboard["icon--big"],
+                              dashboard["icon--primary"],
+                            ].join(" ")}
+                          >
+                            <use href="../images/sprite.svg#request"></use>
+                          </svg>
+                        </span>
+
+                        <span
+                          class={[dashboard["badge"], dashboard[""]].join(" ")}
+                        >
+                          {customerDeliveryRequests.length}
+                        </span>
+                      </div>
+                      Total Delivery Made
+                    </div>
+                  </div>
+                </div>
                 {/* <div>{classNamesSpecific}</div> */}
 
-                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell align="left">SN</StyledTableCell>
-                        <StyledTableCell align="left">
-                          School Name
-                        </StyledTableCell>
-                        <StyledTableCell align="left">Contact</StyledTableCell>
-                        <StyledTableCell align="left">Student</StyledTableCell>
-                        <StyledTableCell align="left">Teachers</StyledTableCell>
-                        <StyledTableCell align="left">Classes</StyledTableCell>
-                        <StyledTableCell align="left">Status</StyledTableCell>
-                        <StyledTableCell align="right">Action</StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? rows.slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                        : rows
-                      ).map((row, index) => (
-                        <StyledTableRow key={row.id}>
-                          <StyledTableCell component="th" scope="row">
-                            {index + 1}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" scope="row">
-                            {row.schoolName}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="left">
-                            {row.contact}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="left">
-                            {row.numberOfStudents}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="left">
-                            {row.numberOfTeachers}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="left">
-                            {row.numberOfClasses}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="left">
-                            {row.isActive}
-                          </StyledTableCell>
-                          <StyledTableCell component="th" align="right">
-                            <div>
-                              <DeliveryActionMenu
+              <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                          <Table
+                            sx={{ minWidth: 650 }}
+                            aria-label="simple table"
+                          >
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>Item Type</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  From(State/City) 
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  To(State/City)
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Date and Time
+                                </StyledTableCell>
+                                 <StyledTableCell align="left">
+                                  Status
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                   Action &nbsp;
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {(rowsPerPage > 0
+                                ? rows.slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                  )
+                                : rows
+                              ).map((row) => (
+                                <StyledTableRow key={row.id}>
+                                  <StyledTableCell component="th" scope="row">
+                                    {row.item?.type}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.from?.state + "/" + row.from?.lga}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {row.to?.state + "/" + row.to?.lga}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.createdAt}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
+                                  </StyledTableCell>
+                                  <StyledTableCell align="right">
+                                 <StyledTableCell component="th" align="right">
+               <div>
+                             <DeliveryActionMenuDeleteEditView
                                 row={row}
                                 onDelete={handleDelete}
                                 onEdit={handleEdit}
                                 onView={handleViewDetails}
-                             
                               />
                             </div>
                           </StyledTableCell>
-                        </StyledTableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[
-                            5,
-                            10,
-                            25,
-                            { label: "All", value: -1 },
-                          ]}
-                          colSpan={3}
-                          count={rows.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          slotProps={{
-                            select: {
-                              inputProps: {
-                                "aria-label": "rows per page",
-                              },
-                              native: true,
-                            },
-                          }}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          ActionsComponent={TablePaginationActions}
-                          sx={{
-                            "& .MuiTablePagination-toolbar": { fontSize: 18 }, // Adjust font size
-                            "& .MuiTablePagination-selectLabel": {
-                              fontSize: 14,
-                            },
-                            "& .MuiTablePagination-input": { fontSize: 18 },
-                            "& .MuiTablePagination-displayedRows": {
-                              fontSize: 14,
-                            },
-                          }}
-                        />
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                              ))}
+                            </TableBody>
+                            <TableFooter>
+                              <TableRow>
+                                <TablePagination
+                                  rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "All", value: -1 },
+                                  ]}
+                                  colSpan={3}
+                                  count={rows.length}
+                                  rowsPerPage={rowsPerPage}
+                                  page={page}
+                                  slotProps={{
+                                    select: {
+                                      inputProps: {
+                                        "aria-label": "rows per page",
+                                      },
+                                      native: true,
+                                    },
+                                  }}
+                                  onPageChange={handleChangePage}
+                                  onRowsPerPageChange={handleChangeRowsPerPage}
+                                  ActionsComponent={TablePaginationActions}
+                                  sx={{
+                                    "& .MuiTablePagination-toolbar": {
+                                      fontSize: 18,
+                                    }, // Adjust font size
+                                    "& .MuiTablePagination-selectLabel": {
+                                      fontSize: 14,
+                                    },
+                                    "& .MuiTablePagination-input": {
+                                      fontSize: 18,
+                                    },
+                                    "& .MuiTablePagination-displayedRows": {
+                                      fontSize: 14,
+                                    },
+                                  }}
+                                />
+                              </TableRow>
+                            </TableFooter>
+                          </Table>
+                        </TableContainer>
               </div>
             </Box>
-            {/*This Area is for Snackbar*/}
           </Box>
         </ClickAwayListener>
       )}
@@ -544,7 +771,7 @@ const SchoolsAdmin = () => {
   );
 };
 
-export default SchoolsAdmin;
+export default CustomerRejected;
 
 function TablePaginationActions(props) {
   const theme = useTheme();

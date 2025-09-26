@@ -118,11 +118,11 @@ const Students = () => {
     // dispatch(getStudentByClass(className));
   };
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   console.log("ROWS " + rows);
@@ -217,7 +217,7 @@ const Students = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -432,7 +432,7 @@ const Students = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#class"></use>
+                        <use href="/images/sprite.svg#request"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Classes</p>
                     </div>
@@ -846,7 +846,7 @@ const Students = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

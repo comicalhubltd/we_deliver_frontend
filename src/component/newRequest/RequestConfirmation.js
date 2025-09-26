@@ -154,11 +154,11 @@ const RequestConfirmation = () => {
   const { id } = useParams();
   const [loading, setIsLoading] = useState(true);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   const [state, setState] = useState({
@@ -223,7 +223,7 @@ const RequestConfirmation = () => {
    }
 
    const statuses = {
-    1: "yet-to-delivered",
+    1: "awaiting-transit",
     2: "rejected"
    }
 
@@ -324,7 +324,7 @@ const RequestConfirmation = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -690,10 +690,10 @@ const RequestConfirmation = () => {
            
            
                      <a
-                                 href="/delivery/yet-to-delivered"
+                                 href="/delivery/awaiting-transit"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
-                                 Yet to Delivered
+                                 Awaiting Transit
                                </a>
            
                                <a
@@ -891,7 +891,7 @@ const RequestConfirmation = () => {
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/school/school-profile"
+                                 href="/customer/customer-profile"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Profile

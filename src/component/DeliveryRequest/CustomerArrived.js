@@ -1,12 +1,12 @@
 import dashboard from "../style/dashboard/CustomerDashboard.module.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
+import PreviewIcon from "@mui/icons-material/Preview";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -16,23 +16,18 @@ import LastPageIcon from "@mui/icons-material/LastPage";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import PropTypes from "prop-types";
+import {
+  getCustomerArrivedDelivery, getCustomerAllDelivery
+ 
+} from "../../redux/reducer/deliveryRequestSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllSession } from "../../redux/reducer/sessionSlice";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import style from "../style/form/StudentRegistration.module.css";
-import { Formik } from "formik";
-import { object, string, array } from "yup";
-import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
-import { Dialog } from "@mui/material";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
-import { useLocation, useParams } from "react-router-dom";
-import { getExpiryDate } from "../../redux/reducer/paymentSlice";
+import { useLocation } from "react-router-dom";
+
 
 // Import for dashboard Below
 
@@ -46,6 +41,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 
 import {
   Drawer,
@@ -80,7 +76,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const DriverDashboard = () => {
+const CustomerArrived = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -108,61 +104,52 @@ const DriverDashboard = () => {
 
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
-  const subjectRegistrationSchema = object({
-    selectedId: string().required("Session required"),
-  });
-
-  const sessionState = useSelector((state) => state.sessions);
-  const { sessions, fetchingStatus } = sessionState;
-  const paymentState = useSelector((state) => state.payments);
-  const { expiryDate } = paymentState;
+  const deliveryState = useSelector((state) => state.deliveryRequests);
+  const { customerArrivedDelivery, customerDeliveryRequests,  fetchingStatus } =
+    deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openAnchor = Boolean(anchorEl);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const [open, setOpen] = useState(false);
-  const [alertType, setAlertType] = useState("");
-  const [message, setMessage] = useState("");
-  const [initialSelectedId, setInitialSelectedId] = useState(null);
-  const rows = Array.isArray(sessions) ? sessions : [];
-  const params = useParams();
-  const location = useLocation();
 
   
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/admin/login");
+   navigate("/customer/login");
     
   };
 
   useEffect(() => {
     fetchData();
+
   }, [location.pathname]);
 
   const fetchData = () => {
-    dispatch(getExpiryDate());
-    dispatch(getAllSession());
+    dispatch(getCustomerArrivedDelivery());
+    dispatch(getCustomerAllDelivery());
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return; // Prevent closing if the user clicks away
-    }
-    setOpen(false); // Close the Snackbar
+  const rows = Array.isArray(customerArrivedDelivery) ? customerArrivedDelivery : [];
+
+ const handleDelete = async (id) => {
+    // Filter out the deleted row
+    rows.filter((row) => row.id !== id);
+    // const result = await dispatch(deleteSchool(id)).unwrap();
   };
 
-  console.log("ARRAY " + rows);
-
-  const handleCheckboxChange = (id) => {
-    // formik.setFieldValue("selectedId", id);
+  const handleEdit = (id) => {
+    // Implement edit functionality
+    navigate(`/delivery/edit/${id}`);
   };
 
-  const navigateToAcceptRequest = () => {
-    navigate("/driver/request");
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
+  };
+
+  const navigateToAddSSSClasses = () => {
+    navigate("/class/add-sss-class");
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -176,27 +163,6 @@ const DriverDashboard = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleFormSubmit = async (values, { resetForm }) => {
-    //   console.log(values);
-    //    console.log("from inside the useeff" + rows)
-    // const selected = rows.forEach(r => r.current === true);
-    // console.log("from inside the effect " + selected);
-    // setInitialSelectedId(selected?.id ?? null);
-    try {
-      const resultAction = await dispatch(
-        setCurrentSession(values.selectedId)
-      ).unwrap();
-      setAlertType("success");
-      setMessage(resultAction.message);
-    } catch (error) {
-      setAlertType("error");
-      setMessage(error);
-    }
-
-    setOpen(true);
-    resetForm(); // This will reset the forto the initial values
   };
 
   return (
@@ -329,7 +295,7 @@ const DriverDashboard = () => {
               <List>
                 {/* Dashboard Navbar Content */}
                 {/* Dashboard Navbar Content */}
-                <div
+            <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
                   className={[
@@ -375,86 +341,17 @@ const DriverDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/driver/home"
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
-                    <a
-                      href="/session/add-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Session
-                    </a>
-                    <a
-                      href="/session/setup-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Setup Session
-                    </a>
-                    <a
-                      href="/school/upload-school-logo"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add School Logo
-                    </a>
+                 
                   </div>
                 </div>
 
         
-                {/* Vehicle Navbar Content */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-3")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-3"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#vehicle"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>Vehicles</p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-3")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
-
-                  <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/vehicle/view-vehicles"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View Vehicles
-                    </a>
-                   
-                  </div>
-                </div>
+          
 
               
                 {/* Delivery Request  Navbar Content */}
@@ -503,54 +400,63 @@ const DriverDashboard = () => {
                       </svg>
                     </span>
                   </header>
+ <div className={navbar["collapsible__content--drawer"]}>
 
-                  <div className={navbar["collapsible__content--drawer"]}>
+                   <a
+                      href="/delivery/customer-pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>
 
-                   
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
-                      href="/delivery/on-transit"
+                      href="/delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
                     </a>
 
 
-          <a
-                      href="/delivery/awaiting-transit"
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Awaiting Transit
+                      Arrived
                     </a>
 
+
+
+                    
                     <a
-                      href="/delivery/delivered"
+                      href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
 
-                      <a
-                      href="/delivery/pending"
+                    <a
+                      href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Pending
+                      Add Deliveries
                     </a>
-
-                      <a
-                      href="/delivery/view-deliveries"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
-                    </a>
-                  
-                  
                   </div>
                 </div>
 
-             
 
                 {/* Location Navbar Content */}
                 <div
@@ -706,76 +612,16 @@ const DriverDashboard = () => {
                           </svg>
                         </span>
 
-                        <div>
-                          {"New Task " + 0}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#request-approve"></use>
-                          </svg>
+                        <span
+                          class={[dashboard["badge"], dashboard[""]].join(" ")}
+                        >
+                          {customerArrivedDelivery.length}
                         </span>
-
-                        <div>
-                          {"Completed Task " + 0}
-                          <p
-                            style={{
-                              color: "#018965",
-                              fontSize: "1.9rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {}
-                          </p>
-                        </div>
                       </div>
+                     Arrived Request
                     </div>
                   </div>
-                </div>
 
-                {/* <div class={[dashboard['card--count'], dashboard['card--primary']].join(' ')}>
-            <div class={dashboard['card_body']}>
-            
-            <div class={dashboard['card_button_and_icon']}>
-            
-            <span class={dashboard['icon-container']}>
-            <svg class={[dashboard['icon--big'], dashboard['icon--primary']].join(' ')}>
-            <use href="../images/sprite.svg#school"></use>
-            </svg>
-            </span>
-
-            <div>{rows.find((r) => r.school.name)?.school.name ?? 0}</div>
-            
-          
-            </div>
-            
-            
-            
-           
-            
-            </div>
-            
-            </div> */}
-
-                <div
-                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
-                >
                   <div
                     class={[
                       dashboard["card--count"],
@@ -791,149 +637,127 @@ const DriverDashboard = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#display"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
                         <span
                           class={[dashboard["badge"], dashboard[""]].join(" ")}
                         >
-                          { 0}
+                          {customerDeliveryRequests.length}
                         </span>
                       </div>
-                      Enroute Movements
-                    </div>
-                  </div>
-
-
-                  <div
-                    class={[
-                      dashboard["card--add"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card--small-head"]}>
-                        Accept Requests
-                      </div>
-
-                      <button
-                        onClick={navigateToAcceptRequest}
-                        className={[
-                          dashboard["btn"],
-                          dashboard["btn--block"],
-                          dashboard["btn--accent"],
-                        ].join(" ")}
-                      >
-                        {" "}
-                        Accept Requests
-                      </button>
+                      Total Delivery Made
                     </div>
                   </div>
                 </div>
+                {/* <div>{classNamesSpecific}</div> */}
 
-               
+              <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                          <Table
+                            sx={{ minWidth: 650 }}
+                            aria-label="simple table"
+                          >
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>Item Type</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  From(State/City) 
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  To(State/City)
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Date and Time
+                                </StyledTableCell>
+                                 <StyledTableCell align="left">
+                                  Status
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                   Action &nbsp;
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {(rowsPerPage > 0
+                                ? rows.slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                  )
+                                : rows
+                              ).map((row) => (
+                                <StyledTableRow key={row.id}>
+                                  <StyledTableCell component="th" scope="row">
+                                    {row.item?.type}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.from?.state + "/" + row.from?.lga}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {row.to?.state + "/" + row.to?.lga}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.createdAt}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
+                                  </StyledTableCell>
+                                  <StyledTableCell align="right">
+                                 <StyledTableCell component="th" align="right">
+                                   
+                  <IconButton onClick={() => handleViewDetails(row.id)}>
+                    <PreviewIcon sx={{ color: "#018965", fontSize: 30 }} />
+                  </IconButton>
+                          </StyledTableCell>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                              ))}
+                            </TableBody>
+                            <TableFooter>
+                              <TableRow>
+                                <TablePagination
+                                  rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "All", value: -1 },
+                                  ]}
+                                  colSpan={3}
+                                  count={rows.length}
+                                  rowsPerPage={rowsPerPage}
+                                  page={page}
+                                  slotProps={{
+                                    select: {
+                                      inputProps: {
+                                        "aria-label": "rows per page",
+                                      },
+                                      native: true,
+                                    },
+                                  }}
+                                  onPageChange={handleChangePage}
+                                  onRowsPerPageChange={handleChangeRowsPerPage}
+                                  ActionsComponent={TablePaginationActions}
+                                  sx={{
+                                    "& .MuiTablePagination-toolbar": {
+                                      fontSize: 18,
+                                    }, // Adjust font size
+                                    "& .MuiTablePagination-selectLabel": {
+                                      fontSize: 14,
+                                    },
+                                    "& .MuiTablePagination-input": {
+                                      fontSize: 18,
+                                    },
+                                    "& .MuiTablePagination-displayedRows": {
+                                      fontSize: 14,
+                                    },
+                                  }}
+                                />
+                              </TableRow>
+                            </TableFooter>
+                          </Table>
+                        </TableContainer>
               </div>
             </Box>
-            {/*This Area is for Snackbar*/}
-
-            <Snackbar
-              open={open}
-              autoHideDuration={3000} // Automatically hide after 1 second
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "center", horizontal: "center" }} // Position at the top center
-            >
-              <div>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  BackdropProps={{
-                    sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" }, // Darker overlay
-                  }}
-                  sx={{
-                    "& .MuiDialog-paper": {
-                      width: "100%",
-                      borderRadius: "15px", // Optional: Rounded corners
-                    },
-                  }}
-                >
-                  {alertType === "success" ? (
-                    <div
-                      style={{ width: "100%", background: "#fff" }}
-                      class={[dashboard["card--alert-success"]].join(" ")}
-                    >
-                      <div class={dashboard["card_body"]}>
-                        <span
-                          class={[
-                            dashboard["icon-container"],
-                            dashboard["alert-close"],
-                          ].join(" ")}
-                        >
-                          <IconButton onClick={handleClose}>
-                            <CloseIcon
-                              sx={{ fontSize: 30, color: "#018965" }}
-                            />
-                          </IconButton>
-                        </span>
-
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--success"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#success-icon"></use>
-                          </svg>
-                        </span>
-
-                        <Typography sx={{ fontSize: 21 }}>
-                          <p class={dashboard["alert-message"]}>{message}</p>
-                        </Typography>
-                      </div>
-                      <Typography sx={{ fontSize: 20 }}>
-                        <p class={dashboard["card_footer"]}>success</p>
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div
-                      style={{ width: "100%", background: "#fff" }}
-                      class={[dashboard["card--alert-error"]].join(" ")}
-                    >
-                      <div class={dashboard["card_body"]}>
-                        <span
-                          class={[
-                            dashboard["icon-container"],
-                            dashboard["alert-close"],
-                          ].join(" ")}
-                        >
-                          <IconButton onClick={handleClose}>
-                            <CloseIcon sx={{ fontSize: 30 }} />
-                          </IconButton>
-                        </span>
-
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--error"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#error-icon"></use>
-                          </svg>
-                        </span>
-                        <Typography sx={{ fontSize: 21 }}>
-                          <p class={dashboard["alert-message"]}>{message}</p>
-                        </Typography>
-                      </div>
-                      <Typography sx={{ fontSize: 20 }}>
-                        <p class={dashboard["card_footer"]}>error</p>
-                      </Typography>
-                    </div>
-                  )}
-                </Dialog>
-              </div>
-            </Snackbar>
           </Box>
         </ClickAwayListener>
       )}
@@ -941,10 +765,7 @@ const DriverDashboard = () => {
   );
 };
 
-export default DriverDashboard;
-
-const ITEM_HEIGHT = 48;
-const options = ["None", "Atria", "Callisto"];
+export default CustomerArrived;
 
 function TablePaginationActions(props) {
   const theme = useTheme();

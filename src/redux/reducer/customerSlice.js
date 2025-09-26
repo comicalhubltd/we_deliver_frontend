@@ -157,6 +157,7 @@ const customerSlice = createSlice({
           })
           .addCase(saveCustomer.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
+            
           })
           .addCase(saveCustomer.rejected, (state) => {
             state.fetchingStatus = 'failed';

@@ -18,8 +18,8 @@ import TablePagination from "@mui/material/TablePagination";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { initiateMovement } from "../../redux/reducer/deliveryRequestSlice";
 import { useNavigate } from "react-router-dom";
-import { getAllSession } from "../../redux/reducer/sessionSlice";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -32,7 +32,11 @@ import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation, useParams } from "react-router-dom";
-import { getExpiryDate } from "../../redux/reducer/paymentSlice";
+import { getDriverById } from "../../redux/reducer/driverSlice";
+import {
+  getAwatingTransitAndPendingDelivery
+ 
+} from "../../redux/reducer/deliveryRequestSlice";
 
 // Import for dashboard Below
 
@@ -80,7 +84,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const DriverDashboard = () => {
+const AddRequestToTransit = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -108,14 +112,12 @@ const DriverDashboard = () => {
 
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
-  const subjectRegistrationSchema = object({
-    selectedId: string().required("Session required"),
-  });
 
-  const sessionState = useSelector((state) => state.sessions);
-  const { sessions, fetchingStatus } = sessionState;
-  const paymentState = useSelector((state) => state.payments);
-  const { expiryDate } = paymentState;
+
+    const deliveryState = useSelector((state) => state.deliveryRequests);
+    const {   awaitingAndPendingTransitDelivery,   fetchingStatus } = deliveryState;
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -127,25 +129,57 @@ const DriverDashboard = () => {
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
-  const [initialSelectedId, setInitialSelectedId] = useState(null);
-  const rows = Array.isArray(sessions) ? sessions : [];
-  const params = useParams();
+  const [initialSelectedId, setInitialSelectedId] = useState(0);
+  const rows = Array.isArray(awaitingAndPendingTransitDelivery) ? awaitingAndPendingTransitDelivery : [];
+  const {  driverId } = useParams();
   const location = useLocation();
+  const [loading, setIsLoading] = useState(true);
+
 
   
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/admin/login");
     
+
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [location.pathname]);
+
+
+  const [state, setState] = useState({
+      id: "",
+      profile: null,
+    });
+  
+    useEffect(() => {
+      fetchData();
+      fetchDriver();
+    }, [location.pathname]);
+  
+    const fetchDriver = async () => {
+      try {
+        setIsLoading(true);
+        await dispatch(getDriverById(driverId))
+          .unwrap()
+          .then((result) => {
+            
+            setState({
+              id: result.id,
+              profile: result.profile,
+            });
+          });
+      } catch (error) {
+        setAlertType("error");
+        setMessage(error.message);
+        console.log(error.message);
+      }
+      setIsLoading(false);
+    };
+  
 
   const fetchData = () => {
-    dispatch(getExpiryDate());
-    dispatch(getAllSession());
+    dispatch(getAwatingTransitAndPendingDelivery());
+
   };
 
   const handleClose = (event, reason) => {
@@ -155,14 +189,12 @@ const DriverDashboard = () => {
     setOpen(false); // Close the Snackbar
   };
 
-  console.log("ARRAY " + rows);
+  console.log("ARRAY " + JSON.stringify(rows));
 
-  const handleCheckboxChange = (id) => {
-    // formik.setFieldValue("selectedId", id);
-  };
 
-  const navigateToAcceptRequest = () => {
-    navigate("/driver/request");
+  const handleAddDeliveryToMovement = (id) => {
+    dispatch(initiateMovement({deliveryId: id, driverId: driverId}))
+   
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -178,30 +210,11 @@ const DriverDashboard = () => {
     setPage(0);
   };
 
-  const handleFormSubmit = async (values, { resetForm }) => {
-    //   console.log(values);
-    //    console.log("from inside the useeff" + rows)
-    // const selected = rows.forEach(r => r.current === true);
-    // console.log("from inside the effect " + selected);
-    // setInitialSelectedId(selected?.id ?? null);
-    try {
-      const resultAction = await dispatch(
-        setCurrentSession(values.selectedId)
-      ).unwrap();
-      setAlertType("success");
-      setMessage(resultAction.message);
-    } catch (error) {
-      setAlertType("error");
-      setMessage(error);
-    }
-
-    setOpen(true);
-    resetForm(); // This will reset the forto the initial values
-  };
+ 
 
   return (
     <>
-      {fetchingStatus === "loading" ? (
+      {loading === true ? (
         <Loading />
       ) : (
         <ClickAwayListener onClickAway={handleClickAway}>
@@ -326,10 +339,10 @@ const DriverDashboard = () => {
               </Box>
 
               {/* Drawer Content */}
-              <List>
+            <List>
                 {/* Dashboard Navbar Content */}
                 {/* Dashboard Navbar Content */}
-                <div
+            <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
                   className={[
@@ -349,7 +362,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"></use>
+                        <use href="/images/sprite.svg#dashboard"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -368,40 +381,138 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="/images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/driver/home"
+                      href="/admin/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
-                    <a
-                      href="/session/add-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Session
-                    </a>
-                    <a
-                      href="/session/setup-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Setup Session
-                    </a>
-                    <a
-                      href="/school/upload-school-logo"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add School Logo
-                    </a>
+                 
                   </div>
                 </div>
 
-        
+                {/* Customer Navbar Content */}
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleChevron("chevron-1")}
+                  className={[
+                    navbar["collapsible"],
+                    navbar[
+                      activeChevron === "chevron-1"
+                        ? "collapsible--expanded"
+                        : null
+                    ],
+                  ].join(" ")}
+                >
+                  <header className={navbar["collapsible__header"]}>
+                    <div className={navbar["collapsible__icon"]}>
+                      <svg
+                        class={[
+                          navbar["collapsible--icon"],
+                          navbar["icon--primary"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#customer"></use>
+                      </svg>
+                      <p className={navbar["collapsible__heading"]}>Customers</p>
+                    </div>
+
+                    <span
+                      onClick={() => toggleChevron("chevron-1")}
+                      className={navbar["icon-container"]}
+                    >
+                      <svg
+                        className={[
+                          navbar["icon"],
+                          navbar["icon--primary"],
+                          navbar["icon--white"],
+                          navbar["collapsible--chevron"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#chevron"></use>
+                      </svg>
+                    </span>
+                  </header>
+
+                  <div className={navbar["collapsible__content--drawer"]}>
+                 
+                    <a
+                      href="/customer/view-customers"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      View Customers
+                    </a>
+               
+                  </div>
+                </div>
+
+                {/* Driver Navbar Content */}
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleChevron("chevron-2")}
+                  className={[
+                    navbar["collapsible"],
+                    navbar[
+                      activeChevron === "chevron-2"
+                        ? "collapsible--expanded"
+                        : null
+                    ],
+                  ].join(" ")}
+                >
+                  <header className={navbar["collapsible__header"]}>
+                    <div className={navbar["collapsible__icon"]}>
+                      <svg
+                        class={[
+                          navbar["collapsible--icon"],
+                          navbar["icon--primary"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#driver"></use>
+                      </svg>
+                      <p className={navbar["collapsible__heading"]}>Drivers</p>
+                    </div>
+
+                    <span
+                      onClick={() => toggleChevron("chevron-2")}
+                      className={navbar["icon-container"]}
+                    >
+                      <svg
+                        className={[
+                          navbar["icon"],
+                          navbar["icon--primary"],
+                          navbar["icon--white"],
+                          navbar["collapsible--chevron"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#chevron"></use>
+                      </svg>
+                    </span>
+                  </header>
+
+                  <div className={navbar["collapsible__content--drawer"]}>
+                    <a
+                      href="/driver/view-drivers"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      View Drivers
+                    </a>
+                      <a
+                      href="/driver/assign-vehicle"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                     Assign Vehicle
+                    </a>
+                  
+                   
+                  </div>
+                </div>
+
                 {/* Vehicle Navbar Content */}
                 <div
                   style={{ cursor: "pointer" }}
@@ -423,7 +534,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#vehicle"></use>
+                        <use href="/images/sprite.svg#vehicle"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Vehicles</p>
                     </div>
@@ -440,7 +551,7 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="/images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -482,7 +593,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#request"></use>
+                        <use href="/images/sprite.svg#request"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Deliveries</p>
                     </div>
@@ -499,7 +610,7 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="/images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -540,13 +651,18 @@ const DriverDashboard = () => {
                     </a>
 
                       <a
-                      href="/delivery/view-deliveries"
+                      href="/delivery/view-all-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View All Deliveries
                     </a>
                   
-                  
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -573,7 +689,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#location"></use>
+                        <use href="/images/sprite.svg#location"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Locations</p>
                     </div>
@@ -590,7 +706,7 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="/images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -605,6 +721,66 @@ const DriverDashboard = () => {
                   </div>
                 </div>
 
+                {/* Payment Navbar Content */}
+                  <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => toggleChevron("chevron-7")}
+                  className={[
+                    navbar["collapsible"],
+                    navbar[
+                      activeChevron === "chevron-7"
+                        ? "collapsible--expanded"
+                        : null
+                    ],
+                  ].join(" ")}
+                >
+                  <header className={navbar["collapsible__header"]}>
+                    <div className={navbar["collapsible__icon"]}>
+                      <svg
+                        class={[
+                          navbar["collapsible--icon"],
+                          navbar["icon--primary"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#fee"></use>
+                      </svg>
+                      <p className={navbar["collapsible__heading"]}>
+                        Payments
+                      </p>
+                    </div>
+
+                    <span
+                      onClick={() => toggleChevron("chevron-7")}
+                      className={navbar["icon-container"]}
+                    >
+                      <svg
+                        className={[
+                          navbar["icon"],
+                          navbar["icon--primary"],
+                          navbar["icon--white"],
+                          navbar["collapsible--chevron"],
+                        ].join(" ")}
+                      >
+                        <use href="/images/sprite.svg#chevron"></use>
+                      </svg>
+                    </span>
+                  </header>
+
+                  <div className={navbar["collapsible__content--drawer"]}>
+                    <a
+                      href="/payment/paid-deliveries"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Paid Deliveries
+                    </a>
+         <a
+                      href="/payment/unpaid-deliveries"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Unpaid Deliveries
+                    </a>
+                  </div>
+                </div>
 
                 
               
@@ -684,155 +860,183 @@ const DriverDashboard = () => {
               }}
             >
               <div className={dashboard["secondary--container"]}>
-                <div
-                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
-                >
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
+
+                <div style={{ width: "100%" }}>
+                      <Box sx={{ overflowX: "auto", width: "100%" }}>
+                        <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                          <Table
+                            sx={{ minWidth: 650 }}
+                            aria-label="simple table"
                           >
-                            <use href="../images/sprite.svg#request"></use>
-                          </svg>
-                        </span>
+                            <TableHead>
+                              <TableRow>
+                                
+                                 <StyledTableCell align="center">
+                                  Vehicle Owner
+                                </StyledTableCell>
+                             
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                             
+                                <StyledTableRow >
+                                  <StyledTableCell component="th" scope="row">
+                                    {state.profile?.firstname}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {state.profile?.surname}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {state.profile?.lastname}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {state.profile?.phoneNumber}
+                                  </StyledTableCell>
+                                
+                                </StyledTableRow>
+                      
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
 
-                        <div>
-                          {"New Task " + 0}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#request-approve"></use>
-                          </svg>
-                        </span>
-
-                        <div>
-                          {"Completed Task " + 0}
-                          <p
-                            style={{
-                              color: "#018965",
-                              fontSize: "1.9rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* <div class={[dashboard['card--count'], dashboard['card--primary']].join(' ')}>
-            <div class={dashboard['card_body']}>
-            
-            <div class={dashboard['card_button_and_icon']}>
-            
-            <span class={dashboard['icon-container']}>
-            <svg class={[dashboard['icon--big'], dashboard['icon--primary']].join(' ')}>
-            <use href="../images/sprite.svg#school"></use>
-            </svg>
-            </span>
-
-            <div>{rows.find((r) => r.school.name)?.school.name ?? 0}</div>
-            
-          
-            </div>
-            
-            
-            
-           
-            
-            </div>
-            
-            </div> */}
-
-                <div
-                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
-                >
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#display"></use>
-                          </svg>
-                        </span>
-
-                        <span
-                          class={[dashboard["badge"], dashboard[""]].join(" ")}
+                        <div
+                          class={[
+                            dashboard["card--add"],
+                            dashboard["card--primary"],
+                          ].join(" ")}
                         >
-                          { 0}
-                        </span>
-                      </div>
-                      Enroute Movements
+                          <div class={dashboard["card_body"]}>
+                            <div class={dashboard["card--small-head"]}>
+                            </div>
+                          </div>
+                        </div>
+                      </Box>
                     </div>
-                  </div>
+      
+                    <div style={{ width: "100%" }}>
+                      <Box sx={{ overflowX: "auto", width: "100%" }}>
+                        <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                          <Table
+                            sx={{ minWidth: 650 }}
+                            aria-label="simple table"
+                          >
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>Item Type</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  From(State/City) 
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  To(State/City)
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Date and Time
+                                </StyledTableCell>
+                                 <StyledTableCell align="left">
+                                  Status
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                   Action &nbsp;
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {(rowsPerPage > 0
+                                ? rows.slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                  )
+                                : rows
+                              ).map((row) => (
+                                <StyledTableRow key={row.id}>
+                                  <StyledTableCell component="th" scope="row">
+                                    {row.item?.type}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.from?.state + "/" + row.from?.lga}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {row.to?.state + "/" + row.to?.lga}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.createdAt}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}> <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  </span>  
+                                  </StyledTableCell>
+                                  <StyledTableCell align="right">
+                                    <button
+            
+              onClick={() => handleAddDeliveryToMovement(row.id)}
+              className={[
+                style["btn"],
+                style["btn--block"],
+                style["btn--primary"],
+              ].join(" ")}
+            >
+              {"Add"}
+            </button>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                              ))}
+                            </TableBody>
+                            <TableFooter>
+                              <TableRow>
+                                <TablePagination
+                                  rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "All", value: -1 },
+                                  ]}
+                                  colSpan={3}
+                                  count={rows.length}
+                                  rowsPerPage={rowsPerPage}
+                                  page={page}
+                                  slotProps={{
+                                    select: {
+                                      inputProps: {
+                                        "aria-label": "rows per page",
+                                      },
+                                      native: true,
+                                    },
+                                  }}
+                                  onPageChange={handleChangePage}
+                                  onRowsPerPageChange={handleChangeRowsPerPage}
+                                  ActionsComponent={TablePaginationActions}
+                                  sx={{
+                                    "& .MuiTablePagination-toolbar": {
+                                      fontSize: 18,
+                                    }, // Adjust font size
+                                    "& .MuiTablePagination-selectLabel": {
+                                      fontSize: 14,
+                                    },
+                                    "& .MuiTablePagination-input": {
+                                      fontSize: 18,
+                                    },
+                                    "& .MuiTablePagination-displayedRows": {
+                                      fontSize: 14,
+                                    },
+                                  }}
+                                />
+                              </TableRow>
+                            </TableFooter>
+                          </Table>
+                        </TableContainer>
 
-
-                  <div
-                    class={[
-                      dashboard["card--add"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card--small-head"]}>
-                        Accept Requests
-                      </div>
-
-                      <button
-                        onClick={navigateToAcceptRequest}
-                        className={[
-                          dashboard["btn"],
-                          dashboard["btn--block"],
-                          dashboard["btn--accent"],
-                        ].join(" ")}
-                      >
-                        {" "}
-                        Accept Requests
-                      </button>
+                        <div
+                          class={[
+                            dashboard["card--add"],
+                            dashboard["card--primary"],
+                          ].join(" ")}
+                        >
+                          <div class={dashboard["card_body"]}>
+                            <div class={dashboard["card--small-head"]}>
+                            </div>
+                          </div>
+                        </div>
+                      </Box>
                     </div>
-                  </div>
-                </div>
-
-               
               </div>
             </Box>
             {/*This Area is for Snackbar*/}
@@ -883,7 +1087,7 @@ const DriverDashboard = () => {
                               dashboard["icon--success"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#success-icon"></use>
+                            <use href="/images/sprite.svg#success-icon"></use>
                           </svg>
                         </span>
 
@@ -919,7 +1123,7 @@ const DriverDashboard = () => {
                               dashboard["icon--error"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#error-icon"></use>
+                            <use href="/images/sprite.svg#error-icon"></use>
                           </svg>
                         </span>
                         <Typography sx={{ fontSize: 21 }}>
@@ -941,7 +1145,7 @@ const DriverDashboard = () => {
   );
 };
 
-export default DriverDashboard;
+export default AddRequestToTransit;
 
 const ITEM_HEIGHT = 48;
 const options = ["None", "Atria", "Callisto"];

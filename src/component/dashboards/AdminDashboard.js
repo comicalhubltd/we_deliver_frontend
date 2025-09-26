@@ -27,10 +27,10 @@ import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation, useParams } from "react-router-dom";
 
-// import DemographicsCharts from "../utility/AppChart";
 
+import AdminDemographicsCharts from "../utility/AdminChart";
 
-import { getPendingDelivery,  getDeliveredDelivery } from "../../redux/reducer/deliveryRequestSlice";
+import { getPendingDelivery,  getAwatingTransitDelivery } from "../../redux/reducer/deliveryRequestSlice";
 import { getallCustomerCount } from "../../redux/reducer/customerSlice";
 import { allDriverCount } from "../../redux/reducer/driverSlice";
 
@@ -113,7 +113,7 @@ const AdminDashboard = () => {
   });
 
   const deliveryState = useSelector((state) => state.deliveryRequests);
-  const {   pendingDelivery, deliveredDelivery,  fetchingStatus } = deliveryState;
+  const {   pendingDelivery,  awaitingTransitDelivery ,  fetchingStatus } = deliveryState;
 
 
   const driverState = useSelector((state) => state.drivers);
@@ -138,11 +138,11 @@ const AdminDashboard = () => {
   const params = useParams();
   const location = useLocation();
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/customer/login");
+    
   };
 
   
@@ -152,7 +152,7 @@ useEffect(() => {
 
   const fetchData = () => {
     dispatch(getPendingDelivery());
-    dispatch(getDeliveredDelivery());
+    dispatch(getAwatingTransitDelivery());
     dispatch(getallCustomerCount());
     dispatch(allDriverCount())
 
@@ -167,8 +167,9 @@ useEffect(() => {
 
   console.log("ARRAY " + rows);
 
-  const handleCheckboxChange = (id) => {
-    // formik.setFieldValue("selectedId", id);
+
+  const navigateIntiateMovement = () => {
+    navigate("/vehicle/view-vehicles");
   };
 
   const navigateToViewNewRequest = () => {
@@ -266,7 +267,7 @@ useEffect(() => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -499,18 +500,13 @@ useEffect(() => {
                     >
                       View Drivers
                     </a>
-                    <a
-                      href="/driver/sss-classes"
+                      <a
+                      href="/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                     Assign Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -619,7 +615,21 @@ useEffect(() => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
+                  <a
+                      href="/delivery/pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>     
+
+
+                    
+                   <a
+                      href="/delivery/awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -628,28 +638,22 @@ useEffect(() => {
                     >
                       On Transit 
                     </a>
+                    
 
 
-          <a
-                      href="/delivery/yet-to-delivered"
+                    <a
+                      href="/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
+
 
                     <a
                       href="/delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
-                    </a>
-
-
-                      <a
-                      href="/delivery/pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
                     </a>
 
                       <a
@@ -827,7 +831,7 @@ useEffect(() => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -858,7 +862,7 @@ useEffect(() => {
             >
               <div className={dashboard["secondary--container"]}>
                 <div
-                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
+                  class={[dashboard["grid"], dashboard["grid--1x3"]].join(" ")}
                 >
                   <div
                     class={[
@@ -923,10 +927,36 @@ useEffect(() => {
                               fontWeight: "bold",
                             }}
                           >
-                          {deliveredDelivery.length}
+                          {awaitingTransitDelivery .length}
                           </p>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+
+                     <div
+                    class={[
+                      dashboard["card--add"],
+                      dashboard["card--primary"],
+                    ].join(" ")}
+                  >
+                    <div class={dashboard["card_body"]}>
+                      <div class={dashboard["card--small-head"]}>
+                        Initiate Movement
+                      </div>
+
+                      <button
+                        onClick={navigateIntiateMovement}
+                        className={[
+                          dashboard["btn"],
+                          dashboard["btn--block"],
+                          dashboard["btn--secondary"],
+                        ].join(" ")}
+                      >
+                        {" "}
+                        Initiate
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -1032,7 +1062,7 @@ useEffect(() => {
                         className={[
                           dashboard["btn"],
                           dashboard["btn--block"],
-                          dashboard["btn--accent"],
+                          dashboard["btn--primary"],
                         ].join(" ")}
                       >
                         {" "}
@@ -1045,7 +1075,7 @@ useEffect(() => {
                 <div
                   class={[dashboard["grid"], dashboard["grid--1x4"]].join(" ")}
                 >
-                  {/* <DemographicsCharts /> */}
+                  <AdminDemographicsCharts/>
                 </div>
               </div>
             </Box>

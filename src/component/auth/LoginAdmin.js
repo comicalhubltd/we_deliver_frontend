@@ -119,7 +119,7 @@ const LoginAdmin = () => {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authenticated = false;
+  
 
   // localStorage.setItem('authenticated', JSON.stringify(authenticated));
 
@@ -166,7 +166,7 @@ const LoginAdmin = () => {
       const body = await dispatch(loginRequest(values)).unwrap();
 
       localStorage.setItem("token", JSON.stringify(body.jwt));
-      localStorage.setItem("authenticated", JSON.stringify(!authenticated));
+     
 
       // setAlertType("success");
       //   setMessage("Login Successfully")

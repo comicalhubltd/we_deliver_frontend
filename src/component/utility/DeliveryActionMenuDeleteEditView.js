@@ -13,7 +13,7 @@ import {
     Button
   } from '@mui/material'
 
-const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
+const  DeliveryActionMenuDeleteEditView = ({ row, onDelete, onEdit,  onView}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
    
@@ -50,7 +50,9 @@ const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
         onView(row.id);
         handleClose();
       };
-  
+
+
+     
     return (
         <>
         <IconButton
@@ -60,6 +62,7 @@ const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
           onClick={handleClick}
         >
           <MoreVertIcon   sx={{fontSize: 30}} />
+        
         </IconButton>
         
         {/* Menu with options */}
@@ -89,7 +92,8 @@ const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
         >
           <MenuItem  style={{fontSize: 17}}  onClick={handleEdit}>Edit</MenuItem>
           <MenuItem style={{fontSize: 17}} onClick={handleDeleteClick}>Delete</MenuItem>
-          <MenuItem style={{fontSize: 17}} onClick={handleViewDetails}>Details</MenuItem>
+          <MenuItem style={{fontSize: 17}} onClick={handleViewDetails}>View Details</MenuItem>
+         
         </Menu>
   
         {/* Delete Confirmation Dialog */}
@@ -128,7 +132,7 @@ const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
              color: '#9a99ac',
                    }}
                       >
-                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.firstname + ' ' + row.surname + ' ' + row.lastname}?</p>
+                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.schoolName}?</p>
                       </Typography>
                    
                    
@@ -197,7 +201,7 @@ const  StudentActionMenu = ({ row, onDelete, onEdit,  onView }) => {
   }
 
 
-  export default StudentActionMenu;
+  export default DeliveryActionMenuDeleteEditView;
   
 
 

@@ -171,11 +171,11 @@ const AddStudent = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   useEffect(() => {
@@ -267,7 +267,7 @@ const AddStudent = () => {
                 <div className={navbar["profile--selection__container"]}>
                   <div className={navbar["profile"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--profile"], navbar[""]].join(
                         " "
                       )}
@@ -484,7 +484,7 @@ const AddStudent = () => {
                       navbar["icon--primary"],
                     ].join(" ")}
                   >
-                    <use href="../images/sprite.svg#class"></use>
+                    <use href="../images/sprite.svg#request"></use>
                   </svg>
                   <p className={navbar["collapsible__heading"]}>Classes</p>
                 </div>
@@ -919,7 +919,7 @@ const AddStudent = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/school/school-profile"
+                  href="/customer/customer-profile"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Profile

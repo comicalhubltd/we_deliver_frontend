@@ -18,7 +18,7 @@ import PropTypes from "prop-types";
 import { getPayments } from "../../redux/reducer/paymentSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
@@ -107,11 +107,11 @@ const Payments = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   useEffect(() => {
@@ -196,7 +196,7 @@ const Payments = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -433,18 +433,13 @@ const Payments = () => {
                     >
                       View Drivers
                     </a>
-                    <a
-                      href="/driver/sss-classes"
+                      <a
+                      href="/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                     Assign Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -752,7 +747,7 @@ const Payments = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -810,7 +805,7 @@ const Payments = () => {
                             {row.paymentDate}
                           </StyledTableCell>
                           <StyledTableCell align="left">
-                            {row.status}
+                             <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                           </StyledTableCell>
                           <StyledTableCell align="left">
                             {row.term}

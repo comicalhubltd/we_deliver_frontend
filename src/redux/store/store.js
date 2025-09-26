@@ -14,8 +14,6 @@ const store = configureStore({
      customers: customerSlice,
      drivers: driverSlice,
      deliveryRequests: deliveryRequestSlice,
-
-
      login: loginSlice,
 
      sessions: sessionSlice,

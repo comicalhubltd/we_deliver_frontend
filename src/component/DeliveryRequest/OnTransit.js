@@ -4,7 +4,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { IconButton } from "@mui/material";
@@ -23,7 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
@@ -113,11 +113,11 @@ const OnTransit = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   useEffect(() => {
@@ -132,20 +132,22 @@ const OnTransit = () => {
 
   const rows = Array.isArray(onTransitDelivery) ? onTransitDelivery : [];
 
- const handleDelete = async (id) => {
-    // Filter out the deleted row
-    rows.filter((row) => row.id !== id);
-    // const result = await dispatch(deleteSchool(id)).unwrap();
-  };
+ 
+  const handleDelete = async (id) => {
+     // Filter out the deleted row
+     rows.filter((row) => row.id !== id);
+     dispatch(deleteDeliveryRequest(id));
+   };
 
-  const handleEdit = (id) => {
+   const handleEdit = (id) => {
     // Implement edit functionality
-    navigate(`/delivery/edit/${id}`);
+    navigate(`/delivery/update-delivery/${id}`);
   };
 
-  const handleViewDetails = (id) => {
-    // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+   
+
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -218,7 +220,7 @@ const OnTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -451,18 +453,13 @@ const OnTransit = () => {
                     >
                       View Drivers
                     </a>
-                    <a
-                      href="/driver/sss-classes"
+                      <a
+                      href="/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                     Assign Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -571,7 +568,21 @@ const OnTransit = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
+                  <a
+                      href="/delivery/pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>     
+
+
+                    
+                   <a
+                      href="/delivery/awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -580,28 +591,22 @@ const OnTransit = () => {
                     >
                       On Transit 
                     </a>
+                    
 
 
-          <a
-                      href="/delivery/yet-to-delivered"
+                    <a
+                      href="/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
+
 
                     <a
                       href="/delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
-                    </a>
-
-
-                      <a
-                      href="/delivery/pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
                     </a>
 
                       <a
@@ -779,7 +784,7 @@ const OnTransit = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -827,7 +832,7 @@ const OnTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -837,7 +842,7 @@ const OnTransit = () => {
                           {onTransitDelivery.length}
                         </span>
                       </div>
-                      Available OnTransit Request
+                      Available OnTransit
                     </div>
                   </div>
 
@@ -856,7 +861,7 @@ const OnTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -920,12 +925,12 @@ const OnTransit = () => {
                                     {row.createdAt}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
-                                    {row.status}
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
                                  <StyledTableCell component="th" align="right">
                             <div>
-                             <DeliveryActionMenu
+                             <DeliveryActionMenuDeleteEditView
                                 row={row}
                                 onDelete={handleDelete}
                                 onEdit={handleEdit}

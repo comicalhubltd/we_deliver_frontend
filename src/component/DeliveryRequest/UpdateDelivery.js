@@ -20,11 +20,12 @@ import { saveDeliveryRequest, resetStatus } from "../../redux/reducer/deliveryRe
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LngAndLatStateData } from "../utility/LngAndLatStateData";
-// Import for dashboard Below
-
+import { getDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import React from "react";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import navbar from "../style/dashboard/CustomerDashboard.module.css";
+import Loading from "../Chunks/loading";
+import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { updateDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import {
   Menu as MenuIcon,
   Close as CloseIcon,
@@ -45,6 +46,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import statesAndLgas from "../utility/NigerianStateAndLgas";
+import { size } from "lodash";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -104,7 +106,7 @@ background-size: cover;;`,
   },
 }));
 
-const AddDeliveryRequest = () => {
+const UpdateDelivery = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -254,15 +256,6 @@ const AddDeliveryRequest = () => {
   
   });
 
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 1000); // Delay before showing content
-    return () => clearTimeout(timer);
-  }, []);
-
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
@@ -274,6 +267,62 @@ const AddDeliveryRequest = () => {
   const [selectedFromState, setSelectedFromState] = useState('');
   const [selectedToState, setSelectedToState] = useState('');
   const [distanceInfo, setDistanceInfo] = useState(null);
+   const [loading, setIsLoading] = useState(true);
+   const { id } = useParams();
+   const location = useLocation();
+
+
+
+   
+   const [state, setState] = useState({
+     id: "",
+     customer: null,
+     item: null,
+     from: null,
+     to: null,
+     pickerName: "",
+     pickerPhone: "",
+     createdAt: "",
+     status: "",
+     distancekm: "",
+     deliveryFee: ""
+   });
+ 
+   useEffect(() => {
+     fetchDelivery();
+   }, [location.pathname]);
+ 
+   const fetchDelivery = async () => {
+     try {
+       setIsLoading(true);
+       await dispatch(getDeliveryRequest(id))
+         .unwrap()
+         .then((result) => {
+           console.log("ganinan" + JSON.stringify(result));
+           setState({
+             id: result.id,
+             customer: result.customer,
+             item: result.item,
+             from: result.from,
+             to: result.to,
+             pickerName: result.pickerName,
+             pickerPhone: result.pickerPhone,
+             createdAt: result.createdAt,
+             status: result.status,
+             distancekm: result.distancekm,
+             deliveryFee: result.deliveryFee,
+           
+           });
+         });
+     } catch (error) {
+       setAlertType("error");
+       setMessage(error.message);
+       console.log(error.message);
+     }
+     setIsLoading(false);
+   };
+
+
 
   const headings = {
     1: "Item Description",
@@ -283,13 +332,7 @@ const AddDeliveryRequest = () => {
     5: "Picker Contact"
   }
 
-  
-  const logout = () => {
-    localStorage.removeItem("token");
-   navigate("/customer/login");
-    
-  };
-
+ 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return; // Prevent closing if the user clicks away
@@ -303,37 +346,37 @@ const AddDeliveryRequest = () => {
 
                     item: {
                   
-                    weight: "",
-                    type: "",
-                    description: "",
+                    weight: state.item?.weight || "",
+                    type: state.item?.type || "",
+                    description: state.item?.description || "",
                     size: {
-                    unit: "",
-                    width: 0,
-                    height: 0,
-                    length: 0
+                    unit: state.item?.size?.unit|| "",
+                    width: state.item?.size?.width || 0,
+                    height: state.item?.size?.height|| 0,
+                    length: state.item?.size?.length|| 0
                     },
-                    value: 0
+                    value: state.item?.value || 0
 
                     },
           
                     from: {
-                    state: "",
-                    lga: "",
-                    city: "",
-                    street: ""
+                    state: state.from?.state ||"",
+                    lga: state.from?.lga ||"",
+                    city: state.from?.city ||"",
+                    street: state.from?.street ||""
                     },
           
                     to: {
-                    state: "",
-                    lga: "",
-                    city: "",
-                    street: ""
+                    state: state.to?.state ||"",
+                    lga: state.to?.lga ||"",
+                    city: state.to?.city ||"",
+                    street: state.to?.street ||""
                     },
                     
-                    pickerName: "",
-                    pickerPhone: "",
-                    distancekm: 0.0,
-                    deliveryFee: 2
+                    pickerName: state.pickerName || "",
+                    pickerPhone: state.pickerPhone || "",
+                    distancekm: state.distancekm || 0,
+                    deliveryFee: state.deliveryFee || 0
                   };
  // Calculate distance when both states are selected
   const calculateDistance = async () => {
@@ -388,12 +431,12 @@ const AddDeliveryRequest = () => {
     console.log(values);
 
     try {
-      const result = await dispatch(saveDeliveryRequest(values)).unwrap();
+      const result = await dispatch(updateDeliveryRequest({deliveryRequestData: values, deliveryRequestId: id})).unwrap();
       console.log(result);
       setAlertType("success");
       setMessage(result.message);
     } catch (error) {
-      console.log(error);
+      
       setAlertType("error");
 
       setMessage(error.message);
@@ -404,415 +447,11 @@ const AddDeliveryRequest = () => {
   };
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-
-        {/* Navbar */}
-        <AppBar
-          position="fixed"
-          sx={{ zIndex: 2, background: "white", color: "#018965" }}
-        >
-          <Toolbar
-            sx={{ zIndex: 2, display: "flex", justifyContent: "space-between" }}
-          >
-            {!isLargeScreen && (
-              <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
-                <MenuIcon sx={{ color: "inherit", fontSize: 30 }} />
-              </IconButton>
-            )}
-
-            <div>
-              {/** Profile Setup */}
-
-              <IconButton
-                onClick={profilePopup}
-                sx={{
-                  backgroundColor: "#018965", // Custom background
-                  "&:hover": {
-                    backgroundColor: "#03684f",
-                  },
-                }}
-              >
-                <PersonOutlineOutlinedIcon
-                  sx={{ color: "white", fontSize: 25 }} // fontSize in px
-                />
-              </IconButton>
-
-              <BasePopup
-                sx={{ zIndex: 2 }}
-                id={idProfile}
-                open={openProfile}
-                anchor={anchorProfile}
-              >
-                <div className={navbar["profile--selection__container"]}>
-                  <div className={navbar["profile"]}>
-                    <a
-                      href="/customer/customer-profile"
-                      className={[navbar["link--profile"], navbar[""]].join(
-                        " "
-                      )}
-                    >
-                      Profile
-                    </a>
-                  </div>
-                  <div className={navbar["logout"]}>
-                    <a
-                      onClick={logout}
-                      className={[navbar["link--profile"], navbar[""]].join(
-                        " "
-                      )}
-                    >
-                      Logout
-                    </a>
-                  </div>
-                </div>
-              </BasePopup>
-            </div>
-          </Toolbar>
-        </AppBar>
-
-        {/* Drawer */}
-        <Drawer
-          variant={isLargeScreen ? "persistent" : "temporary"}
-          open={isLargeScreen || isDrawerOpen}
-          onClose={!isLargeScreen ? toggleDrawer : undefined}
-          sx={{
-            width: 240,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: 240,
-              boxSizing: "border-box",
-            },
-            "& .MuiBackdrop-root": {
-              backgroundColor: "rgba(157, 152, 202, 0.3)", // Transparent backdrop
-            },
-          }}
-        >
-          {/* Drawer Header */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              p: 2,
-              borderBottom: "1px solid #ddd",
-            }}
-          >
-            {/* Logo in the center */}
-            <Box sx={{ textAlign: "center", flexGrow: 1 }}>
-              <a
-                className={[navbar["logo__link"], navbar["logo"]].join(" ")}
-                href="#"
-              >
-                <img src="/images/logo.png" alt="miqwii logo" />
-              </a>
-            </Box>
-
-            {/* Close Button */}
-            {!isLargeScreen && (
-              <IconButton onClick={toggleDrawer}>
-                <Cancel sx={{ color: "#018965", fontSize: 30 }} />
-              </IconButton>
-            )}
-          </Box>
-
-          {/* Drawer Content */}
-                  <List>
-                {/* Dashboard Navbar Content */}
-                {/* Dashboard Navbar Content */}
-            <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-0")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-0"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#dashboard"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>
-                        Dashboard
-                      </p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-0")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
-
-                  <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/home"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Home
-                    </a>
-                 
-                  </div>
-                </div>
-
-        
-          
-
-              
-                {/* Delivery Request  Navbar Content */}
-                
-                {/* Delivery Request  Navbar Content */}
-              
-                {/* Delivery Request  Navbar Content */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-4")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-4"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#request"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-4")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
- <div className={navbar["collapsible__content--drawer"]}>
-
-                   <a
-                      href="/delivery/customer-pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-
-                    
-                     <a
-                      href="/delivery/customer-awaiting-transit"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Awaiting Transit
-                    </a>
-
-
-                    <a
-                      href="/delivery/customer-on-transit"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      On Transit 
-                    </a>
-
-
-
-
-
-                     <a
-                      href="/delivery/customer-arrived"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Arrived
-                    </a>
-
-
-
-                    
-                    <a
-                      href="/delivery/customer-delivered"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Delivered
-                    </a>
-
-
-                    <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Deliveries
-                    </a>
-                  </div>
-                </div>
-
-
-                {/* Location Navbar Content */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-6")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-6"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#location"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>Locations</p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-6")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
-
-                  <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/location/show-locations"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Live Location
-                    </a>
-                  </div>
-                </div>
-
-
-                
-              
-
-                {/* Profile Navbar Content */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-9")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-9"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="/images/sprite.svg#profile"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>Profile</p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-9")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="/images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
-
-                  <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/customer-profile"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Profile
-                    </a>
-                    <a
-                      onClick={logout}
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Logout
-                    </a>
-                  </div>
-                </div>
-              </List>
-        </Drawer>
-
-        {/* Main Content */}
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            marginTop: 6,
-            fontSize: 20,
-            transition: "margin-left 0.3s ease-in-out",
-          }}
-        >
-            <SignInContainer>
+    <>
+       {loading === true ? (
+        <Loading />
+      ) : (
+          <SignInContainer>
                 <Formik
                   initialValues={initialValues}
                   validationSchema={deliveryRegistrationSchema}
@@ -829,23 +468,7 @@ const AddDeliveryRequest = () => {
                     setFieldValue
                   }) => { 
                     
-                  // const handleFromStateChange = (event) => {
-                  //   setFieldValue("from.state", event.target.value);
-                  //   setFieldValue("from.lga", ""); // reset LGA when state changes
-                  // };
-
-
-                      
-                  // const handleToStateChange = (event) => {
-                  //   setFieldValue("to.state", event.target.value);
-                  //   setFieldValue("to.lga", ""); // reset LGA when state changes
-                  // };
-
-
-                 
-                
-                
-         
+               
                     return ( 
                     <Card>
                       {/*Card Image*/}
@@ -1515,7 +1138,7 @@ const AddDeliveryRequest = () => {
                         margin="normal"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={(distanceInfo !== null && isCalculating === true  ) ? "Calculating..." : distanceInfo.distance + " km " + distanceInfo.duration + " Minutes "}
+                        value={(distanceInfo !== null && isCalculating === true  ) ?  distanceInfo.distance + " km " + distanceInfo.duration + " Minutes " : "Calculating..."}
                         name="item.distancekm"
                         error={touched.distancekm && Boolean(errors.distancekm)}
                         helperText={touched.distancekm && errors.distancekm}
@@ -1691,7 +1314,7 @@ const AddDeliveryRequest = () => {
                                      style["btn--primary"],
                                    ].join(" ")}
                                  >
-                                   {isSubmitting ? "Submitting..." : "Add Delivery"}
+                                   {isSubmitting ? "Updating..." : "Update Delivery"}
                                  </button>
           
                         </>
@@ -1760,7 +1383,7 @@ const AddDeliveryRequest = () => {
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"></use>
+                                <use href="/images/sprite.svg#success-icon"></use>
                               </svg>
                             </span>
           
@@ -1792,7 +1415,7 @@ const AddDeliveryRequest = () => {
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"></use>
+                                <use href="/images/sprite.svg#error-icon"></use>
                               </svg>
                             </span>
           
@@ -1805,110 +1428,12 @@ const AddDeliveryRequest = () => {
                   </div>
                 </Snackbar>
               </SignInContainer>
-        </Box>
-        {/*This Area is for Snackbar*/}
-
-        <Snackbar
-          open={open}
-          autoHideDuration={3000} // Automatically hide after 1 second
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "center", horizontal: "center" }} // Position at the top center
-        >
-          <div>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              BackdropProps={{
-                sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" }, // Darker overlay
-              }}
-              sx={{
-                "& .MuiDialog-paper": {
-                  width: "100%",
-                  borderRadius: "15px", // Optional: Rounded corners
-                },
-              }}
-            >
-              {alertType === "success" ? (
-                <div
-                  style={{ width: "100%", background: "#fff" }}
-                  class={[dashboard["card--alert-success"]].join(" ")}
-                >
-                  <div class={dashboard["card_body"]}>
-                    <span
-                      class={[
-                        dashboard["icon-container"],
-                        dashboard["alert-close"],
-                      ].join(" ")}
-                    >
-                      <IconButton onClick={handleClose}>
-                        <CloseIcon sx={{ fontSize: 30, color: "#018965" }} />
-                      </IconButton>
-                    </span>
-
-                    <span class={dashboard["icon-container"]}>
-                      <svg
-                        class={[
-                          dashboard["icon--big"],
-                          dashboard["icon--success"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#success-icon"></use>
-                      </svg>
-                    </span>
-
-                    <Typography sx={{ fontSize: 21 }}>
-                      <p class={dashboard["alert-message"]}>{message}</p>
-                    </Typography>
-                  </div>
-                  <Typography sx={{ fontSize: 20 }}>
-                    <p class={dashboard["card_footer"]}>success</p>
-                  </Typography>
-                </div>
-              ) : (
-                <div
-                  style={{ width: "100%", background: "#fff" }}
-                  class={[dashboard["card--alert-error"]].join(" ")}
-                >
-                  <div class={dashboard["card_body"]}>
-                    <span
-                      class={[
-                        dashboard["icon-container"],
-                        dashboard["alert-close"],
-                      ].join(" ")}
-                    >
-                      <IconButton onClick={handleClose}>
-                        <CloseIcon sx={{ fontSize: 30 }} />
-                      </IconButton>
-                    </span>
-
-                    <span class={dashboard["icon-container"]}>
-                      <svg
-                        class={[
-                          dashboard["icon--big"],
-                          dashboard["icon--error"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#error-icon"></use>
-                      </svg>
-                    </span>
-                    <Typography sx={{ fontSize: 21 }}>
-                      <p class={dashboard["alert-message"]}>{message}</p>
-                    </Typography>
-                  </div>
-                  <Typography sx={{ fontSize: 20 }}>
-                    <p class={dashboard["card_footer"]}>error</p>
-                  </Typography>
-                </div>
-              )}
-            </Dialog>
-          </div>
-        </Snackbar>
-      </Box>
-    </ClickAwayListener>
+            )}
+              </>
   );
 };
 
-export default AddDeliveryRequest;
+export default UpdateDelivery;
 
 
 

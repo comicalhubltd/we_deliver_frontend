@@ -119,9 +119,9 @@ const LoginCustomer = () => {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authenticated = false;
+  
 
-  // localStorage.setItem('authenticated', JSON.stringify(authenticated));
+  
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -166,7 +166,7 @@ const LoginCustomer = () => {
       const body = await dispatch(loginRequest(values)).unwrap();
 
       localStorage.setItem("token", JSON.stringify(body.jwt));
-      localStorage.setItem("authenticated", JSON.stringify(!authenticated));
+     
 
       // setAlertType("success");
       //   setMessage("Login Successfully")
@@ -176,6 +176,8 @@ const LoginCustomer = () => {
       }
     } catch (error) {
       setAlertType("error");
+      console.log("Error Single " + JSON.stringify(error) );
+      console.log("Error with Message " + error.message)
       setMessage(error.message);
     }
 

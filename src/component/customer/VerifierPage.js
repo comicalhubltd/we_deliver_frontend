@@ -102,11 +102,11 @@ const VerifierPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   const queryParam = new URLSearchParams(location.search);
@@ -138,7 +138,7 @@ const VerifierPage = () => {
   };
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/admin/login");
   };
 
   const backToRegister = () => {

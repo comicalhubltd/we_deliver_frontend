@@ -95,12 +95,12 @@ export const getAllDrivers = createAsyncThunk(
 );
 
 
-export const getStudentById = createAsyncThunk(
-  'class/getStudentById',
+export const getDriverById = createAsyncThunk(
+  'class/getDriverById',
   async (id,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.get(BASE_URL + `/get-by-id/${id}`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.get(BASE_URL + `/get-driver-by-id/${id}`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -128,7 +128,7 @@ const driverSlice = createSlice({
     name: 'Driver',
     initialState: {
         drivers: [],
-
+        driver: [],
 
         student: null,
         studentsInClass: [],
@@ -231,13 +231,14 @@ const driverSlice = createSlice({
 
                          // get Student By Id
 
-                         .addCase(getStudentById.pending, (state) => {
+                         .addCase(getDriverById.pending, (state) => {
                           state.fetchingStatus = 'loading';
                         })
-                        .addCase(getStudentById.fulfilled, (state, action) => {
+                        .addCase(getDriverById.fulfilled, (state, action) => {
                           state.fetchingStatus = 'succeeded';
+                          state.driver = action.payload;
                         })
-                        .addCase(getStudentById.rejected, (state) => {
+                        .addCase(getDriverById.rejected, (state) => {
                           state.fetchingStatus= 'failed';
                         })
 

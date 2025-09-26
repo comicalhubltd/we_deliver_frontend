@@ -210,11 +210,11 @@ const PayUS = () => {
   const navigate = useNavigate();
   let amount = 0;
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   const [state, setState] = useState({
@@ -365,7 +365,7 @@ const PayUS = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -598,18 +598,13 @@ const PayUS = () => {
                     >
                       View Drivers
                     </a>
-                    <a
-                      href="/driver/sss-classes"
+                      <a
+                      href="/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                     Assign Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -718,7 +713,21 @@ const PayUS = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
+                  <a
+                      href="/delivery/pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>     
+
+
+                    
+                   <a
+                      href="/delivery/awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -727,28 +736,22 @@ const PayUS = () => {
                     >
                       On Transit 
                     </a>
+                    
 
 
-          <a
-                      href="/delivery/yet-to-delivered"
+                    <a
+                      href="/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
+
 
                     <a
                       href="/delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
-                    </a>
-
-
-                      <a
-                      href="/delivery/pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
                     </a>
 
                       <a
@@ -926,7 +929,7 @@ const PayUS = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

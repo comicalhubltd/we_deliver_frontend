@@ -11,7 +11,9 @@ export const loginRequest = createAsyncThunk(
     try {
       const response = await api.post(BASE_URL + '/login', requestData, {headers: {"Content-Type":"application/json"}});
       return response.data; // Return the saved user response
+
     } catch (error) {
+     
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
     }
   }
@@ -57,6 +59,7 @@ const loginSlice = createSlice({
           })
           .addCase(loginRequest.fulfilled, (state, action) => {
             state.loginStatus = 'succeeded';
+            
           })
           .addCase(loginRequest.rejected, (state) => {
             state.loginStatus = 'failed';

@@ -143,11 +143,11 @@ const AdminProfile = () => {
   const { id, className } = useParams();
   const [loading, setIsLoading] = useState(true);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   const [state, setState] = useState({
@@ -257,7 +257,7 @@ const AdminProfile = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}

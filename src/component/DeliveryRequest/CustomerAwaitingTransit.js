@@ -6,7 +6,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 import { IconButton } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -17,18 +17,18 @@ import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import PropTypes from "prop-types";
 import {
-   getCustomerYetToDeliveredDelivery, getCustomerAllDelivery
+   getCustomerAwaitingTransitDelivery, getCustomerAllDelivery
  
 } from "../../redux/reducer/deliveryRequestSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
 // import ClassScoreSheet from "../result/ClassScoreSheet";
-
+import PreviewIcon from "@mui/icons-material/Preview";
 // Import for dashboard Below
 
 import React from "react";
@@ -75,7 +75,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const CustomerYetToDelivered = () => {
+const CustomerAwatingTransit = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -104,7 +104,7 @@ const CustomerYetToDelivered = () => {
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
   const deliveryState = useSelector((state) => state.deliveryRequests);
-  const { customerYetToDeliveredDelivery, customerDeliveryRequests,  fetchingStatus } =
+  const {  customerAwaitingTransitDelivery, customerDeliveryRequests,  fetchingStatus } =
     deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,11 +113,11 @@ const CustomerYetToDelivered = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   useEffect(() => {
@@ -126,11 +126,11 @@ const CustomerYetToDelivered = () => {
   }, [location.pathname]);
 
   const fetchData = () => {
-    dispatch(getCustomerYetToDeliveredDelivery());
+    dispatch(getCustomerAwaitingTransitDelivery());
     dispatch(getCustomerAllDelivery());
   };
 
-  const rows = Array.isArray(customerYetToDeliveredDelivery) ? customerYetToDeliveredDelivery : [];
+  const rows = Array.isArray(customerAwaitingTransitDelivery) ? customerAwaitingTransitDelivery : [];
 
  const handleDelete = async (id) => {
     // Filter out the deleted row
@@ -143,9 +143,8 @@ const CustomerYetToDelivered = () => {
     navigate(`/delivery/edit/${id}`);
   };
 
-  const handleViewDetails = (id) => {
-    // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
   };
 
   const navigateToAddSSSClasses = () => {
@@ -222,7 +221,7 @@ const CustomerYetToDelivered = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -400,10 +399,23 @@ const CustomerYetToDelivered = () => {
                       </svg>
                     </span>
                   </header>
+ <div className={navbar["collapsible__content--drawer"]}>
 
-                  <div className={navbar["collapsible__content--drawer"]}>
+                   <a
+                      href="/delivery/customer-pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>
 
-                   
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -414,13 +426,19 @@ const CustomerYetToDelivered = () => {
                     </a>
 
 
-          <a
-                      href="/delivery/customer-yet-to-delivered"
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
 
+
+
+                    
                     <a
                       href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -429,20 +447,6 @@ const CustomerYetToDelivered = () => {
                     </a>
 
 
-                      <a
-                      href="/delivery/customer-pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-                      <a
-                      href="/delivery/customer-view-all-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
-                    </a>
-                  
                     <a
                       href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -555,7 +559,7 @@ const CustomerYetToDelivered = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -603,17 +607,17 @@ const CustomerYetToDelivered = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
                         <span
                           class={[dashboard["badge"], dashboard[""]].join(" ")}
                         >
-                          {customerYetToDeliveredDelivery.length}
+                          {customerAwaitingTransitDelivery.length}
                         </span>
                       </div>
-                      Available Yet to Delivered Request
+                      Awaiting Transit
                     </div>
                   </div>
 
@@ -632,7 +636,7 @@ const CustomerYetToDelivered = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -697,18 +701,14 @@ const CustomerYetToDelivered = () => {
                                     {row.createdAt}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
-                                    {row.status}
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
                                  <StyledTableCell component="th" align="right">
-                            <div>
-                             <DeliveryActionMenu
-                                row={row}
-                                onDelete={handleDelete}
-                                onEdit={handleEdit}
-                                onView={handleViewDetails}
-                              />
-                            </div>
+                                      
+                  <IconButton onClick={() => handleViewDetails(row.id)}>
+                    <PreviewIcon sx={{ color: "#018965", fontSize: 30 }} />
+                  </IconButton>
                           </StyledTableCell>
                                   </StyledTableCell>
                                 </StyledTableRow>
@@ -766,7 +766,7 @@ const CustomerYetToDelivered = () => {
   );
 };
 
-export default CustomerYetToDelivered;
+export default CustomerAwatingTransit;
 
 function TablePaginationActions(props) {
   const theme = useTheme();

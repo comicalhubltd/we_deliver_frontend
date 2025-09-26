@@ -6,6 +6,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import PreviewIcon from "@mui/icons-material/Preview";
 import { IconButton } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -22,11 +23,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 // import ClassScoreSheet from "../result/ClassScoreSheet";
 
 // Import for dashboard Below
@@ -113,11 +114,11 @@ const CustomerPending = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   useEffect(() => {
@@ -134,20 +135,20 @@ const CustomerPending = () => {
 
 
 
-  const handleDelete = async (id) => {
+ const handleDelete = async (id) => {
     // Filter out the deleted row
     rows.filter((row) => row.id !== id);
-    // const result = await dispatch(deleteSchool(id)).unwrap();
+    dispatch(deleteDeliveryRequest(id));
   };
 
-  const handleEdit = (id) => {
+ 
+    const handleEdit = (id) => {
     // Implement edit functionality
-    navigate(`/delivery/edit/${id}`);
+    navigate(`/delivery/update-delivery/${id}`);
   };
 
-  const handleViewDetails = (id) => {
-    // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -220,7 +221,7 @@ const CustomerPending = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -398,10 +399,23 @@ const CustomerPending = () => {
                       </svg>
                     </span>
                   </header>
+ <div className={navbar["collapsible__content--drawer"]}>
 
-                  <div className={navbar["collapsible__content--drawer"]}>
+                   <a
+                      href="/delivery/customer-pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>
 
-                   
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -412,13 +426,19 @@ const CustomerPending = () => {
                     </a>
 
 
-          <a
-                      href="/delivery/customer-yet-to-delivered"
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
 
+
+
+                    
                     <a
                       href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -427,20 +447,6 @@ const CustomerPending = () => {
                     </a>
 
 
-                      <a
-                      href="/delivery/customer-pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-                      <a
-                      href="/delivery/customer-view-all-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
-                    </a>
-                  
                     <a
                       href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -553,7 +559,7 @@ const CustomerPending = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -601,7 +607,7 @@ const CustomerPending = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -611,7 +617,7 @@ const CustomerPending = () => {
                           {customerPendingDelivery.length}
                         </span>
                       </div>
-                      Available Pending Request
+                       Pending Request
                     </div>
                   </div>
 
@@ -630,7 +636,7 @@ const CustomerPending = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -694,12 +700,12 @@ const CustomerPending = () => {
                                     {row.createdAt}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
-                                    {row.status}
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
                                  <StyledTableCell component="th" align="right">
                             <div>
-                             <DeliveryActionMenu
+                             <DeliveryActionMenuDeleteEditView
                                 row={row}
                                 onDelete={handleDelete}
                                 onEdit={handleEdit}

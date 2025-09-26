@@ -132,11 +132,11 @@ const AcceptRequest = () => {
   const location = useLocation();
 
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   useEffect(() => {
@@ -242,7 +242,7 @@ const AcceptRequest = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -475,18 +475,13 @@ const AcceptRequest = () => {
                     >
                       View Drivers
                     </a>
-                    <a
-                      href="/driver/sss-classes"
+                      <a
+                      href="/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                     Assign Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -607,7 +602,7 @@ const AcceptRequest = () => {
 
 
           <a
-                      href="/delivery/yet-to-delivered"
+                      href="/delivery/awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Yet to Delivered
@@ -808,7 +803,7 @@ const AcceptRequest = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -888,7 +883,7 @@ const AcceptRequest = () => {
                                     {row.createdAt}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
-                                    {row.status}
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
                                     <FormGroup>

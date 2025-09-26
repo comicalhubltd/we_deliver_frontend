@@ -9,7 +9,7 @@ import AddStudent from './component/driver/AddStudent';
 import PrivateRoute from './component/routing/PrivateRoute';
 import AddDeliveryRequest from './component/DeliveryRequest/AddDeliveryRequest';
 import OnTransit from './component/DeliveryRequest/OnTransit';
-import YetToDelivered from './component/DeliveryRequest/YetToDelivered';
+import AddRequestToTransit from './component/admin/AddRequestToTransit';
 import Delivered from './component/DeliveryRequest/Delivered';
 import AcceptRequest from './component/newRequest/AcceptRequest';
 import AdminDashboard from './component/dashboards/AdminDashboard';
@@ -21,11 +21,7 @@ import NavBar from './component/Chunks/NavBar';
 import PayUS from './component/subscription/PayUs';
 import Payments from './component/subscription/Payments';
 import StudentProfile from './component/driver/StudentProfile';
-import SchoolProfile from './component/customer/SchoolProfile';
-import SchoolsAdmin from './component/admin/SchoolsAdmin';
-import AdminSchoolsDetails from './component/admin/AdminSchoolsDetails';
-import UpdateSchool from './component/admin/UpdateSchool';
-import SchoolActivator from './component/admin/SchoolActivator';
+import CustomerProfile from './component/customer/CustomerProfile';
 import Services from './component/home/Services';
 import ContactUs from './component/home/ContactUs';
 import AboutUs from './component/home/AboutUs';
@@ -41,12 +37,24 @@ import ViewAllRequest from './component/DeliveryRequest/ViewAllRequest';
 import CustomerOnTransit from './component/DeliveryRequest/CustomerOnTransit';
 import CustomerPending from './component/DeliveryRequest/CustomerPending';
 import CustomerViewAllRequest from './component/DeliveryRequest/CustomerViewAllRequest';
-import CustomerYetToDelivered from './component/DeliveryRequest/CustomerYetToDelivered';
+import CustomerAwatingTransit from './component/DeliveryRequest/CustomerAwaitingTransit';
+import AwaitingTransit from './component/DeliveryRequest/AwaitingTransit';
 import CustomerDelivered from './component/DeliveryRequest/CustomerDelivered';
 import RequestConfirmation from './component/newRequest/RequestConfirmation';
 import Home from './component/home/Home';
 import ViewAllCustomers from './component/customer/ViewAllCustomers';
 import ViewAllDrivers from './component/driver/ViewAllDrivers';
+import AssignVehicle from './component/driver/AssignVehicle';
+import AddVehicle from './component/vehicle/AddVehicle';
+import Arrived from './component/DeliveryRequest/Arrived';
+import Rejected from './component/DeliveryRequest/Rejected';
+import CustomerArrived from './component/DeliveryRequest/CustomerArrived';
+import CustomerRejected from './component/DeliveryRequest/CustomerRejected';
+import DeliveryDetails from './component/DeliveryRequest/DeliveryDetails';
+import UpdateDelivery from './component/DeliveryRequest/UpdateDelivery';
+import ViewVehicles from './component/admin/ViewVehicles';
+import CustomerViewFeedback from './component/DeliveryRequest/CustomerViewFeedback';
+import FeedbackDescription from './component/DeliveryRequest/FeedbackDescription';
 
 function App() {
 
@@ -58,24 +66,23 @@ function App() {
      
         
            {/*Delivery Request Releted*/}
-         <Route exact path='/delivery/view-all-delivery'  element={ <ViewAllRequest/> }/>
-         <Route exact path='/delivery/pending'  element={ <Pending/> }/>
-         <Route exact path='/delivery/on-transit'  element={ <OnTransit/> }/>
-         <Route exact path='/delivery/delivered'  element={ <Delivered/> }/>
-         <Route exact path='/delivery/yet-to-delivered'  element={ <YetToDelivered/> }/>
-
+        
          <Route exact path='/delivery/customer-view-all-delivery'  element={ <CustomerViewAllRequest/> }/>
          <Route exact path='/delivery/customer-pending'  element={ <CustomerPending/> }/>
+         <Route exact path='/delivery/customer-rejected'  element={ <CustomerRejected/> }/>
          <Route exact path='/delivery/customer-on-transit'  element={ <CustomerOnTransit/> }/>
          <Route exact path='/delivery/customer-delivered'  element={ <CustomerDelivered/> }/>
-         <Route exact path='/delivery/customer-yet-to-delivered'  element={ <CustomerYetToDelivered/> }/>
-
+         <Route exact path='/delivery/customer-awaiting-transit'  element={ <CustomerAwatingTransit/> }/>
+         <Route exact path='/delivery/customer-view-feedback'  element={ <CustomerViewFeedback/>}/>
+        <Route exact path='/delivery/feedback-description/:id'  element={ <FeedbackDescription/>}/>
+        <Route exact path='/delivery/delivery-details/:id'  element={ <DeliveryDetails/> }/>
         <Route exact path='/delivery/add-delivery'  element={ <AddDeliveryRequest/> }/>
-  
+         <Route exact path='/delivery/update-delivery/:id'  element={ <UpdateDelivery/> }/>
          {/*new request releted Releted*/}
    
          <Route exact path='/delivery/new-requests'  element={ <AcceptRequest/> }/>
-          <Route exact path='/delivery/view-request-details/:id'  element={ <RequestConfirmation/> }/> 
+         <Route exact path='/delivery/view-request-details/:id'  element={ <RequestConfirmation/> }/> 
+         <Route exact path='/delivery/add-request-to-transit/:driverId'  element={ <AddRequestToTransit/> }/> 
           
               {/*Payment Releted*/}
         <Route exact path='/payment/pay-subscription'  element={ <PayUS/> }/>
@@ -86,22 +93,28 @@ function App() {
          <Route exact path='/password/password-reset'  element={<ResetPassword/>}/>
          <Route exact path='/password/password-reset-student'  element={<StudentResetPassword/>}/>
         {/*school Releted*/}
-            <Route exact path='/admin/school-activator/:id' element={ <SchoolActivator/> }/>
-            <Route exact path='/admin/update-school/:id' element={ <UpdateSchool/> }/>
-             <Route exact path='/admin/school-profile/:id' element={ <AdminSchoolsDetails/> }/>
-            <Route exact path='/school/school-profile' element={ <SchoolProfile/> }/>
+           
+            <Route exact path='/customer/customer-profile' element={ <CustomerProfile/> }/>
 
-          {/*Admin Releted*/}
-          <Route exact path='/admin/schools' element={ <SchoolsAdmin/> }/>
-            <Route exact path='/admin/profile' element={ <AdminProfile/> }/>
-
+               {/*Admin Releted*/}
+              <Route exact path='/delivery/view-all-delivery'  element={ <ViewAllRequest/> }/>
+              <Route exact path='/delivery/pending'  element={ <Pending/> }/>
+              <Route exact path='/delivery/on-transit'  element={ <OnTransit/> }/>
+              <Route exact path='/delivery/delivered'  element={ <Delivered/> }/>
+              <Route exact path='/delivery/awaiting-transit'  element={ <AwaitingTransit/> }/>
+              <Route exact path='/delivery/arrived'  element={ <Arrived/> }/>
+              <Route exact path='/delivery/rejected'  element={ <Rejected/> }/>
+               
+              <Route exact path='/vehicle/view-vehicles'  element={ <ViewVehicles/> }/>
 
                 {/*customer reletated Releted*/}
           <Route exact path='/customer/view-customers' element={ <ViewAllCustomers/> }/>
               {/*driver reletated Releted*/}
           <Route exact path='/driver/view-drivers' element={ <ViewAllDrivers/> }/>
-     
-
+          <Route exact path='/driver/assign-vehicle' element={ <AssignVehicle/> }/>
+        
+         {/*vehicle Releted*/}
+       <Route exact path='/driver/add-vehicle/:id' element={ <AddVehicle/> }/>
            {/*Dashboard Releted*/}
         <Route exact path='/customer/home' element={ <CustomerDashboard/> }/>
         <Route exact path='/admin/home' element={ <AdminDashboard/> }/>

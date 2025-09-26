@@ -19,10 +19,11 @@ import {
   getCustomerDeliveredDelivery, getCustomerAllDelivery
  
 } from "../../redux/reducer/deliveryRequestSlice";
+import PreviewIcon from "@mui/icons-material/Preview";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
@@ -40,7 +41,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 
 import {
   Drawer,
@@ -113,11 +114,11 @@ const CustomerDelivered = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   useEffect(() => {
@@ -143,9 +144,8 @@ const CustomerDelivered = () => {
     navigate(`/delivery/edit/${id}`);
   };
 
-  const handleViewDetails = (id) => {
-    // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
   };
 
   const navigateToAddSSSClasses = () => {
@@ -222,7 +222,7 @@ const CustomerDelivered = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -403,7 +403,21 @@ const CustomerDelivered = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
+                   <a
+                      href="/delivery/customer-pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>
+
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -414,13 +428,19 @@ const CustomerDelivered = () => {
                     </a>
 
 
-          <a
-                      href="/delivery/customer-yet-to-delivered"
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
 
+
+
+                    
                     <a
                       href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -429,20 +449,6 @@ const CustomerDelivered = () => {
                     </a>
 
 
-                      <a
-                      href="/delivery/customer-pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-                      <a
-                      href="/delivery/customer-view-all-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
-                    </a>
-                  
                     <a
                       href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -555,7 +561,7 @@ const CustomerDelivered = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -603,7 +609,7 @@ const CustomerDelivered = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -613,7 +619,7 @@ const CustomerDelivered = () => {
                           {customerDeliveredDelivery.length}
                         </span>
                       </div>
-                      Available Delivered Request
+                     Delivered Request
                     </div>
                   </div>
 
@@ -632,7 +638,7 @@ const CustomerDelivered = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#class"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                         </span>
 
@@ -644,34 +650,9 @@ const CustomerDelivered = () => {
                       </div>
                       Total Delivery Made
                     </div>
-                  </div>
-
-                  <div
-                    class={[
-                      dashboard["card--add"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card--small-head"]}>
-                        Add SSS Classes
-                      </div>
-
-                      <button
-                        onClick={navigateToAddSSSClasses}
-                        className={[
-                          dashboard["btn"],
-                          dashboard["btn--block"],
-                          dashboard["btn--primary"],
-                        ].join(" ")}
-                      >
-                        Add SSS Class
-                      </button>
-                    </div>
-                  </div>
+                 </div>
                 </div>
-                {/* <div>{classNamesSpecific}</div> */}
-
+        
               <TableContainer component={Paper} sx={{ marginTop: 1 }}>
                           <Table
                             sx={{ minWidth: 650 }}
@@ -719,18 +700,14 @@ const CustomerDelivered = () => {
                                     {row.createdAt}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
-                                    {row.status}
+                                     <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
                                  <StyledTableCell component="th" align="right">
-                            <div>
-                              <DeliveryActionMenu
-                                row={row}
-                                onDelete={handleDelete}
-                                onEdit={handleEdit}
-                                onView={handleViewDetails}
-                              />
-                            </div>
+                                   
+                  <IconButton onClick={() => handleViewDetails(row.id)}>
+                    <PreviewIcon sx={{ color: "#018965", fontSize: 30 }} />
+                  </IconButton>
                           </StyledTableCell>
                                   </StyledTableCell>
                                 </StyledTableRow>

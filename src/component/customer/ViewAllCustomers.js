@@ -4,7 +4,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import DeliveryActionMenu from "../utility/DeliveryActionMenu";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { IconButton } from "@mui/material";
@@ -20,10 +20,12 @@ import { getAllCustomers } from "../../redux/reducer/customerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteClass } from "../../redux/reducer/deliveryRequestSlice";
+import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
+import DriverCustomerActionMenu from "../utility/DriverCustomerActionMenu";
+
 // import ClassScoreSheet from "../result/ClassScoreSheet";
 
 // Import for dashboard Below
@@ -109,11 +111,11 @@ const ViewAllCustomers = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/admin/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    
   };
 
   useEffect(() => {
@@ -213,7 +215,7 @@ const ViewAllCustomers = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -447,17 +449,12 @@ const ViewAllCustomers = () => {
                       View Drivers
                     </a>
                     <a
-                      href="/driver/sss-classes"
+                      href="/driver/assigned-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Available Drivers
+                      Assigned Vehicle
                     </a>
-                    <a
-                      href="/class/primary-classes"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Drivers Enroute
-                    </a>
+                  
                    
                   </div>
                 </div>
@@ -566,7 +563,21 @@ const ViewAllCustomers = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
+                  <a
+                      href="/delivery/pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>     
+
+
+                    
+                   <a
+                      href="/delivery/awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -575,28 +586,22 @@ const ViewAllCustomers = () => {
                     >
                       On Transit 
                     </a>
+                    
 
 
-          <a
-                      href="/delivery/yet-to-delivered"
+                    <a
+                      href="/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
+
 
                     <a
                       href="/delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
-                    </a>
-
-
-                      <a
-                      href="/delivery/pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
                     </a>
 
                       <a
@@ -774,7 +779,7 @@ const ViewAllCustomers = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -854,7 +859,7 @@ const ViewAllCustomers = () => {
                                   <StyledTableCell align="right">
                                  <StyledTableCell component="th" align="right">
                             <div>
-                             <DeliveryActionMenu
+                             <DriverCustomerActionMenu
                                 row={row}
                                 onDelete={handleDelete}
                                 onEdit={handleEdit}

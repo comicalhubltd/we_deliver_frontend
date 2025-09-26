@@ -13,7 +13,7 @@ import {
     Button
   } from '@mui/material'
 
-const  DeliveryActionMenu = ({ row, onDelete, onEdit,  onView}) => {
+const  DriverCustomerActionMenu = ({ row, onDelete, onEdit,  onView }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
    
@@ -50,9 +50,7 @@ const  DeliveryActionMenu = ({ row, onDelete, onEdit,  onView}) => {
         onView(row.id);
         handleClose();
       };
-
-
-     
+  
     return (
         <>
         <IconButton
@@ -91,8 +89,7 @@ const  DeliveryActionMenu = ({ row, onDelete, onEdit,  onView}) => {
         >
           <MenuItem  style={{fontSize: 17}}  onClick={handleEdit}>Edit</MenuItem>
           <MenuItem style={{fontSize: 17}} onClick={handleDeleteClick}>Delete</MenuItem>
-          <MenuItem style={{fontSize: 17}} onClick={handleViewDetails}>View Details</MenuItem>
-         
+          <MenuItem style={{fontSize: 17}} onClick={handleViewDetails}>Details</MenuItem>
         </Menu>
   
         {/* Delete Confirmation Dialog */}
@@ -131,7 +128,7 @@ const  DeliveryActionMenu = ({ row, onDelete, onEdit,  onView}) => {
              color: '#9a99ac',
                    }}
                       >
-                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.schoolName}?</p>
+                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.firstname + ' ' + row.surname + ' ' + row.lastname}?</p>
                       </Typography>
                    
                    
@@ -200,7 +197,7 @@ const  DeliveryActionMenu = ({ row, onDelete, onEdit,  onView}) => {
   }
 
 
-  export default DeliveryActionMenu;
+  export default DriverCustomerActionMenu;
   
 
 

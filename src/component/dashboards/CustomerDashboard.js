@@ -20,11 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllSession } from "../../redux/reducer/sessionSlice";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import style from "../style/form/StudentRegistration.module.css";
-import { Formik } from "formik";
+import {
+  getCustomerDeliveredDelivery, getCustomerAllDelivery
+ 
+} from "../../redux/reducer/deliveryRequestSlice";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
 import { setCurrentSession } from "../../redux/reducer/sessionSlice";
@@ -108,14 +107,10 @@ const CustomerDashboard = () => {
 
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
-  const subjectRegistrationSchema = object({
-    selectedId: string().required("Session required"),
-  });
+ 
 
-  const sessionState = useSelector((state) => state.sessions);
-  const { sessions, fetchingStatus } = sessionState;
-  const paymentState = useSelector((state) => state.payments);
-  const { expiryDate } = paymentState;
+   const deliveryState = useSelector((state) => state.deliveryRequests);
+   const { customerDeliveredDelivery, customerDeliveryRequests,  fetchingStatus } = deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -128,31 +123,37 @@ const CustomerDashboard = () => {
   const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
   const [initialSelectedId, setInitialSelectedId] = useState(null);
-  const rows = Array.isArray(sessions) ? sessions : [];
+  const rows = Array.isArray(customerDeliveredDelivery) ? customerDeliveredDelivery : [];
   const params = useParams();
   const location = useLocation();
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+   navigate("/customer/login");
+    
   };
 
   useEffect(() => {
     fetchData();
   }, [location.pathname]);
 
-  const fetchData = () => {
-    dispatch(getExpiryDate());
-    dispatch(getAllSession());
-  };
+ 
+   const fetchData = () => {
+     dispatch(getCustomerDeliveredDelivery());
+     dispatch(getCustomerAllDelivery());
+   };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return; // Prevent closing if the user clicks away
     }
     setOpen(false); // Close the Snackbar
+  };
+
+
+   const navigateToFeedback = () => {
+    navigate("/delivery/customer-view-feedback");
   };
 
   console.log("ARRAY " + rows);
@@ -256,7 +257,7 @@ const CustomerDashboard = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/school/school-profile"
+                          href="/customer/customer-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -434,10 +435,23 @@ const CustomerDashboard = () => {
                       </svg>
                     </span>
                   </header>
+ <div className={navbar["collapsible__content--drawer"]}>
 
-                  <div className={navbar["collapsible__content--drawer"]}>
+                   <a
+                      href="/delivery/customer-pending"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Pending
+                    </a>
 
-                   
+
+                    
+                     <a
+                      href="/delivery/customer-awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
+                    </a>
 
 
                     <a
@@ -448,13 +462,19 @@ const CustomerDashboard = () => {
                     </a>
 
 
-          <a
-                      href="/delivery/customer-yet-to-delivered"
+
+
+
+                     <a
+                      href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Yet to Delivered
+                      Arrived
                     </a>
 
+
+
+                    
                     <a
                       href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -463,20 +483,6 @@ const CustomerDashboard = () => {
                     </a>
 
 
-                      <a
-                      href="/delivery/customer-pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-                      <a
-                      href="/delivery/customer-view-all-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
-                    </a>
-                  
                     <a
                       href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -589,7 +595,7 @@ const CustomerDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/school/school-profile"
+                      href="/customer/customer-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -620,68 +626,103 @@ const CustomerDashboard = () => {
             >
               <div className={dashboard["secondary--container"]}>
                 <div
-                  class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
+                  class={[dashboard["grid"], dashboard["grid--1x3"]].join(" ")}
                 >
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#request"></use>
-                          </svg>
-                        </span>
+                   <div
+                                     class={[
+                                       dashboard["card--count"],
+                                       dashboard["card--primary"],
+                                     ].join(" ")}
+                                   >
+                                     <div class={dashboard["card_body"]}>
+                                       <div class={dashboard["card_button_and_icon"]}>
+                                         <span class={dashboard["icon-container"]}>
+                                           <svg
+                                             class={[
+                                               dashboard["icon--big"],
+                                               dashboard["icon--primary"],
+                                             ].join(" ")}
+                                           >
+                                             <use href="../images/sprite.svg#request"></use>
+                                           </svg>
+                                         </span>
+                 
+                                         <div>
+                                           {"Total Deliveries Made: "}
+                                            <p
+                                             style={{
+                                               color: "#018965",
+                                               fontSize: "2.5rem",
+                                               fontWeight: "bold",
+                                             }}
+                                           >
+                                           {customerDeliveryRequests.length}
+                                           </p>
+                                         </div>
+                                       </div>
+                                     </div>
+                                   </div>
+                 
+                                   <div
+                                     class={[
+                                       dashboard["card--count"],
+                                       dashboard["card--primary"],
+                                     ].join(" ")}
+                                   >
+                                     <div class={dashboard["card_body"]}>
+                                       <div class={dashboard["card_button_and_icon"]}>
+                                         <span class={dashboard["icon-container"]}>
+                                           <svg
+                                             class={[
+                                               dashboard["icon--big"],
+                                               dashboard["icon--primary"],
+                                             ].join(" ")}
+                                           >
+                                             <use href="../images/sprite.svg#request-approve"></use>
+                                           </svg>
+                                         </span>
+                 
+                                         <div>
+                                           {"Delivered: "}
+                                           <p
+                                             style={{
+                                               color: "#018965",
+                                               fontSize: "2.5rem",
+                                               fontWeight: "bold",
+                                             }}
+                                           >
+                                           {customerDeliveredDelivery.length}
+                                           </p>
+                                         </div>
+                                       </div>
+                                     </div>
+                                   </div>
 
-                        <div>
-                          {"New Delivery " + 0}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div
-                    class={[
-                      dashboard["card--count"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card_button_and_icon"]}>
-                        <span class={dashboard["icon-container"]}>
-                          <svg
-                            class={[
-                              dashboard["icon--big"],
-                              dashboard["icon--primary"],
-                            ].join(" ")}
-                          >
-                            <use href="../images/sprite.svg#request-approve"></use>
-                          </svg>
-                        </span>
-
-                        <div>
-                          {"Total Delivery " + 0}
-                          <p
-                            style={{
-                              color: "#018965",
-                              fontSize: "1.9rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            {}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                     <div
+                                      class={[
+                                        dashboard["card--add"],
+                                        dashboard["card--primary"],
+                                      ].join(" ")}
+                                    >
+                                      <div class={dashboard["card_body"]}>
+                                        <div class={dashboard["card--small-head"]}>
+                                          View Feedback
+                                        </div>
+                  
+                                        <button
+                                          onClick={navigateToFeedback}
+                                          className={[
+                                            dashboard["btn"],
+                                            dashboard["btn--block"],
+                                            dashboard["btn--secondary"],
+                                          ].join(" ")}
+                                        >
+                                          {" "}
+                                          View Feedback
+                                        </button>
+                                      </div>
+                                    </div>
                 </div>
 
                 {/* <div class={[dashboard['card--count'], dashboard['card--primary']].join(' ')}>
@@ -757,7 +798,7 @@ const CustomerDashboard = () => {
                         className={[
                           dashboard["btn"],
                           dashboard["btn--block"],
-                          dashboard["btn--accent"],
+                          dashboard["btn--primary"],
                         ].join(" ")}
                       >
                         {" "}

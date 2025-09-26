@@ -10,7 +10,7 @@ api.interceptors.response.use(
     //   localStorage.removeItem("token");
     //   window.location.href = "/school/login";
     // }
-    // return Promise.reject(err);
+   return Promise.reject(err);
   }
 );
 

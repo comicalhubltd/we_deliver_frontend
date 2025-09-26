@@ -9,52 +9,33 @@ import {
 } from "recharts";
 import dashboard from "../style/dashboard/CustomerDashboard.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getClassCountSpecificJSS,
-  getClassCountSpecificSSS,
-  getClassCountSpecificPRI,
- 
-} from "../../redux/reducer/deliveryRequestSlice";
+import { getCountDelivery, getCountPending, getCountDelivered} from "../../redux/reducer/deliveryRequestSlice";
+
+
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {
-  maleStudentCount,
-  femaleStudentCount,
-} from "../../redux/reducer/driverSlice";
 
-import {
-  getAllSchoolCount,
-  getAllStudentCount,
-  getAllTeachersCount,
-  getAllStudentCountMale,
-  getAllStudentCountFemale,
-  getAllClassCountJss,
-  getAllClassCountPri,
-  getAllClassCountSss,
-  getAllClassCountJssTeacher,
-  getAllClassCountPriTeachers,
-  getAllClassCountSssTeachers,
-} from "../../redux/reducer/customerSlice";
+import { getVehicleCount } from "../../redux/reducer/vehicleSlice";
+import { allDriverCount } from "../../redux/reducer/driverSlice";
+import { getallCustomerCount } from "../../redux/reducer/customerSlice";
+
 
 const AdminDemographicsCharts = () => {
-  const schoolState = useSelector((state) => state.schools);
-  const {
-    allSchoolCount,
-    allStudentCount,
-    allTeachersCount,
-    allStudentCountMale,
-    allStudentCountFamale,
-    allClassJssCount,
-    allClassSssCount,
-    allClassPriCount,
-    allClassTeachersPriCount,
-    allClassTeachersJssCount,
-    allClassTeachersSssCount,
+ 
+   const deliveryState = useSelector((state) => state.deliveryRequests);
+   const {   countDelivery, countPending, countDelivered ,  fetchingStatus } = deliveryState;
 
-    fetchingStatus,
-  } = schoolState;
 
-  const dispatch = useDispatch();
+   const driverState = useSelector((state) => state.drivers);
+   const { driversCount  } = driverState;
+
+   const customerState = useSelector((state) => state.customers);
+   const { allCustomerCount  } = customerState;
+
+   const vehicleState = useSelector((state) => state.vehicles);
+   const {  vehicleCount  } = vehicleState;
+   
+   const dispatch = useDispatch();
 
   useEffect(() => {
     if (fetchingStatus === "idle") {
@@ -63,20 +44,14 @@ const AdminDemographicsCharts = () => {
   }, []);
 
   const fetchData = () => {
-    dispatch(getAllStudentCount());
-    dispatch(getAllSchoolCount());
-    dispatch(getAllTeachersCount());
+    dispatch(getVehicleCount());
+    dispatch(allDriverCount());
+    dispatch(getallCustomerCount());
+    
+    dispatch(getCountDelivery());
+    dispatch(getCountPending());
+    dispatch(getCountDelivered());
 
-    dispatch(getAllStudentCountMale());
-    dispatch(getAllStudentCountFemale());
-
-    dispatch(getAllClassCountJss());
-    dispatch(getAllClassCountPri());
-    dispatch(getAllClassCountSss());
-
-    dispatch(getAllClassCountJssTeacher());
-    dispatch(getAllClassCountPriTeachers());
-    dispatch(getAllClassCountSssTeachers());
   };
 
   const chartStyle = {
@@ -173,27 +148,23 @@ const AdminDemographicsCharts = () => {
     },
   };
   // Sample data for students by gender
-  const studentGenderData = [
-    { name: "Female Students", value: allStudentCountFamale, color: "#007CC3" },
-    { name: "Male Students", value: allStudentCountMale, color: "#00529B" },
+  const driversAndVehicles = [
+    { name: "Drivers", value: driversCount, color: "#018965" },
+    { name: "Vehicles", value: vehicleCount, color: "#67bd50" },
   ];
 
   // Sample data for teachers
-  const teacherData = [
-    {
-      name: "Primary Teachers",
-      value: allClassTeachersPriCount,
-      color: "#00008B",
-    },
-    { name: "JSS Teachers", value: allClassTeachersJssCount, color: "#1F75FE" },
-    { name: "SSS Teachers", value: allClassTeachersSssCount, color: "#74BBFB" },
+  const customerAndDelivery = [
+  
+    { name: "Total Customers", value: allCustomerCount, color: "#12ABA5" },
+    { name: "Total Delivery", value: countDelivery, color: "#36e2a0ff" },
   ];
 
   // Sample data for classes
-  const classData = [
-    { name: "Primary Classes", value: allClassPriCount, color: "#7D77DE" },
-    { name: "JSS Classes", value: allClassJssCount, color: "#013375" },
-    { name: "SSS Classes", value: allClassSssCount, color: "#0167AD" },
+  const pendingAndDeliveredAndDelivery = [
+    { name: "Total Pending", value: countPending, color: "#028766" },
+    { name: "Total Delivery", value: countDelivery, color: "#67bd50" },
+    { name: "Total Delivered", value: countDelivered, color: "#0cff86ff" },
   ];
 
   const renderCustomLabel = ({
@@ -227,13 +198,12 @@ const AdminDemographicsCharts = () => {
   return (
     <div style={chartStyle.container}>
       <div class={[dashboard["grid"], dashboard["grid--1x3"]].join(" ")}>
-        {/* Student Gender Distribution */}
+
         <div style={chartStyle.chartCard}>
-          <h2 style={chartStyle.chartTitle}>Student Gender Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={studentGenderData}
+                data={driversAndVehicles}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -243,29 +213,22 @@ const AdminDemographicsCharts = () => {
                 dataKey="value"
                 fontFamily="Roboto"
               >
-                {studentGenderData.map((entry, index) => (
+                {driversAndVehicles.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value) => [value, "Students"]} />
+              <Tooltip formatter={(value) => [value, ""]} />
               <Legend wrapperStyle={legendStyle} />
             </PieChart>
           </ResponsiveContainer>
-          <div style={chartStyle.chartTotal}>
-            <p>
-              Total Students:{" "}
-              {studentGenderData.reduce((sum, item) => sum + item.value, 0)}
-            </p>
-          </div>
         </div>
 
-        {/* Teacher Distribution */}
+  
         <div style={chartStyle.chartCard}>
-          <h2 style={chartStyle.chartTitle}>Teacher Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={teacherData}
+                data={customerAndDelivery}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -274,29 +237,23 @@ const AdminDemographicsCharts = () => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {teacherData.map((entry, index) => (
+                {customerAndDelivery.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value) => [value, "Staff"]} />
+              <Tooltip formatter={(value) => [value, ""]} />
               <Legend wrapperStyle={legendStyle} />
             </PieChart>
           </ResponsiveContainer>
-          <div style={chartStyle.chartTotal}>
-            <p>
-              Total Staff:{" "}
-              {teacherData.reduce((sum, item) => sum + item.value, 0)}
-            </p>
-          </div>
+ 
         </div>
 
-        {/* Class Distribution */}
+        {/* Delivery Distribution */}
         <div style={chartStyle.chartCard}>
-          <h2 style={chartStyle.chartTitle}>Class Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={classData}
+                data={pendingAndDeliveredAndDelivery}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -305,47 +262,42 @@ const AdminDemographicsCharts = () => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {classData.map((entry, index) => (
+                {pendingAndDeliveredAndDelivery.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value) => [value, "Classes"]} />
+              <Tooltip formatter={(value) => [value, ""]} />
               <Legend wrapperStyle={legendStyle} />
             </PieChart>
           </ResponsiveContainer>
-          <div style={chartStyle.chartTotal}>
-            <p>
-              Total Classes:{" "}
-              {classData.reduce((sum, item) => sum + item.value, 0)}
-            </p>
-          </div>
+  
         </div>
       </div>
 
-      {/* Summary Statistics */}
+      {/* Summary Statistics
       <div style={chartStyle.summaryCard}>
         <h2 style={chartStyle.summaryTitle}>School Summary</h2>
         <div style={chartStyle.summaryGrid}>
           <div style={summaryStyles.students}>
             <h3 style={chartStyle.summaryItemTitle}>Total Students</h3>
             <p style={chartStyle.summaryItemValue}>
-              {studentGenderData.reduce((sum, item) => sum + item.value, 0)}
+              {driversAndVehicles.reduce((sum, item) => sum + item.value, 0)}
             </p>
           </div>
           <div style={summaryStyles.staff}>
             <h3 style={chartStyle.summaryItemTitle}>Total Staff</h3>
             <p style={chartStyle.summaryItemValue}>
-              {teacherData.reduce((sum, item) => sum + item.value, 0)}
+              {customerAndDelivery.reduce((sum, item) => sum + item.value, 0)}
             </p>
           </div>
           <div style={summaryStyles.classes}>
             <h3 style={chartStyle.summaryItemTitle}>Total Classes</h3>
             <p style={chartStyle.summaryItemValue}>
-              {classData.reduce((sum, item) => sum + item.value, 0)}
+              {pendingAndDeliveredAndDelivery.reduce((sum, item) => sum + item.value, 0)}
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

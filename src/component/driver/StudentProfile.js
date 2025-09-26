@@ -143,11 +143,11 @@ const StudentProfile = () => {
   const { id, className } = useParams();
   const [loading, setIsLoading] = useState(true);
 
-  const authenticated = false;
+  
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/school/login");
-    localStorage.setItem("authenticated", JSON.stringify(authenticated));
+    navigate("/admin/login");
+    
   };
 
   const [state, setState] = useState({
