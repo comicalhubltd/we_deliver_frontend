@@ -22,6 +22,21 @@ export const saveVehicle = createAsyncThunk(
 
 
 
+export const toggleVehicleStatus = createAsyncThunk(
+  'vehicle/toggleVehicleStatus',
+  async (vehicleId,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.put(BASE_URL + `/toggle-vehicle-status/${vehicleId}`, {}, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+
 
 export const getVehicles = createAsyncThunk(
   'vehicles/getVehicles',
@@ -29,6 +44,21 @@ export const getVehicles = createAsyncThunk(
     try {
       const token = localStorage.getItem('token');
       const response = await api.get(BASE_URL + `/get-all`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+
+export const getVehiclesByDriver = createAsyncThunk(
+  'vehicles/getVehiclesByDriver',
+  async (_,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.get(BASE_URL + `/get-driver-vehicles`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -103,6 +133,38 @@ const vehicleSlice = createSlice({
                                 state.vehicles = action.payload;
                               })
                               .addCase(getVehicles.rejected, (state) => {
+                                state.fetchingStatus = 'failed';
+                              })
+
+
+
+                               .addCase(toggleVehicleStatus.pending, (state) => {
+                                state.fetchingStatus = 'loading';
+                              })
+                              .addCase(toggleVehicleStatus.fulfilled, (state, action) => {
+                                const index = state.vehicles.findIndex(vehicle => vehicle.id === action.payload.vehicleResponseDto.id);
+                              if (index !== -1) {
+                                // Replace the old user object with the updated one
+                                state.vehicles[index] = action.payload.vehicleResponseDto;
+                              }
+                                state.fetchingStatus = 'succeeded';
+                          
+                              })
+                              .addCase(toggleVehicleStatus.rejected, (state) => {
+                                state.fetchingStatus = 'failed';
+                              })
+
+
+
+
+                              .addCase(getVehiclesByDriver.pending, (state) => {
+                                state.fetchingStatus = 'loading';
+                              })
+                              .addCase(getVehiclesByDriver.fulfilled, (state, action) => {
+                                state.fetchingStatus = 'succeeded';
+                                state.vehicles = action.payload;
+                              })
+                              .addCase(getVehiclesByDriver.rejected, (state) => {
                                 state.fetchingStatus = 'failed';
                               })
 

@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CustomerRegistration from './component/customer/CustomerRegistration';
 import CustomerDashboard from './component/dashboards/CustomerDashboard';
-import AddStudent from './component/driver/AddStudent';
-import PrivateRoute from './component/routing/PrivateRoute';
 import AddDeliveryRequest from './component/DeliveryRequest/AddDeliveryRequest';
 import OnTransit from './component/DeliveryRequest/OnTransit';
+import DriverProfile from './component/driver/DriverProfile';
 import AddRequestToTransit from './component/admin/AddRequestToTransit';
 import Delivered from './component/DeliveryRequest/Delivered';
 import AcceptRequest from './component/newRequest/AcceptRequest';
@@ -16,18 +15,14 @@ import AdminDashboard from './component/dashboards/AdminDashboard';
 import DriverDashboard from './component/dashboards/DriverDashboard';
 import PasswordRequest from './component/auth/PasswordRequest';
 import ResetPassword from './component/auth/ResetPassword';
-import VerifierPage from './component/customer/VerifierPage';
 import NavBar from './component/Chunks/NavBar';
 import PayUS from './component/subscription/PayUs';
 import Payments from './component/subscription/Payments';
-import StudentProfile from './component/driver/StudentProfile';
 import CustomerProfile from './component/customer/CustomerProfile';
 import Services from './component/home/Services';
 import ContactUs from './component/home/ContactUs';
 import AboutUs from './component/home/AboutUs';
 import StudentResetPassword from './component/driver/StudentResetPassword';
-import AdminProfile from './component/admin/AdminProfile';
-import Loading from './component/Chunks/loading';
 import DriverRegistration from './component/driver/DriverRegistration';
 import LoginAdmin from './component/auth/LoginAdmin';
 import LoginCustomer from './component/auth/LoginCustomer';
@@ -55,6 +50,15 @@ import UpdateDelivery from './component/DeliveryRequest/UpdateDelivery';
 import ViewVehicles from './component/admin/ViewVehicles';
 import CustomerViewFeedback from './component/DeliveryRequest/CustomerViewFeedback';
 import FeedbackDescription from './component/DeliveryRequest/FeedbackDescription';
+import DriverDetails from './component/driver/DriverDetails';
+import CustomerDetails from './component/customer/CustomerDetails';
+import UpdateCustomer from './component/customer/UpdateCustomer';
+import UpdateDriver from './component/driver/UpdateDriver';
+import DriverLocationIdentifier from './component/location/DriverLocationFinder';
+import DriverMovements from './component/driver/DriverMovements';
+import ViewDriverVehicle from './component/driver/ViewDriverVehicle';
+import AdminLocationIdentifier from './component/location/AdminLocationView';
+
 
 function App() {
 
@@ -64,7 +68,9 @@ function App() {
     <Router>
     <Routes>
      
-        
+
+     {/*Location Releted*/}
+        <Route exact path='/location' element={<AdminLocationIdentifier/>}/>
            {/*Delivery Request Releted*/}
         
          <Route exact path='/delivery/customer-view-all-delivery'  element={ <CustomerViewAllRequest/> }/>
@@ -104,14 +110,23 @@ function App() {
               <Route exact path='/delivery/awaiting-transit'  element={ <AwaitingTransit/> }/>
               <Route exact path='/delivery/arrived'  element={ <Arrived/> }/>
               <Route exact path='/delivery/rejected'  element={ <Rejected/> }/>
+
+               {/*vehicle Releted*/}
                
-              <Route exact path='/vehicle/view-vehicles'  element={ <ViewVehicles/> }/>
+              <Route exact path='/vehicle/view-driver-vehicle'  element={ <ViewDriverVehicle/> }/>
+               <Route exact path='/vehicle/view-vehicles'  element={ <ViewVehicles/> }/>
 
                 {/*customer reletated Releted*/}
           <Route exact path='/customer/view-customers' element={ <ViewAllCustomers/> }/>
+           <Route exact path='/customer/customer-details/:id'  element={ <CustomerDetails/> }/>
+           <Route exact path='/customer/customer-update/:id'  element={ <UpdateCustomer/> }/>
               {/*driver reletated Releted*/}
           <Route exact path='/driver/view-drivers' element={ <ViewAllDrivers/> }/>
           <Route exact path='/driver/assign-vehicle' element={ <AssignVehicle/> }/>
+           <Route exact path='/driver/driver-profile' element={ <DriverProfile/> }/>
+         <Route exact path='/driver/driver-details/:id' element={ <DriverDetails/> }/>
+           <Route exact path='/driver/driver-update/:id'  element={ <UpdateDriver/> }/>
+           <Route exact path='/driver/driver-movements'  element={ <DriverMovements/> }/>
         
          {/*vehicle Releted*/}
        <Route exact path='/driver/add-vehicle/:id' element={ <AddVehicle/> }/>
@@ -125,7 +140,6 @@ function App() {
         <Route exact path='/driver/login'  element={<LoginDriver/>}/>
         <Route exact path='/customer/login'  element={<LoginCustomer/>}/>
         <Route exact path='/admin/login'  element={<LoginAdmin/>}/>
-        <Route exact path='/school/verify-account'  element={ <VerifierPage/> }/>
            {/*Website*/}
         <Route exact path='/' element={<Home/>}/>
         <Route exact path='/services' element={<Services/>}/>

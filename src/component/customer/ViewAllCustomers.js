@@ -40,6 +40,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { deleteCustomer } from "../../redux/reducer/customerSlice";
 
 import {
   Drawer,
@@ -132,17 +133,17 @@ const ViewAllCustomers = () => {
  const handleDelete = async (id) => {
     // Filter out the deleted row
     rows.filter((row) => row.id !== id);
-    // const result = await dispatch(deleteSchool(id)).unwrap();
+    dispatch(deleteCustomer(id));
   };
 
   const handleEdit = (id) => {
     // Implement edit functionality
-    navigate(`/delivery/edit/${id}`);
+    navigate(`/customer/customer-update/${id}`);
   };
 
   const handleViewDetails = (id) => {
     // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+    navigate(`/customer/customer-details/${id}`);
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -333,11 +334,18 @@ const ViewAllCustomers = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/home"
+                      <a
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -541,7 +549,7 @@ const ViewAllCustomers = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span

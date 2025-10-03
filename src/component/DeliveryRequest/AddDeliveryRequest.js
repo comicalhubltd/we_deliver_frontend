@@ -51,13 +51,12 @@ const Card = styled(MuiCard)(({ theme }) => ({
   flexDirection: "column",
   alignSelf: "center",
   width: "100%",
-  overflowY: "auto", // Enables vertical scrolling
+  overflowY: "auto",
   "&::-webkit-scrollbar": {
     display: "none",
   },
-  // Hide scrollbar for Firefox
-  scrollbarWidth: "none", // Firefox
-  msOverflowStyle: "none", // IE and Edge
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
   borderRadius: "10px",
   padding: theme.spacing(4),
   gap: theme.spacing(0),
@@ -130,108 +129,68 @@ const AddDeliveryRequest = () => {
     setAnchorProfile(null);
   };
 
-  // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
+  // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC
 
    const deliveryRegistrationSchema = object({
-
-
-
-
-    // from
      from: object({
-    
-     
      state: string()
             .max(45, "State must not exceed 30 characters")
             .required("State is required"),
-    
      lga: string()
             .max(30, "L.G.A must not exceed 30 characters")
             .required("L.G.A is required"),
-
      city: string()
         .max(42, "City must not exceed 42 characters")
         .required("City is required"),
-
-    
-
      street: string()
         .max(42, "Street must not exceed 42 characters")
         .required("Street is required"),
-
-
- 
-
        }),
 
-         // to
      to: object({
-     
       state: string()
              .max(45, "State must not exceed 30 characters")
              .required("State is required"),
-     
       lga: string()
              .max(30, "L.G.A must not exceed 30 characters")
              .required("L.G.A is required"),
-
      city: string()
         .max(42, "City must not exceed 42 characters")
         .required("City is required"),
-
-    
-
      street: string()
         .max(42, "Street must not exceed 42 characters")
         .required("Street is required"),
-
-
- 
     }),
 
-
-    // item
  item: object({
-      
-   
     weight: string()
       .max(5, "Weight must not exceed 5 characters")
       .required("weight is required"),
-        
     type: string()
     .max(15, "Type must not exceed 15 characters"),
-
     description: string()
     .max(200, "Description must not exceed 200 characters"),
-
      size: object({ 
-   
      unit: string()
       .max(5, "Unit must not exceed 5 characters")
       .required("Unit is required"),
-
      width:  number()
       .positive("Must be positive number")
       .min(0.01, "Width must be greater than 0")
       .required("Width is required"),
-
       height: number()
       .positive("Must be positive number")
       .min(0.01, "Height must be greater than 0")
       .required("Height is required"),
-
       length: number()
       .positive("Must be positive number")
       .min(0.01, "Lenght must be greater than 0")
       .required("Length is required"),
-       
       }),
-      
      value: number()
-    .min(0.01, "Lenght must be greater than 0")
+    .min(0.01, "Value must be greater than 0")
     .required("Value Name is required")
     }),
-
 
     pickerName: string()
       .max(30, "Picker Name must not exceed 30 characters")
@@ -242,16 +201,8 @@ const AddDeliveryRequest = () => {
           .min(11, "Phone number should not be less than 11")
           .required("Phone Number is required"),
 
-
-   deliveryFee: number()
-            .min(0.01, "Delivery Fee must be greater than 0")
-            .positive("Fee Must be positive number")
-            .required("Delivery Fee is required"),
-
     distancekm: number()
             .required("Distance is required"),
-
-  
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -259,7 +210,7 @@ const AddDeliveryRequest = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 1000); // Delay before showing content
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -283,26 +234,20 @@ const AddDeliveryRequest = () => {
     5: "Picker Contact"
   }
 
-  
   const logout = () => {
     localStorage.removeItem("token");
    navigate("/customer/login");
-    
   };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      return; // Prevent closing if the user clicks away
+      return;
     }
-    setOpen(false); // Close the Snackbar
+    setOpen(false);
   };
 
-
  const initialValues = {
-                
-
                     item: {
-                  
                     weight: "",
                     type: "",
                     description: "",
@@ -313,7 +258,6 @@ const AddDeliveryRequest = () => {
                     length: 0
                     },
                     value: 0
-
                     },
           
                     from: {
@@ -333,9 +277,68 @@ const AddDeliveryRequest = () => {
                     pickerName: "",
                     pickerPhone: "",
                     distancekm: 0.0,
-                    deliveryFee: 2
+                    payment: {
+                      deliveryFee: 0,
+                      insurance: 0,
+                      vat: 0,
+                      totalAmount: 0,
+                      status: "pending"
+                    }
                   };
- // Calculate distance when both states are selected
+
+  // Function to convert measurements to meters
+  const convertToMeters = (value, unit) => {
+    const conversions = {
+      'Inch': 0.0254,
+      'Feet': 0.3048,
+      'CM': 0.01
+    };
+    return value * (conversions[unit] || 1);
+  };
+
+  // Function to calculate delivery fees
+  const calculateDeliveryFees = (values) => {
+    const itemValue = parseFloat(values.item?.value) || 0;
+    const weight = parseFloat(values.item?.weight) || 0;
+    const distance = distanceInfo?.distance ? parseFloat(distanceInfo.distance) : 0;
+    const width = parseFloat(values.item?.size?.width) || 0;
+    const length = parseFloat(values.item?.size?.length) || 0;
+    const unit = values.item?.size?.unit || '';
+
+    let deliveryFee = 0;
+
+    // Weight charge (1% per kg)
+    const weightCharge = (Math.ceil(weight) / 100) * itemValue;
+    deliveryFee += weightCharge;
+
+    // Distance charge (0.5% per 100km)
+    const distanceCharge = (Math.ceil(distance / 100) * 0.5 / 100) * itemValue;
+    deliveryFee += distanceCharge;
+
+    // Size charge (1% per square meter)
+    const widthInMeters = convertToMeters(width, unit);
+    const lengthInMeters = convertToMeters(length, unit);
+    const squareMeters = widthInMeters * lengthInMeters;
+    const sizeCharge = (Math.ceil(squareMeters) / 100) * itemValue;
+    deliveryFee += sizeCharge;
+
+    // Insurance (2% of value)
+    const insurance = (2 / 100) * itemValue;
+
+    // VAT (assumed 7.5% of delivery fee)
+    const vat = (7.5 / 100) * deliveryFee;
+
+    // Total amount
+    const totalAmount = deliveryFee + insurance + vat;
+
+    return {
+      deliveryFee: deliveryFee.toFixed(2),
+      insurance: insurance.toFixed(2),
+      vat: vat.toFixed(2),
+      totalAmount: totalAmount.toFixed(2)
+    };
+  };
+
   const calculateDistance = async () => {
     if (selectedFromState && selectedToState && LngAndLatStateData) {
       const fromStateData = LngAndLatStateData.find(state => state.name === selectedFromState);
@@ -361,17 +364,14 @@ const AddDeliveryRequest = () => {
     }
   };
 
-
-
    useEffect(() => {
     calculateDistance();
   }, [selectedFromState, selectedToState]);
 
-
    const handleFromStateChange = async (value, setFieldValue) => {
     setSelectedFromState(value);
     setFieldValue('from.state', value);
-    setFieldValue("from.lga", ""); // reset LGA when state changes
+    setFieldValue("from.lga", "");
     setFieldValue('calculatedDistance', '');
     setFieldValue('estimatedDuration', '');
   };
@@ -379,28 +379,38 @@ const AddDeliveryRequest = () => {
   const handleToStateChange = async (value, setFieldValue) => {
     setSelectedToState(value);
     setFieldValue('to.state', value);
-    setFieldValue("to.lga", ""); // reset LGA when state changes
+    setFieldValue("to.lga", "");
     setFieldValue('calculatedDistance', '');
     setFieldValue('estimatedDuration', '');
   };
 
   const handleFormSubmit = async (values, { resetForm }) => {
-    console.log(values);
+    // Calculate fees before submission
+    const fees = calculateDeliveryFees(values);
+    const submissionData = {
+      ...values,
+      distancekm: distanceInfo?.distance || 0,
+      payment: {
+        ...fees,
+        status: "pending"
+      }
+    };
+
+    console.log(submissionData);
 
     try {
-      const result = await dispatch(saveDeliveryRequest(values)).unwrap();
+      const result = await dispatch(saveDeliveryRequest(submissionData)).unwrap();
       console.log(result);
       setAlertType("success");
       setMessage(result.message);
     } catch (error) {
       console.log(error);
       setAlertType("error");
-
       setMessage(error.message);
     }
 
     setOpen(true);
-    resetForm(); // This will reset the forto the initial values
+    resetForm();
   };
 
   return (
@@ -408,7 +418,6 @@ const AddDeliveryRequest = () => {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-        {/* Navbar */}
         <AppBar
           position="fixed"
           sx={{ zIndex: 2, background: "white", color: "#018965" }}
@@ -423,19 +432,17 @@ const AddDeliveryRequest = () => {
             )}
 
             <div>
-              {/** Profile Setup */}
-
               <IconButton
                 onClick={profilePopup}
                 sx={{
-                  backgroundColor: "#018965", // Custom background
+                  backgroundColor: "#018965",
                   "&:hover": {
                     backgroundColor: "#03684f",
                   },
                 }}
               >
                 <PersonOutlineOutlinedIcon
-                  sx={{ color: "white", fontSize: 25 }} // fontSize in px
+                  sx={{ color: "white", fontSize: 25 }}
                 />
               </IconButton>
 
@@ -472,7 +479,6 @@ const AddDeliveryRequest = () => {
           </Toolbar>
         </AppBar>
 
-        {/* Drawer */}
         <Drawer
           variant={isLargeScreen ? "persistent" : "temporary"}
           open={isLargeScreen || isDrawerOpen}
@@ -485,11 +491,10 @@ const AddDeliveryRequest = () => {
               boxSizing: "border-box",
             },
             "& .MuiBackdrop-root": {
-              backgroundColor: "rgba(157, 152, 202, 0.3)", // Transparent backdrop
+              backgroundColor: "rgba(157, 152, 202, 0.3)",
             },
           }}
         >
-          {/* Drawer Header */}
           <Box
             sx={{
               display: "flex",
@@ -499,7 +504,6 @@ const AddDeliveryRequest = () => {
               borderBottom: "1px solid #ddd",
             }}
           >
-            {/* Logo in the center */}
             <Box sx={{ textAlign: "center", flexGrow: 1 }}>
               <a
                 className={[navbar["logo__link"], navbar["logo"]].join(" ")}
@@ -509,7 +513,6 @@ const AddDeliveryRequest = () => {
               </a>
             </Box>
 
-            {/* Close Button */}
             {!isLargeScreen && (
               <IconButton onClick={toggleDrawer}>
                 <Cancel sx={{ color: "#018965", fontSize: 30 }} />
@@ -517,10 +520,7 @@ const AddDeliveryRequest = () => {
             )}
           </Box>
 
-          {/* Drawer Content */}
-                  <List>
-                {/* Dashboard Navbar Content */}
-                {/* Dashboard Navbar Content */}
+          <List>
             <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
@@ -572,19 +572,9 @@ const AddDeliveryRequest = () => {
                     >
                       Home
                     </a>
-                 
                   </div>
                 </div>
 
-        
-          
-
-              
-                {/* Delivery Request  Navbar Content */}
-                
-                {/* Delivery Request  Navbar Content */}
-              
-                {/* Delivery Request  Navbar Content */}
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-4")}
@@ -627,53 +617,36 @@ const AddDeliveryRequest = () => {
                     </span>
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
-
                    <a
                       href="/delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
                     </a>
-
-
-                    
                      <a
                       href="/delivery/customer-awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
-
-
                     <a
                       href="/delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
                     </a>
-
-
-
-
-
                      <a
                       href="/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
-
-
-
-                    
                     <a
                       href="/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
-
-
                     <a
                       href="/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
@@ -683,8 +656,6 @@ const AddDeliveryRequest = () => {
                   </div>
                 </div>
 
-
-                {/* Location Navbar Content */}
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-6")}
@@ -737,11 +708,6 @@ const AddDeliveryRequest = () => {
                   </div>
                 </div>
 
-
-                
-              
-
-                {/* Profile Navbar Content */}
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-9")}
@@ -802,7 +768,6 @@ const AddDeliveryRequest = () => {
               </List>
         </Drawer>
 
-        {/* Main Content */}
         <Box
           component="main"
           sx={{
@@ -828,43 +793,18 @@ const AddDeliveryRequest = () => {
                     handleBlur,
                     setFieldValue
                   }) => { 
-                    
-                  // const handleFromStateChange = (event) => {
-                  //   setFieldValue("from.state", event.target.value);
-                  //   setFieldValue("from.lga", ""); // reset LGA when state changes
-                  // };
-
-
-                      
-                  // const handleToStateChange = (event) => {
-                  //   setFieldValue("to.state", event.target.value);
-                  //   setFieldValue("to.lga", ""); // reset LGA when state changes
-                  // };
-
-
-                 
-                
-                
-         
                     return ( 
                     <Card>
-                      {/*Card Image*/}
-          
                       <section class={style.container__brand}>
                         <img src="/images/logo.png" alt="Logo" />
                       </section>
           
-                      {/*Card Header*/}
                       <p className={style["form-header"]}>{headings[step]}</p>
           
           
                       {step === 1 && 
                       (
                         <>
-          
-                        {/* Text Fields*/}
-
-
                          <TextField
                         select
                         label="Type"
@@ -879,80 +819,42 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.type && errors.item?.type}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
-
-
                      >
-
                <MenuItem sx={{ fontSize: 18 }}  value={"Electronics"}>
                  Electronics
                </MenuItem>
-                      
                <MenuItem sx={{ fontSize: 18 }}  value={"Furniture"}>
                 Furniture
                </MenuItem>
-
                 <MenuItem sx={{ fontSize: 18 }}  value={"Percel"}>
                 Percel
                </MenuItem>
-
                 <MenuItem sx={{ fontSize: 18 }}  value={"Fragile Item"}>
                 Fragile Item
                </MenuItem>
-
                 <MenuItem sx={{ fontSize: 18 }}  value={"Medicine"}>
                 Medicine
                </MenuItem>
-
                  <MenuItem sx={{ fontSize: 18 }}  value={"Food"}>
                 Food
                </MenuItem>
-
-
                  <MenuItem sx={{ fontSize: 18 }}  value={"Other"}>
                 Other
                </MenuItem>
-                     
-                     
                </TextField>
                   
-                      <TextField
-                        label="Weight (KG)"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.weight}
-                        name="item.weight"
-                        error={touched.item?.weight && Boolean(errors.item?.weight)}
-                        helperText={touched.item?.weight && errors.item?.weight}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
-                          },
-                          input: {
-                            style: { fontSize: 18 }, // font size for input text
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
-                          },
-                        }}
-                      />
+                  
 
-                     
-                
-          
                           <TextField
-                                  
                                     label="Description"
                                     name="item.description"
                                     value={values.item?.description}
@@ -964,30 +866,20 @@ const AddDeliveryRequest = () => {
                                     helperText={touched.item?.description && errors.item?.description}
                                     fullWidth
                                     margin="normal"
-                      
                                      slotProps={{
                                       formHelperText: {
-                                        sx: { fontSize: 15 }, // Increase font size of helper text
+                                        sx: { fontSize: 15 },
                                       },
                                       input: {
-                                        style: { fontSize: 18 }, // font size for input text
+                                        style: { fontSize: 18 },
                                       },
                                       inputLabel: {
-                                        style: { fontSize: 16 }, // font size for label text
+                                        style: { fontSize: 16 },
                                       },
                                     }}
-                                  >
-                                   
-                                
-                                  
-                                  </TextField>
-          
-          
-        
-            {/* {  NEXT BUTTON } */}
-          
+                                  />
+
                       <button
-                       
                         onClick={() => setStep(2)}
                         className={[
                           style["btn"],
@@ -997,20 +889,12 @@ const AddDeliveryRequest = () => {
                       >
                         {"Next"}
                       </button>
-          
-          
                         </>
                       )}
           
-                      
-                       
                          {step === 2 && 
                       (
-
                           <>
-            
-          
-                      {/* STATE DROPDOWN */}
                       <TextField
                         select
                         label="State"
@@ -1022,16 +906,15 @@ const AddDeliveryRequest = () => {
                         helperText={touched.from?.state && errors.from?.state}
                         fullWidth
                         margin="normal"
-          
                          slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       >
@@ -1042,7 +925,6 @@ const AddDeliveryRequest = () => {
                         ))}
                       </TextField>
           
-                      {/* LGA DROPDOWN */}
                       <TextField
                         select
                         label="LGA"
@@ -1057,13 +939,13 @@ const AddDeliveryRequest = () => {
                         margin="normal"
                          slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       >
@@ -1074,10 +956,7 @@ const AddDeliveryRequest = () => {
                             </MenuItem>
                           ))}
                       </TextField>
-          
-          
-          
-          
+
                          <TextField
                         label="City"
                         variant="outlined"
@@ -1091,19 +970,17 @@ const AddDeliveryRequest = () => {
                         helperText={touched.from?.city && errors.from?.city}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       />   
-          
-          
-          
+
                          <TextField
                         label="Street"
                         variant="outlined"
@@ -1117,22 +994,18 @@ const AddDeliveryRequest = () => {
                         helperText={touched.from?.street && errors.from?.street}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       /> 
-          
-     
-                       {/* {  BACK BUTTON BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(1)}
                         className={[
                           style["btn"],
@@ -1142,13 +1015,8 @@ const AddDeliveryRequest = () => {
                       >
                         {"Back"}
                       </button>
-          
-          
-          
-            {/* {  NEXT BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(3)}
                         className={[
                           style["btn"],
@@ -1158,22 +1026,12 @@ const AddDeliveryRequest = () => {
                       >
                         {"Next"}
                       </button>
-          
                         </>
-                     
                       )}
-          
-
 
                       {step === 3 && 
                       (
-
                           <>
-                                                                                                                                                                                                                                                    
-                    
-          
-          
-                      {/* STATE DROPDOWN */}
                       <TextField
                         select
                         label="State"
@@ -1185,16 +1043,15 @@ const AddDeliveryRequest = () => {
                         helperText={touched.to?.state && errors.to?.state}
                         fullWidth
                         margin="normal"
-          
                          slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       >
@@ -1205,7 +1062,6 @@ const AddDeliveryRequest = () => {
                         ))}
                       </TextField>
           
-                      {/* LGA DROPDOWN */}
                       <TextField
                         select
                         label="LGA"
@@ -1220,13 +1076,13 @@ const AddDeliveryRequest = () => {
                         margin="normal"
                          slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       >
@@ -1237,10 +1093,7 @@ const AddDeliveryRequest = () => {
                             </MenuItem>
                           ))}
                       </TextField>
-          
-          
-          
-          
+
                          <TextField
                         label="City"
                         variant="outlined"
@@ -1254,19 +1107,17 @@ const AddDeliveryRequest = () => {
                         helperText={touched.to?.city && errors.to?.city}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       />   
-          
-          
-          
+
                          <TextField
                         label="Street"
                         variant="outlined"
@@ -1280,23 +1131,18 @@ const AddDeliveryRequest = () => {
                         helperText={touched.to?.street && errors.to?.street}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       /> 
-          
-                    
-          
-                       {/* {  BACK BUTTON BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(2)}
                         className={[
                           style["btn"],
@@ -1306,13 +1152,8 @@ const AddDeliveryRequest = () => {
                       >
                         {"Back"}
                       </button>
-          
-          
-          
-            {/* {  NEXT BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(4)}
                         className={[
                           style["btn"],
@@ -1322,19 +1163,26 @@ const AddDeliveryRequest = () => {
                       >
                         {"Next"}
                       </button>
-          
                         </>
-                      
                       )}
           
-                      
-                      
                        {step === 4 && 
                       (
-                     
                        <>
-            
-                     <TextField
+
+
+                       
+                            <div
+                             style={{
+                               width: "100%",
+                               display: "flex",
+                               justifyContent: "center",
+                             }}
+                           >
+
+                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
+
+                        <TextField
                         label="Price Value (N)"
                         variant="outlined"
                         fullWidth
@@ -1347,25 +1195,50 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.value && errors.item?.value}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
-
-
                      />
 
-            
-       
-                  
-          
-                        
-                       <TextField
+                    </FormControl>
+
+                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
+
+                          <TextField
+                        label="Weight (KG)"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.item?.weight}
+                        name="item.weight"
+                        error={touched.item?.weight && Boolean(errors.item?.weight)}
+                        helperText={touched.item?.weight && errors.item?.weight}
+                        slotProps={{
+                          formHelperText: {
+                            sx: { fontSize: 15 },
+                          },
+                          input: {
+                            style: { fontSize: 18 },
+                          },
+                          inputLabel: {
+                            style: { fontSize: 16 },
+                          },
+                        }}
+                      />
+                      
+                    </FormControl>
+
+                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
+
+                              <TextField
                         select
                         label="Unit"
                         variant="outlined"
@@ -1379,34 +1252,37 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.size?.unit && errors.item?.size?.unit}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
-
-
                      >
-
                <MenuItem sx={{ fontSize: 18 }}  value={"Inch"}>
                  Inch
                </MenuItem>
-                      
                <MenuItem sx={{ fontSize: 18 }}  value={"Feet"}>
                  Feet
                </MenuItem>
-
                 <MenuItem sx={{ fontSize: 18 }}  value={"CM"}>
                  CM
                </MenuItem>
-       
            </TextField>
+                      
+                    </FormControl>
 
+                           </div>
 
+                       
+                   
+
+                     
+
+               
 
                             <div
                              style={{
@@ -1415,9 +1291,7 @@ const AddDeliveryRequest = () => {
                                justifyContent: "center",
                              }}
                            >
-                            
                                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
                <TextField
                         label="Height"
                         variant="outlined"
@@ -1431,22 +1305,19 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.size?.height && errors.item?.size?.height}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       />              
-                                 
          </FormControl>
 
            <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
-
               <TextField
                         label="Width"
                         variant="outlined"
@@ -1460,22 +1331,19 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.size?.width && errors.item?.size?.width}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       />                
-                                 
          </FormControl>
 
            <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
-            
                           <TextField
                         label="Length"
                         variant="outlined"
@@ -1489,82 +1357,57 @@ const AddDeliveryRequest = () => {
                         helperText={touched.item?.size?.length && errors.item?.size?.length}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       />                 
-                                 
          </FormControl>
-
-
                            </div>
 
-            
-                     
-                     <TextField
-                        disabled
-                        label="Distance"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={(distanceInfo !== null && isCalculating === true  ) ? "Calculating..." : distanceInfo.distance + " km " + distanceInfo.duration + " Minutes "}
-                        name="item.distancekm"
-                        error={touched.distancekm && Boolean(errors.distancekm)}
-                        helperText={touched.distancekm && errors.distancekm}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
-                          },
-                          input: {
-                            style: { fontSize: 18 }, // font size for input text
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
-                          },
-                        }}
+                  <>
+                                    <div
+                                      style={{ whiteSpace: "normal" }}
+                                      class={dashboard["card--details"]}
+                                    >
+                                      {"Distance: " + (distanceInfo !== null && isCalculating === false ? distanceInfo.distance + " km (" + distanceInfo.duration + " Minutes)" : "Calculating...")}
+                                    </div>
 
+                                       <div
+                                      style={{ whiteSpace: "normal" }}
+                                      class={dashboard["card--details"]}
+                                    >
+                                      {"Delivery Fee: ₦" + calculateDeliveryFees(values).deliveryFee}
+                                    </div>
 
-                     />
-                     <TextField
-                        disabled
-                        label="Delivery Fee"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.deliveryFee}
-                        name="item.deliveryFee"
-                        error={touched.deliveryFee && Boolean(errors.deliveryFee)}
-                        helperText={touched.deliveryFee && errors.deliveryFee}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
-                          },
-                          input: {
-                            style: { fontSize: 18 }, // font size for input text
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
-                          },
-                        }}
+                                       <div
+                                      style={{ whiteSpace: "normal" }}
+                                      class={dashboard["card--details"]}
+                                    >
+                                      {"Insurance: ₦" + calculateDeliveryFees(values).insurance}
+                                    </div>
 
+                                <div
+                                      style={{ whiteSpace: "normal" }}
+                                      class={dashboard["card--details"]}
+                                    >
+                                      {"VAT: ₦" + calculateDeliveryFees(values).vat}
+                                    </div>
 
-                     />
+                                       <div
+                                      style={{ whiteSpace: "normal" }}
+                                      class={dashboard["card--details"]}
+                                    >
+                                      {"Total: ₦" + calculateDeliveryFees(values).totalAmount}
+                                    </div>
+                  </>
 
-             
-              {/* {  BACK BUTTON BUTTON } */}
-          
                       <button
-                       
                         onClick={() => setStep(3)}
                         className={[
                           style["btn"],
@@ -1574,13 +1417,8 @@ const AddDeliveryRequest = () => {
                       >
                         {"Back"}
                       </button>
-          
-          
-          
-            {/* {  NEXT BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(5)}
                         className={[
                           style["btn"],
@@ -1590,26 +1428,12 @@ const AddDeliveryRequest = () => {
                       >
                         {"Next"}
                       </button>
-          
                         </>
-                    
                       )}
-          
-                      
 
                         {step === 5 && 
                       (
-                     
-                         
                          <>
-                     
-          
-          
-          
-                       
-          
-                       
-          
                          <TextField
                         label="Picker Name"
                         variant="outlined"
@@ -1623,20 +1447,16 @@ const AddDeliveryRequest = () => {
                         helperText={touched.pickerName && errors.pickerName}
                         slotProps={{
                           formHelperText: {
-                            sx: { fontSize: 15 }, // Increase font size of helper text
+                            sx: { fontSize: 15 },
                           },
                           input: {
-                            style: { fontSize: 18 }, // font size for input text
+                            style: { fontSize: 18 },
                           },
                           inputLabel: {
-                            style: { fontSize: 16 }, // font size for label text
+                            style: { fontSize: 16 },
                           },
                         }}
                       /> 
-          
-                    
-
-
 
                          <TextField
                                     label="Picker Tel"
@@ -1651,23 +1471,18 @@ const AddDeliveryRequest = () => {
                                     helperText={touched.pickerPhone && errors.pickerPhone}
                                     slotProps={{
                                       formHelperText: {
-                                        sx: { fontSize: 15 }, // Increase font size of helper text
+                                        sx: { fontSize: 15 },
                                       },
                                       input: {
-                                        style: { fontSize: 18 }, // font size for input text
+                                        style: { fontSize: 18 },
                                       },
                                       inputLabel: {
-                                        style: { fontSize: 16 }, // font size for label text
+                                        style: { fontSize: 16 },
                                       },
                                     }}
                                   />
-          
-          
-                       
-                       {/* {  BACK BUTTON BUTTON } */}
-          
+
                       <button
-                       
                         onClick={() => setStep(4)}
                         className={[
                           style["btn"],
@@ -1678,9 +1493,6 @@ const AddDeliveryRequest = () => {
                         {"Back"}
                       </button>
             
-          
-                      {/* {  SUBMIT BUTTON BUTTON } */}
-                     
                                  <button
                                    disabled={isSubmitting}
                                    type="submit"
@@ -1693,17 +1505,8 @@ const AddDeliveryRequest = () => {
                                  >
                                    {isSubmitting ? "Submitting..." : "Add Delivery"}
                                  </button>
-          
                         </>
-
-                        
-                    
                       )}
-          
-          
-                     
-          
-          
                     </Card>
                   )}}
                 </Formik>
@@ -1711,28 +1514,27 @@ const AddDeliveryRequest = () => {
                 <div className={style.footer__brand}>
                   <img src="/images/logo.png" alt="" />
                   <p className={style.footer__copyright}>
-                    {" "}
                     (c) 2025 We Deliver, All Rights Reserved
                   </p>
                 </div>
           
                 <Snackbar
                   open={open}
-                  autoHideDuration={3000} // Automatically hide after 1 second
+                  autoHideDuration={3000}
                   onClose={handleClose}
-                  anchorOrigin={{ vertical: "center", horizontal: "center" }} // Position at the top center
+                  anchorOrigin={{ vertical: "center", horizontal: "center" }}
                 >
                   <div>
                     <Dialog
                       open={open}
                       onClose={handleClose}
                       BackdropProps={{
-                        sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" }, // Darker overlay
+                        sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" },
                       }}
                       sx={{
                         "& .MuiDialog-paper": {
                           width: "100%",
-                          borderRadius: "15px", // Optional: Rounded corners
+                          borderRadius: "15px",
                         },
                       }}
                     >
@@ -1806,25 +1608,24 @@ const AddDeliveryRequest = () => {
                 </Snackbar>
               </SignInContainer>
         </Box>
-        {/*This Area is for Snackbar*/}
 
         <Snackbar
           open={open}
-          autoHideDuration={3000} // Automatically hide after 1 second
+          autoHideDuration={3000}
           onClose={handleClose}
-          anchorOrigin={{ vertical: "center", horizontal: "center" }} // Position at the top center
+          anchorOrigin={{ vertical: "center", horizontal: "center" }}
         >
           <div>
             <Dialog
               open={open}
               onClose={handleClose}
               BackdropProps={{
-                sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" }, // Darker overlay
+                sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" },
               }}
               sx={{
                 "& .MuiDialog-paper": {
                   width: "100%",
-                  borderRadius: "15px", // Optional: Rounded corners
+                  borderRadius: "15px",
                 },
               }}
             >
@@ -1909,11 +1710,6 @@ const AddDeliveryRequest = () => {
 };
 
 export default AddDeliveryRequest;
-
-
-
-
-
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {

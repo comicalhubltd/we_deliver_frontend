@@ -128,7 +128,7 @@ const  DriverCustomerActionMenu = ({ row, onDelete, onEdit,  onView }) => {
              color: '#9a99ac',
                    }}
                       >
-                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.firstname + ' ' + row.surname + ' ' + row.lastname}?</p>
+                         <p  class={dashboard['alert-message']} >Are you sure you want to delete {row.profile?.firstname + ' ' + row.profile?.surname + ' ' + row.profile?.lastname}?</p>
                       </Typography>
                    
                    

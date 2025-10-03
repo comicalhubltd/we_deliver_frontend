@@ -19,14 +19,12 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllSession } from "../../redux/reducer/sessionSlice";
 import {
   getCustomerDeliveredDelivery, getCustomerAllDelivery
  
 } from "../../redux/reducer/deliveryRequestSlice";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
 import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
@@ -177,27 +175,6 @@ const CustomerDashboard = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleFormSubmit = async (values, { resetForm }) => {
-    //   console.log(values);
-    //    console.log("from inside the useeff" + rows)
-    // const selected = rows.forEach(r => r.current === true);
-    // console.log("from inside the effect " + selected);
-    // setInitialSelectedId(selected?.id ?? null);
-    try {
-      const resultAction = await dispatch(
-        setCurrentSession(values.selectedId)
-      ).unwrap();
-      setAlertType("success");
-      setMessage(resultAction.message);
-    } catch (error) {
-      setAlertType("error");
-      setMessage(error);
-    }
-
-    setOpen(true);
-    resetForm(); // This will reset the forto the initial values
   };
 
   return (
@@ -375,11 +352,18 @@ const CustomerDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
+                      <a
                       href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -416,7 +400,7 @@ const CustomerDashboard = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span
@@ -483,12 +467,7 @@ const CustomerDashboard = () => {
                     </a>
 
 
-                    <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Deliveries
-                    </a>
+                    
                   </div>
                 </div>
 

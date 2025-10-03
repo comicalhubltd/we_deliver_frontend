@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
 import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
@@ -33,7 +32,7 @@ import AdminDemographicsCharts from "../utility/AdminChart";
 import { getPendingDelivery,  getAwatingTransitDelivery } from "../../redux/reducer/deliveryRequestSlice";
 import { getallCustomerCount } from "../../redux/reducer/customerSlice";
 import { allDriverCount } from "../../redux/reducer/driverSlice";
-
+import AdminLocationIdentifier from "../location/AdminLocationView";
 // Import for dashboard Below
 
 import React from "react";
@@ -189,26 +188,6 @@ useEffect(() => {
     setPage(0);
   };
 
-  const handleFormSubmit = async (values, { resetForm }) => {
-    //   console.log(values);
-    //    console.log("from inside the useeff" + rows)
-    // const selected = rows.forEach(r => r.current === true);
-    // console.log("from inside the effect " + selected);
-    // setInitialSelectedId(selected?.id ?? null);
-    try {
-      const resultAction = await dispatch(
-        setCurrentSession(values.selectedId)
-      ).unwrap();
-      setAlertType("success");
-      setMessage(resultAction.message);
-    } catch (error) {
-      setAlertType("error");
-      setMessage(error);
-    }
-
-    setOpen(true);
-    resetForm(); // This will reset the forto the initial values
-  };
 
   return (
     <>
@@ -385,11 +364,18 @@ useEffect(() => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/home"
+                      <a
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -565,12 +551,7 @@ useEffect(() => {
                   </div>
                 </div>
 
-              
-                {/* Delivery Request  Navbar Content */}
-                
-                {/* Delivery Request  Navbar Content */}
-              
-                {/* Delivery Request  Navbar Content */}
+            
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-4")}
@@ -593,7 +574,7 @@ useEffect(() => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span
@@ -714,7 +695,7 @@ useEffect(() => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/location/show-locations"
+                      href="/location"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -1075,6 +1056,7 @@ useEffect(() => {
                 <div
                   class={[dashboard["grid"], dashboard["grid--1x4"]].join(" ")}
                 >
+                   <AdminLocationIdentifier/>
                   <AdminDemographicsCharts/>
                 </div>
               </div>

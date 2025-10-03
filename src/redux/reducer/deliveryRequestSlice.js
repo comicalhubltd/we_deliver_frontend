@@ -199,12 +199,12 @@ export const getCustomerDeliveredDelivery = createAsyncThunk(
 
 
 
- export const getAwatingTransitAndPendingDelivery = createAsyncThunk(
-   'delivery/getAwatingTransitAndPendingDelivery',
+ export const getAllAwatingTransitToTransit = createAsyncThunk(
+   'delivery/getAllAwatingTransitToTransit',
    async (_,  { rejectWithValue }) => {
      try {
        const token = localStorage.getItem('token');
-       const response = await api.get(BASE_URL + `/all-pending-and-awaiting`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+       const response = await api.get(BASE_URL + `/all-awaiting-transit-to-transit`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
        return response.data; // Return the saved user response
      } catch (error) {
        return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -420,7 +420,7 @@ const deliveryRequestSlice = createSlice({
         customerArrivedDelivery: [],
         customerViewFeedback: [],
 
-         awaitingAndPendingTransitDelivery: [],
+         awaitingTransitToTransit: [],
          allDeliveryRequests: [],
          onTransitDelivery: [],
          pendingDelivery: [],
@@ -598,14 +598,14 @@ const deliveryRequestSlice = createSlice({
 
 
 
-            .addCase(getAwatingTransitAndPendingDelivery.pending, (state) => {
+            .addCase(getAllAwatingTransitToTransit.pending, (state) => {
             state.fetchingStatus = 'loading';
           })
-          .addCase(getAwatingTransitAndPendingDelivery.fulfilled, (state, action) => {
+          .addCase(getAllAwatingTransitToTransit.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
-            state.awaitingAndPendingTransitDelivery = action.payload;
+            state.awaitingTransitToTransit = action.payload;
           })
-          .addCase(getAwatingTransitAndPendingDelivery.rejected, (state) => {
+          .addCase(getAllAwatingTransitToTransit.rejected, (state) => {
             state.fetchingStatus = 'failed';
           })
 
@@ -679,7 +679,7 @@ const deliveryRequestSlice = createSlice({
             state.deletingStatus = 'failed';
           })
 
-
+        
 
 
 
@@ -689,7 +689,7 @@ const deliveryRequestSlice = createSlice({
           })
           .addCase(initiateMovement.fulfilled, (state, action) => {
           state.deletingStatus = 'succeeded';
-          state.awaitingAndPendingTransitDelivery = state.awaitingAndPendingTransitDelivery.filter(request => request.id !== action.payload.id);
+          state.awaitingTransitToTransit = state.awaitingTransitToTransit.filter(request => request.id !== action.payload.id);
         
           })
           .addCase(initiateMovement.rejected, (state) => {

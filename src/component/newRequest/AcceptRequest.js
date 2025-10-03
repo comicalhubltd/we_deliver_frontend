@@ -26,7 +26,6 @@ import style from "../style/form/StudentRegistration.module.css";
 import { Formik } from "formik";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
 import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
@@ -360,11 +359,18 @@ const AcceptRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/home"
+                      <a
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -568,7 +574,7 @@ const AcceptRequest = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span
@@ -630,12 +636,7 @@ const AcceptRequest = () => {
                       View All Deliveries
                     </a>
                   
-                    <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Deliveries
-                    </a>
+                    
                   </div>
                 </div>
 

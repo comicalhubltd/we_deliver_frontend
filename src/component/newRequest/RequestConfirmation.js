@@ -656,7 +656,7 @@ const RequestConfirmation = () => {
                                  >
                                    <use href="/images/sprite.svg#request"></use>
                                  </svg>
-                                 <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                                  <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                                </div>
            
                                <span

@@ -20,6 +20,23 @@ export const saveCustomer = createAsyncThunk(
 
 
 
+export const updateCustomer = createAsyncThunk(
+  'driver/updateCustomer',
+  async ({id, customerData},  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.put(BASE_URL + `/update/${id}`, customerData, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+
+
+
 export const getCustomerById = createAsyncThunk(
   'customer/getCustomerById',
   async (id,  { rejectWithValue }) => {
@@ -112,6 +129,22 @@ export const getAllCustomers = createAsyncThunk(
 
 
 
+
+export const deleteCustomer = createAsyncThunk(
+  'delivery/deleteCustomer',
+  async (id,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.delete(BASE_URL + `/delete/${id}`, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+
 export const deleteSchool = createAsyncThunk(
   'Student/deleteStudent',
   async (id,  { rejectWithValue }) => {
@@ -196,11 +229,40 @@ const customerSlice = createSlice({
           })
           .addCase(getCustomerById.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
-            state.authCustomer = action.payload;
+            state.customer = action.payload;
           })
           .addCase(getCustomerById.rejected, (state) => {
             state.fetchingStatus = 'failed';
           })
+
+
+           .addCase(updateCustomer.pending, (state) => {
+                                          state.updateStatus = 'loading';
+                                        })
+                                        .addCase(updateCustomer.fulfilled, (state, action) => {
+                                          const index = state.customers.findIndex(customer => customer.id === action.payload.customerDto.id);
+                                          if (index !== -1) {
+                                            // Replace the old user object with the updated one
+                                            state.customers[index] = action.payload.customerDto;
+                                          }
+                                          state.updateStatus = 'succeeded';
+                                        })
+                                        .addCase(updateCustomer.rejected, (state) => {
+                                          state.updateStatus = 'failed';
+                                        })
+
+
+
+                    .addCase(deleteCustomer.pending, (state) => {
+                      state.deletingStatus = 'loading';
+                    })
+                    .addCase(deleteCustomer.fulfilled, (state, action) => {
+                      state.deletingStatus = 'succeeded';
+                      state.customers = state.customers.filter(customer => customer.id !== action.payload.id);
+                    })
+                    .addCase(deleteCustomer.rejected, (state) => {
+                      state.deletingStatus = 'failed';
+            })
 
 
 

@@ -2,15 +2,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // import api from 'api';
 import api from '../../component/routing/Interceptor';
 
-const BASE_URL = `${process.env.REACT_APP_API_URL}/v1/api/session`;
+const BASE_URL = `${process.env.REACT_APP_API_URL}/v1/api/location`;
 
 
-export const saveSession = createAsyncThunk(
-  'session/AddSession',
-  async (requestData, { rejectWithValue }) => {
+export const getAllLocationOnTransit = createAsyncThunk(
+  'location/getAllLocationOnTransit',
+  async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.post(BASE_URL + '/add', requestData, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.get(BASE_URL + '/get-all-location-on-transit',  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -23,12 +23,12 @@ export const saveSession = createAsyncThunk(
 
 
 
-export const setCurrentSession = createAsyncThunk(
-  'session/setCurrentSession',
-  async (id,  { rejectWithValue }) => {
+export const getAllCustomerLocationOnTransit = createAsyncThunk(
+  'location/getAllCustomerLocationOnTransit',
+  async (_,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.put(BASE_URL + '/set-current', id , { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
+      const response = await api.put(BASE_URL + '/get-all-customer-location',  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
       console.log("Set Current Session " + response.data);
       return response.data; // Return the saved user response
       
@@ -52,10 +52,10 @@ export const getAllSession = createAsyncThunk(
 );
 
 
-const sessionSlice = createSlice({
-    name: 'Session',
+const locationSlice = createSlice({
+    name: 'Location',
     initialState: {
-        sessions: [],
+        locations: [],
         savingStatus: 'idle',
         fetchingStatus: 'idle',
         error: null,
@@ -66,20 +66,21 @@ const sessionSlice = createSlice({
         
           // save session
 
-          .addCase(saveSession.pending, (state) => {
+          .addCase(getAllLocationOnTransit.pending, (state) => {
             state.savingStatus = 'loading';
           })
-          .addCase(saveSession.fulfilled, (state, action) => {
+          .addCase(getAllLocationOnTransit.fulfilled, (state, action) => {
             state.savingStatus = 'succeeded';
+            state.locations = action.payload;
          
           })
-          .addCase(saveSession.rejected, (state) => {
+          .addCase(getAllLocationOnTransit.rejected, (state) => {
             state.savingStatus = 'failed';
           })
 
                // get All Session
             
-           .addCase(getAllSession.pending, (state) => {
+            .addCase(getAllSession.pending, (state) => {
                 state.fetchingStatus = 'loading';
               })
               .addCase(getAllSession.fulfilled, (state, action) => {
@@ -93,28 +94,18 @@ const sessionSlice = createSlice({
 
                   // get Session by ID
 
-          .addCase(setCurrentSession.pending, (state) => {
+          .addCase(getAllCustomerLocationOnTransit.pending, (state) => {
             state.fetchingStatus = 'loading';
           })
-          .addCase(setCurrentSession.fulfilled, (state, action) => {
-            const index = state.sessions.findIndex(session => session.id === action.payload.id);
-            console.log("from inside add case" + action.payload)
-              if (index !== -1) {
-              //  the logic for the update here
-               // First, loop through and set all to false
-              state.sessions.forEach(session => {
-                session.current = false;
-              });
-              state.sessions[index].current = true;
-            }
+          .addCase(getAllCustomerLocationOnTransit.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
-            // here will be the logic of the update 
+            state.locations = action.payload;
           })
-          .addCase(setCurrentSession.rejected, (state) => {
+          .addCase(getAllCustomerLocationOnTransit.rejected, (state) => {
             state.fetchingStatus = 'failed';
           })
       },
 });
 
 
-export default sessionSlice.reducer;
+export default locationSlice.reducer;

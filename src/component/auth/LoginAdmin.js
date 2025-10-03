@@ -121,7 +121,7 @@ const LoginAdmin = () => {
   const navigate = useNavigate();
   
 
-  // localStorage.setItem('authenticated', JSON.stringify(authenticated));
+  
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

@@ -375,11 +375,18 @@ const AdminProfile = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/home"
+                      <a
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                     <a
                       href="/admin/schools"

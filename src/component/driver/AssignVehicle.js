@@ -94,7 +94,7 @@ const AssignVehicle = () => {
 const logout = () => {
 localStorage.removeItem('token');
 navigate("/school/login")
-localStorage.setItem('authenticated', JSON.stringify(authenticated));
+
 }
 
     return (
@@ -451,7 +451,7 @@ localStorage.setItem('authenticated', JSON.stringify(authenticated));
                           >
                             <use href="../images/sprite.svg#request"></use>
                           </svg>
-                          <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                           <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                         </div>
     
                         <span

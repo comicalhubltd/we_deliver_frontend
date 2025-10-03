@@ -28,7 +28,7 @@ import {
   resetStatus,
   deleteClass,
 } from "../../redux/reducer/deliveryRequestSlice";
-import { getAllSession } from "../../redux/reducer/sessionSlice";
+
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -36,7 +36,6 @@ import style from "../style/form/StudentRegistration.module.css";
 import { Formik } from "formik";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
 import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";

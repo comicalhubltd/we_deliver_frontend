@@ -4,10 +4,11 @@ import driverSlice from '../reducer/driverSlice';
 import deliveryRequestSlice from '../reducer/deliveryRequestSlice';
 import loginSlice from '../reducer/loginSlice';
 import customerSlice from '../reducer/customerSlice';
-import sessionSlice from '../reducer/sessionSlice';
+import locationSlice from '../reducer/locationSlice';
 import passwordSlice from '../reducer/passwordSlice';
 import paymentSlice from '../reducer/paymentSlice';
 import vehicleSlice from '../reducer/vehicleSlice';
+import movementSlice from '../reducer/movementSlice';
 
 const store = configureStore({
     reducer: {
@@ -15,8 +16,8 @@ const store = configureStore({
      drivers: driverSlice,
      deliveryRequests: deliveryRequestSlice,
      login: loginSlice,
-
-     sessions: sessionSlice,
+     movements: movementSlice,
+     locations: locationSlice,
      passwords: passwordSlice,
      vehicles: vehicleSlice,
      payments: paymentSlice

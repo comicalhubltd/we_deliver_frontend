@@ -19,20 +19,23 @@ import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllSession } from "../../redux/reducer/sessionSlice";
+
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import style from "../style/form/StudentRegistration.module.css";
+import { countDriverAwaitingTask, countDriverDeliveredTask, countDriverOnTransitTask } from "../../redux/reducer/movementSlice";
 import { Formik } from "formik";
 import { object, string, array } from "yup";
 import { Alert, Snackbar } from "@mui/material";
-import { setCurrentSession } from "../../redux/reducer/sessionSlice";
 import { Dialog } from "@mui/material";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation, useParams } from "react-router-dom";
 import { getExpiryDate } from "../../redux/reducer/paymentSlice";
+import { MapContainer } from "react-leaflet";
+import CirculerProgressLoader from "../utility/CirculerProgressLoader";
+import DriverLocationIdentifier from "../location/DriverLocationFinder";
 
 // Import for dashboard Below
 
@@ -46,6 +49,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { Marker, Popup, TileLayer } from "react-leaflet";
 
 import {
   Drawer,
@@ -112,10 +116,9 @@ const DriverDashboard = () => {
     selectedId: string().required("Session required"),
   });
 
-  const sessionState = useSelector((state) => state.sessions);
-  const { sessions, fetchingStatus } = sessionState;
-  const paymentState = useSelector((state) => state.payments);
-  const { expiryDate } = paymentState;
+  const movementState = useSelector((state) => state.movements);
+  const { driverOnTransitTask, driverAwaitingTask, driverDeliveredTask, fetchingStatus } = movementState;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -128,7 +131,7 @@ const DriverDashboard = () => {
   const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
   const [initialSelectedId, setInitialSelectedId] = useState(null);
-  const rows = Array.isArray(sessions) ? sessions : [];
+ 
   const params = useParams();
   const location = useLocation();
 
@@ -144,8 +147,10 @@ const DriverDashboard = () => {
   }, [location.pathname]);
 
   const fetchData = () => {
-    dispatch(getExpiryDate());
-    dispatch(getAllSession());
+  
+    dispatch(countDriverAwaitingTask());
+     dispatch(countDriverDeliveredTask());
+     dispatch(countDriverOnTransitTask());
   };
 
   const handleClose = (event, reason) => {
@@ -155,49 +160,50 @@ const DriverDashboard = () => {
     setOpen(false); // Close the Snackbar
   };
 
-  console.log("ARRAY " + rows);
+
 
   const handleCheckboxChange = (id) => {
     // formik.setFieldValue("selectedId", id);
   };
 
-  const navigateToAcceptRequest = () => {
-    navigate("/driver/request");
+  const navigateToOnTransit = () => {
+    navigate("/driver/driver-movements");
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+
+  const position = [
+  9.2833, 12.4667
+  ];
+
+
+  const renderMap = () => (
+  <MapContainer
+    center={position}
+    zoom={13}
+    scrollWheelZoom={false}
+    style={{ height: "400px", width: "100%" }}
+  >
+    <TileLayer
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    />
+    <Marker position={position}>
+      <Popup>A pretty CSS3 popup. <br /> Easily customizable.</Popup>
+    </Marker>
+  </MapContainer>
+);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  const handleFormSubmit = async (values, { resetForm }) => {
-    //   console.log(values);
-    //    console.log("from inside the useeff" + rows)
-    // const selected = rows.forEach(r => r.current === true);
-    // console.log("from inside the effect " + selected);
-    // setInitialSelectedId(selected?.id ?? null);
-    try {
-      const resultAction = await dispatch(
-        setCurrentSession(values.selectedId)
-      ).unwrap();
-      setAlertType("success");
-      setMessage(resultAction.message);
-    } catch (error) {
-      setAlertType("error");
-      setMessage(error);
-    }
-
-    setOpen(true);
-    resetForm(); // This will reset the forto the initial values
-  };
 
   return (
     <>
@@ -256,7 +262,7 @@ const DriverDashboard = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/driver/driver-profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -328,7 +334,7 @@ const DriverDashboard = () => {
               {/* Drawer Content */}
               <List>
                 {/* Dashboard Navbar Content */}
-                {/* Dashboard Navbar Content */}
+  
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
@@ -380,24 +386,7 @@ const DriverDashboard = () => {
                     >
                       Home
                     </a>
-                    <a
-                      href="/session/add-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Session
-                    </a>
-                    <a
-                      href="/session/setup-session"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Setup Session
-                    </a>
-                    <a
-                      href="/school/upload-school-logo"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add School Logo
-                    </a>
+                
                   </div>
                 </div>
 
@@ -447,7 +436,7 @@ const DriverDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/vehicle/view-vehicles"
+                       href="/vehicle/view-driver-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Vehicles
@@ -456,10 +445,6 @@ const DriverDashboard = () => {
                   </div>
                 </div>
 
-              
-                {/* Delivery Request  Navbar Content */}
-                
-                {/* Delivery Request  Navbar Content */}
               
                 {/* Delivery Request  Navbar Content */}
                 <div
@@ -484,7 +469,7 @@ const DriverDashboard = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                      <p className={navbar["collapsible__heading"]}>Tasks</p>
                     </div>
 
                     <span
@@ -506,44 +491,11 @@ const DriverDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                   
-
-
-                    <a
-                      href="/delivery/on-transit"
+                  <a
+                      href="/driver/driver-movements"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      On Transit 
-                    </a>
-
-
-          <a
-                      href="/delivery/awaiting-transit"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Awaiting Transit
-                    </a>
-
-                    <a
-                      href="/delivery/delivered"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Delivered
-                    </a>
-
-
-                      <a
-                      href="/delivery/pending"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Pending
-                    </a>
-
-                      <a
-                      href="/delivery/view-deliveries"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View All Deliveries
+                      Driver Movements
                     </a>
                   
                   
@@ -552,62 +504,6 @@ const DriverDashboard = () => {
 
              
 
-                {/* Location Navbar Content */}
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => toggleChevron("chevron-6")}
-                  className={[
-                    navbar["collapsible"],
-                    navbar[
-                      activeChevron === "chevron-6"
-                        ? "collapsible--expanded"
-                        : null
-                    ],
-                  ].join(" ")}
-                >
-                  <header className={navbar["collapsible__header"]}>
-                    <div className={navbar["collapsible__icon"]}>
-                      <svg
-                        class={[
-                          navbar["collapsible--icon"],
-                          navbar["icon--primary"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#location"></use>
-                      </svg>
-                      <p className={navbar["collapsible__heading"]}>Locations</p>
-                    </div>
-
-                    <span
-                      onClick={() => toggleChevron("chevron-6")}
-                      className={navbar["icon-container"]}
-                    >
-                      <svg
-                        className={[
-                          navbar["icon"],
-                          navbar["icon--primary"],
-                          navbar["icon--white"],
-                          navbar["collapsible--chevron"],
-                        ].join(" ")}
-                      >
-                        <use href="../images/sprite.svg#chevron"></use>
-                      </svg>
-                    </span>
-                  </header>
-
-                  <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/location/show-locations"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Live Location
-                    </a>
-                  </div>
-                </div>
-
-
-                
-              
 
                 {/* Profile Navbar Content */}
                 <div
@@ -654,7 +550,7 @@ const DriverDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/driver/driver-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -707,7 +603,7 @@ const DriverDashboard = () => {
                         </span>
 
                         <div>
-                          {"New Task " + 0}
+                          {"New Task " + driverAwaitingTask}
                         </div>
                       </div>
                     </div>
@@ -733,7 +629,7 @@ const DriverDashboard = () => {
                         </span>
 
                         <div>
-                          {"Completed Task " + 0}
+                          {"Completed Task " + driverDeliveredTask}
                           <p
                             style={{
                               color: "#018965",
@@ -749,29 +645,7 @@ const DriverDashboard = () => {
                   </div>
                 </div>
 
-                {/* <div class={[dashboard['card--count'], dashboard['card--primary']].join(' ')}>
-            <div class={dashboard['card_body']}>
-            
-            <div class={dashboard['card_button_and_icon']}>
-            
-            <span class={dashboard['icon-container']}>
-            <svg class={[dashboard['icon--big'], dashboard['icon--primary']].join(' ')}>
-            <use href="../images/sprite.svg#school"></use>
-            </svg>
-            </span>
-
-            <div>{rows.find((r) => r.school.name)?.school.name ?? 0}</div>
-            
-          
-            </div>
-            
-            
-            
-           
-            
-            </div>
-            
-            </div> */}
+               
 
                 <div
                   class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
@@ -798,10 +672,10 @@ const DriverDashboard = () => {
                         <span
                           class={[dashboard["badge"], dashboard[""]].join(" ")}
                         >
-                          { 0}
+                          { driverOnTransitTask}
                         </span>
                       </div>
-                      Enroute Movements
+                      Current movements
                     </div>
                   </div>
 
@@ -814,26 +688,37 @@ const DriverDashboard = () => {
                   >
                     <div class={dashboard["card_body"]}>
                       <div class={dashboard["card--small-head"]}>
-                        Accept Requests
+                        View new Transit
                       </div>
 
                       <button
-                        onClick={navigateToAcceptRequest}
+                        onClick={navigateToOnTransit}
                         className={[
                           dashboard["btn"],
                           dashboard["btn--block"],
-                          dashboard["btn--accent"],
+                          dashboard["btn--secondary"],
                         ].join(" ")}
                       >
                         {" "}
-                        Accept Requests
+                        View Transit
                       </button>
                     </div>
                   </div>
                 </div>
 
+           <>
+           <DriverLocationIdentifier/>
+
+            {/* {renderMap()} */}
+           
+           </>
+
                
               </div>
+
+
+             
+
             </Box>
             {/*This Area is for Snackbar*/}
 

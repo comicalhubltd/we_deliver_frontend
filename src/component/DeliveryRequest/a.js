@@ -66,86 +66,86 @@
     //     }
     // }
 
-//     /**
-//      * Safely delete a Customer and all related delivery requests
-//      * WARNING: This will delete ALL delivery requests for this customer
-//      */
-//     public boolean deleteCustomer(Long customerId) {
-//         try {
-//             Optional<Customer> customerOpt = customerRepository.findById(customerId);
+    // /**
+    //  * Safely delete a Customer and all related delivery requests
+    //  * WARNING: This will delete ALL delivery requests for this customer
+    //  */
+    // public boolean deleteCustomer(Long customerId) {
+    //     try {
+    //         Optional<Customer> customerOpt = customerRepository.findById(customerId);
             
-//             if (customerOpt.isEmpty()) {
-//                 throw new EntityNotFoundException("Customer with id " + customerId + " not found");
-//             }
+    //         if (customerOpt.isEmpty()) {
+    //             throw new EntityNotFoundException("Customer with id " + customerId + " not found");
+    //         }
             
-//             Customer customer = customerOpt.get();
+    //         Customer customer = customerOpt.get();
             
-//             // 1. Delete all delivery requests for this customer
-//             List<DeliveryRequest> deliveryRequests = customer.getDeliveryRequests();
-//             for (DeliveryRequest deliveryRequest : new ArrayList<>(deliveryRequests)) {
-//                 deleteDeliveryRequest(deliveryRequest.getId());
-//             }
+    //         // 1. Delete all delivery requests for this customer
+    //         List<DeliveryRequest> deliveryRequests = customer.getDeliveryRequests();
+    //         for (DeliveryRequest deliveryRequest : new ArrayList<>(deliveryRequests)) {
+    //             deleteDeliveryRequest(deliveryRequest.getId());
+    //         }
             
-//             // 2. Delete associated User if exists
-//             if (customer.getUser() != null) {
-//                 userRepository.delete(customer.getUser());
-//             }
+    //         // 2. Delete associated User if exists
+    //         if (customer.getUser() != null) {
+    //             userRepository.delete(customer.getUser());
+    //         }
             
-//             // 3. Delete the Customer
-//             // Profile will not be deleted as it might be referenced elsewhere
-//             customerRepository.delete(customer);
+    //         // 3. Delete the Customer
+    //         // Profile will not be deleted as it might be referenced elsewhere
+    //         customerRepository.delete(customer);
             
-//             return true;
+    //         return true;
             
-//         } catch (Exception e) {
-//             throw new RuntimeException("Failed to delete Customer: " + e.getMessage(), e);
-//         }
-//     }
+    //     } catch (Exception e) {
+    //         throw new RuntimeException("Failed to delete Customer: " + e.getMessage(), e);
+    //     }
+    // }
 
-//     /**
-//      * Safely delete a Driver and handle related entities
-//      * This will also delete all movements and vehicles associated with the driver
-//      */
-//     public boolean deleteDriver(Long driverId) {
-//         try {
-//             Optional<Driver> driverOpt = driverRepository.findById(driverId);
+    // /**
+    //  * Safely delete a Driver and handle related entities
+    //  * This will also delete all movements and vehicles associated with the driver
+    //  */
+    // public boolean deleteDriver(Long driverId) {
+    //     try {
+    //         Optional<Driver> driverOpt = driverRepository.findById(driverId);
             
-//             if (driverOpt.isEmpty()) {
-//                 throw new EntityNotFoundException("Driver with id " + driverId + " not found");
-//             }
+    //         if (driverOpt.isEmpty()) {
+    //             throw new EntityNotFoundException("Driver with id " + driverId + " not found");
+    //         }
             
-//             Driver driver = driverOpt.get();
+    //         Driver driver = driverOpt.get();
             
-//             // 1. Handle movements - need to be careful as they're linked to delivery requests
-//             List<Movement> movements = driver.getMovements();
-//             for (Movement movement : new ArrayList<>(movements)) {
-//                 // Set driver to null in movement instead of deleting movement
-//                 // because movement is linked to DeliveryRequest
-//                 movement.setDriver(null);
-//                 movementRepository.save(movement);
-//             }
+    //         // 1. Handle movements - need to be careful as they're linked to delivery requests
+    //         List<Movement> movements = driver.getMovements();
+    //         for (Movement movement : new ArrayList<>(movements)) {
+    //             // Set driver to null in movement instead of deleting movement
+    //             // because movement is linked to DeliveryRequest
+    //             movement.setDriver(null);
+    //             movementRepository.save(movement);
+    //         }
             
-//             // 2. Delete associated vehicles
-//             List<Vehicle> vehicles = driver.getVehicles();
-//             for (Vehicle vehicle : new ArrayList<>(vehicles)) {
-//                 vehicleRepository.delete(vehicle);
-//             }
+    //         // 2. Delete associated vehicles
+    //         List<Vehicle> vehicles = driver.getVehicles();
+    //         for (Vehicle vehicle : new ArrayList<>(vehicles)) {
+    //             vehicleRepository.delete(vehicle);
+    //         }
             
-//             // 3. Delete associated User if exists
-//             if (driver.getUser() != null) {
-//                 userRepository.delete(driver.getUser());
-//             }
+    //         // 3. Delete associated User if exists
+    //         if (driver.getUser() != null) {
+    //             userRepository.delete(driver.getUser());
+    //         }
             
-//             // 4. Delete the Driver
-//             // Profile will not be deleted as it might be referenced elsewhere
-//             driverRepository.delete(driver);
+    //         // 4. Delete the Driver
+    //         // Profile will not be deleted as it might be referenced elsewhere
+    //         driverRepository.delete(driver);
             
-//             return true;
+    //         return true;
             
-//         } catch (Exception e) {
-//             throw new RuntimeException("Failed to delete Driver: " + e.getMessage(), e);
-//         }
-//     }
+    //     } catch (Exception e) {
+    //         throw new RuntimeException("Failed to delete Driver: " + e.getMessage(), e);
+    //     }
+    // }
 
 //     /**
 //      * Safely delete a Vehicle

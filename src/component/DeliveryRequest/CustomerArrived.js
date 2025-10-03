@@ -340,11 +340,18 @@ const CustomerArrived = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
+                      <a
                       href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -381,7 +388,7 @@ const CustomerArrived = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span
@@ -448,12 +455,7 @@ const CustomerArrived = () => {
                     </a>
 
 
-                    <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Add Deliveries
-                    </a>
+                    
                   </div>
                 </div>
 

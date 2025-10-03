@@ -24,6 +24,7 @@ import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation } from "react-router-dom";
 import DriverCustomerActionMenu from "../utility/DriverCustomerActionMenu";
+import { deleteDriver } from "../../redux/reducer/driverSlice";
 
 // Import for dashboard Below
 
@@ -129,17 +130,17 @@ const ViewAllDrivers = () => {
  const handleDelete = async (id) => {
     // Filter out the deleted row
     rows.filter((row) => row.id !== id);
-    // const result = await dispatch(deleteSchool(id)).unwrap();
+    dispatch(deleteDriver(id));
   };
 
   const handleEdit = (id) => {
     // Implement edit functionality
-    navigate(`/delivery/edit/${id}`);
+    navigate(`/driver/driver-update/${id}`);
   };
 
   const handleViewDetails = (id) => {
     // Implement view functionality
-    navigate(`/delivery/view/${id}`);
+    navigate(`/driver/driver-details/${id}`);
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -330,11 +331,18 @@ const ViewAllDrivers = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/home"
+                      <a
+                      href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
+                    </a>
+
+                     <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Request Delivery
                     </a>
                  
                   </div>
@@ -538,7 +546,7 @@ const ViewAllDrivers = () => {
                       >
                         <use href="../images/sprite.svg#request"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Deliveries</p>
+                       <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
 
                     <span

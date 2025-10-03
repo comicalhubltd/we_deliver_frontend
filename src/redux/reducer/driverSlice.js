@@ -35,12 +35,12 @@ export const allDriverCount = createAsyncThunk(
 
 
 
-export const updateStudent = createAsyncThunk(
-  'class/updateStudent',
-  async ({id, studentData},  { rejectWithValue }) => {
+export const updateDriver = createAsyncThunk(
+  'driver/updateDriver',
+  async ({id, driverData},  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.put(BASE_URL + `/update/${id}`, studentData, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.put(BASE_URL + `/update/${id}`, driverData, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -65,12 +65,12 @@ export const getStudentsByClassId = createAsyncThunk(
 );
 
 
-export const getAuthenticatedStudentById = createAsyncThunk(
-  'teacher/getAuthenticatedStudentById',
+export const getAuthenticatedDriver = createAsyncThunk(
+  'teacher/getAuthenticatedDriver',
   async (_,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.get(BASE_URL + `/get-authenticated-student-by-id`,{ headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.get(BASE_URL + `/get-auth-driver`,{ headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -87,6 +87,21 @@ export const getAllDrivers = createAsyncThunk(
     try {
       const token = localStorage.getItem('token');
       const response = await api.get(BASE_URL + `/get-all`,   { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+
+export const deleteDriver = createAsyncThunk(
+  'delivery/deleteDriver',
+  async (id,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.delete(BASE_URL + `/delete/${id}`, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -161,14 +176,14 @@ const driverSlice = createSlice({
 
           // deleting student
 
-          .addCase(deleteStudent.pending, (state) => {
+          .addCase(deleteDriver.pending, (state) => {
             state.deletingStatus = 'loading';
           })
-          .addCase(deleteStudent.fulfilled, (state, action) => {
+          .addCase(deleteDriver.fulfilled, (state, action) => {
             state.deletingStatus = 'succeeded';
-            state.studentsInClass = state.studentsInClass.filter(student => student.id !== action.payload.id);
+            state.drivers = state.drivers.filter(driver => driver.id !== action.payload.id);
           })
-          .addCase(deleteStudent.rejected, (state) => {
+          .addCase(deleteDriver.rejected, (state) => {
             state.deletingStatus = 'failed';
           })
               
@@ -194,15 +209,15 @@ const driverSlice = createSlice({
 
                // Get Authenticated Student By Id
                         
-                          .addCase(getAuthenticatedStudentById.pending, (state) => {
+                          .addCase(getAuthenticatedDriver.pending, (state) => {
                             state.fetchingStatus = 'loading';
                           })
-                          .addCase(getAuthenticatedStudentById.fulfilled, (state, action) => {
+                          .addCase(getAuthenticatedDriver.fulfilled, (state, action) => {
                             state.fetchingStatus = 'succeeded';
-                            state.student = action.payload;
+                            state.driver = action.payload;
                             
                           })
-                          .addCase(getAuthenticatedStudentById.rejected, (state) => {
+                          .addCase(getAuthenticatedDriver.rejected, (state) => {
                             state.fetchingStatus = 'failed';
                           })
               
@@ -248,18 +263,18 @@ const driverSlice = createSlice({
                               // Update Status
                     
                     
-                              .addCase(updateStudent.pending, (state) => {
+                              .addCase(updateDriver.pending, (state) => {
                                 state.updateStatus = 'loading';
                               })
-                              .addCase(updateStudent.fulfilled, (state, action) => {
-                                const index = state.studentsInClass.findIndex(user => user.id === action.payload.studentDto.id);
+                              .addCase(updateDriver.fulfilled, (state, action) => {
+                                const index = state.drivers.findIndex(driver => driver.id === action.payload.driverDto.id);
                                 if (index !== -1) {
                                   // Replace the old user object with the updated one
-                                  state.studentsInClass[index] = action.payload.studentDto;
+                                  state.drivers[index] = action.payload.driverDto;
                                 }
                                 state.updateStatus = 'succeeded';
                               })
-                              .addCase(updateStudent.rejected, (state) => {
+                              .addCase(updateDriver.rejected, (state) => {
                                 state.updateStatus = 'failed';
                               });
 
