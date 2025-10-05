@@ -216,7 +216,7 @@ const ViewAllCustomers = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -787,7 +787,7 @@ const ViewAllCustomers = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

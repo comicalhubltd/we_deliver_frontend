@@ -268,7 +268,7 @@ const AddRequestToTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -663,7 +663,12 @@ const AddRequestToTransit = () => {
                       View All Deliveries
                     </a>
                   
-                    
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -831,7 +836,7 @@ const AddRequestToTransit = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -923,6 +928,7 @@ const AddRequestToTransit = () => {
                           >
                             <TableHead>
                               <TableRow>
+                                <StyledTableCell>Payment Status</StyledTableCell>
                                 <StyledTableCell>Item Type</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
@@ -950,6 +956,9 @@ const AddRequestToTransit = () => {
                                 : rows
                               ).map((row) => (
                                 <StyledTableRow key={row.id}>
+                                  <StyledTableCell component="th" scope="row">
+                                     <span className={[dashboard["badge"], dashboard[row.payment?.status === "success" ?  "badge--secondary" : "badge--primary"]].join(' ')}>{row.payment?.status === "success" ? "Paid" : "Unpaid"}</span>  
+                                  </StyledTableCell>
                                   <StyledTableCell component="th" scope="row">
                                     {row.item?.type}
                                   </StyledTableCell>

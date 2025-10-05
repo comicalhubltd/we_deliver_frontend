@@ -221,7 +221,7 @@ const Pending = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -735,10 +735,10 @@ const Pending = () => {
                     >
                       Paid Deliveries
                     </a>
-         <a
-                      href="/payment/unpaid-deliveries"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
+                     <a
+                        href="/payment/unpaid-deliveries"
+                        className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                      >
                       Unpaid Deliveries
                     </a>
                   </div>
@@ -792,7 +792,7 @@ const Pending = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

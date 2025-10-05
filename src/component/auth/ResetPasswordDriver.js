@@ -13,8 +13,9 @@ import { ErrorMessage, Formik } from "formik";
 import { object, string, ref } from "yup";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment } from "@mui/material";
-import { sendPasswordRequest } from "../../redux/reducer/passwordSlice";
+import { sendPasswordResetDriver } from "../../redux/reducer/passwordSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -77,9 +78,16 @@ background-size: cover;;`,
   },
 }));
 
-const PasswordRequest = () => {
-  const passwordRequestSchema = object({
-    email: string().email("Invalid email").required("Email required"),
+const ResetPasswordDriver = () => {
+  const resetPasswordSchema = object({
+    password: string()
+      .min(8, "Password must be at least 8 characters")
+      .required("Password is required"),
+
+    confirmPassword: string()
+      .min(8, "Password must be at least 8 characters")
+      .oneOf([ref("password"), null], "Passwords must match")
+      .required("Password is required"),
   });
 
   const [visibility, setVisibility] = useState(false);
@@ -88,6 +96,10 @@ const PasswordRequest = () => {
   const [alertType, setAlertType] = useState(""); // "success" or "error"
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const queryParam = new URLSearchParams(location.search);
+  const resetToken = queryParam.get("resetToken");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -96,9 +108,22 @@ const PasswordRequest = () => {
     setOpen(false); // Close the Snackbar
   };
 
+  const togglePasswordVisibility = () => {
+    setVisibility(!visibility);
+    if (inputType === "password") {
+      setInputType("text");
+    } else {
+      setInputType("password");
+    }
+  };
+
   const handleFormSubmit = async (values, { resetForm }) => {
+    console.log(resetToken);
+    console.log(values.password);
     try {
-      const body = await dispatch(sendPasswordRequest(values.email)).unwrap();
+      const body = await dispatch(
+        sendPasswordResetDriver({ resetToken: resetToken, password: values.password })
+      ).unwrap();
       console.log(body);
       setAlertType("success");
       setMessage(body.message);
@@ -108,7 +133,7 @@ const PasswordRequest = () => {
       setMessage(error.message);
     }
     // Handle form submission logic
-    console.log("Form values:", values);
+    console.log("Form values:", values.password);
     setOpen(true);
     resetForm(); // This will reset the form to the initial values
   };
@@ -117,9 +142,10 @@ const PasswordRequest = () => {
     <SignInContainer>
       <Formik
         initialValues={{
-          email: "",
+          password: "",
+          confirmPassword: "",
         }}
-        validationSchema={passwordRequestSchema}
+        validationSchema={resetPasswordSchema}
         onSubmit={handleFormSubmit}
       >
         {({
@@ -139,28 +165,84 @@ const PasswordRequest = () => {
             </section>
 
             {/*Card Header*/}
-            <p className={style["form-header"]}>Password Request</p>
+            <p className={style["form-header"]}>Reset Password</p>
 
             <TextField
-              label="Email"
+              type={inputType}
+              label="New Password"
               variant="outlined"
               fullWidth
               margin="normal"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.user?.email}
-              name="email"
-              error={touched.email && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
+              value={values.password}
+              name="password"
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
               slotProps={{
                 formHelperText: {
                   sx: { fontSize: 15 }, // Increase font size of helper text
                 },
+                inputLabel: {
+                  style: { fontSize: 16 }, // font size for label text
+                },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {visibility ? (
+                          <VisibilityIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        ) : (
+                          <VisibilityOffIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+
+            <TextField
+              type={inputType}
+              label="Confirm New Password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.confirmPassword}
+              name="confirmPassword"
+              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+              helperText={touched.confirmPassword && errors.confirmPassword}
+              slotProps={{
+                formHelperText: {
+                  sx: { fontSize: 15 }, // Increase font size of helper text
                 },
                 inputLabel: {
                   style: { fontSize: 16 }, // font size for label text
+                },
+                input: {
+                  style: { fontSize: 18 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {visibility ? (
+                          <VisibilityIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        ) : (
+                          <VisibilityOffIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 },
               }}
             />
@@ -177,14 +259,14 @@ const PasswordRequest = () => {
                 style["btn--primary"],
               ].join(" ")}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? "Resetting..." : "Reset"}
             </button>
 
             <div className={style["form-link--container"]}>
               <span className={style["form-link"]}>
                 {" "}
-                Already Have an Accoutn:{" "}
-                <a className={style["link__register"]} href="/school/login">
+                Already Have an Account:{" "}
+                <a className={style["link__register"]} href="/driver/login">
                   Login
                 </a>
               </span>
@@ -224,4 +306,4 @@ const PasswordRequest = () => {
   );
 };
 
-export default PasswordRequest;
+export default ResetPasswordDriver;

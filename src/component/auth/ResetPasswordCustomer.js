@@ -1,5 +1,5 @@
 import dashboard from "../style/dashboard/CustomerDashboard.module.css";
-import style from "../style/form/SchoolLogin.module.css";
+import style from "../style/form/CustomerRegistration.module.css";
 import { useState } from "react";
 import React from "react";
 import TextField from "@mui/material/TextField";
@@ -9,19 +9,21 @@ import Stack from "@mui/material/Stack";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Alert, Snackbar } from "@mui/material";
-import { Formik } from "formik";
+import { ErrorMessage, Formik } from "formik";
 import { object, string, ref } from "yup";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment } from "@mui/material";
+import { sendPasswordResetCustomer } from "../../redux/reducer/passwordSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "../../redux/reducer/loginSlice";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useLocation } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignSelf: "center",
   width: "100%",
+  minHeight: "auto",
+  maxHeight: "auto", // Fixed height
   overflowY: "auto", // Enables vertical scrolling
   "&::-webkit-scrollbar": {
     display: "none",
@@ -76,41 +78,17 @@ background-size: cover;;`,
   },
 }));
 
-const LoginDriver = () => {
-  const loginSchema = object({
-    username: string()
-      .max(35, "ID must not exceed 35 characters")
-      .required("ID is required"),
-
+const ResetPasswordCustomer = () => {
+  const resetPasswordSchema = object({
     password: string()
       .min(8, "Password must be at least 8 characters")
       .required("Password is required"),
-  });
 
-  const [displayText, setDisplayText] = useState("School");
-  const [role, setRoles] = useState([
-    {
-      id: 1,
-      text: "School",
-      isSelected: true,
-      color: "#fff",
-      backgroundColor: "#028766",
-    },
-    {
-      id: 2,
-      text: "Teacher",
-      isSelected: false,
-      color: "#028766",
-      backgroundColor: "#fff",
-    },
-    {
-      id: 3,
-      text: "Student",
-      isSelected: false,
-      color: "#028766",
-      backgroundColor: "#fff",
-    },
-  ]);
+    confirmPassword: string()
+      .min(8, "Password must be at least 8 characters")
+      .oneOf([ref("password"), null], "Passwords must match")
+      .required("Password is required"),
+  });
 
   const [visibility, setVisibility] = useState(false);
   const [inputType, setInputType] = useState("password");
@@ -118,10 +96,10 @@ const LoginDriver = () => {
   const [alertType, setAlertType] = useState(""); // "success" or "error"
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
+  const location = useLocation();
 
-  
+  const queryParam = new URLSearchParams(location.search);
+  const resetToken = queryParam.get("resetToken");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -139,60 +117,35 @@ const LoginDriver = () => {
     }
   };
 
-  const handleRoleClick = (id) => {
-    setRoles((prevRole) =>
-      prevRole.map(
-        (role) =>
-          role.id === id
-            ? {
-                ...role,
-                isSelected: true,
-                color: "#fff",
-                backgroundColor: "#028766",
-              }
-            : {
-                ...role,
-                isSelected: false,
-                color: "#028766",
-                backgroundColor: "#fff",
-              } // Reset other tags
-      )
-    );
-    setDisplayText(role.find((role) => role.id === id).text);
-  };
-
   const handleFormSubmit = async (values, { resetForm }) => {
+    console.log(resetToken);
+    console.log(values.password);
     try {
-      const body = await dispatch(loginRequest(values)).unwrap();
-
-      localStorage.setItem("token", JSON.stringify(body.jwt));
-     
-
+      const body = await dispatch(
+        sendPasswordResetCustomer({ resetToken: resetToken, password: values.password })
+      ).unwrap();
+      console.log(body);
       setAlertType("success");
-        setMessage("Login Successfully")
-      // if statement here
-      if (body.redirectUrl !== "error") {
-        navigate(body.redirectUrl);
-      }
+      setMessage(body.message);
     } catch (error) {
-       setAlertType("error");
+      console.log(error.message);
+      setAlertType("error");
       setMessage(error.message);
     }
-
+    // Handle form submission logic
+    console.log("Form values:", values.password);
     setOpen(true);
-    resetForm(); // This will reset the forto the initial values
+    resetForm(); // This will reset the form to the initial values
   };
 
   return (
     <SignInContainer>
       <Formik
         initialValues={{
-          username: "",
           password: "",
-          captchaToken: ""
+          confirmPassword: "",
         }}
-
-        validationSchema={loginSchema}
+        validationSchema={resetPasswordSchema}
         onSubmit={handleFormSubmit}
       >
         {({
@@ -203,7 +156,6 @@ const LoginDriver = () => {
           isSubmitting,
           touched,
           handleBlur,
-          setFieldValue
         }) => (
           <Card>
             {/*Card Image*/}
@@ -213,37 +165,11 @@ const LoginDriver = () => {
             </section>
 
             {/*Card Header*/}
-            <p className={style["form-header"]}>Driver Login</p>
-
-
-            {/* Text Fields*/}
-            <TextField
-              label={"Email"}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.username}
-              name="username"
-              error={touched.username && Boolean(errors.username)}
-              helperText={touched.username && errors.username}
-              slotProps={{
-                formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
-                },
-                input: {
-                  style: { fontSize: 18 }, // font size for input text
-                },
-                inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
-                },
-              }}
-            />
+            <p className={style["form-header"]}>Reset Password</p>
 
             <TextField
               type={inputType}
-              label="Password"
+              label="New Password"
               variant="outlined"
               fullWidth
               margin="normal"
@@ -281,11 +207,45 @@ const LoginDriver = () => {
               }}
             />
 
-
-            <ReCAPTCHA
-            sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
-            onChange={(token) => setFieldValue("captchaToken", token)}
-         />
+            <TextField
+              type={inputType}
+              label="Confirm New Password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.confirmPassword}
+              name="confirmPassword"
+              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+              helperText={touched.confirmPassword && errors.confirmPassword}
+              slotProps={{
+                formHelperText: {
+                  sx: { fontSize: 15 }, // Increase font size of helper text
+                },
+                inputLabel: {
+                  style: { fontSize: 16 }, // font size for label text
+                },
+                input: {
+                  style: { fontSize: 18 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                        {visibility ? (
+                          <VisibilityIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        ) : (
+                          <VisibilityOffIcon
+                            sx={{ fontSize: 22, color: "#018965" }}
+                          />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
 
             {/* {BUTTON } */}
 
@@ -299,24 +259,15 @@ const LoginDriver = () => {
                 style["btn--primary"],
               ].join(" ")}
             >
-              {isSubmitting ? "Wait..." : "Login"}
+              {isSubmitting ? "Resetting..." : "Reset"}
             </button>
 
             <div className={style["form-link--container"]}>
               <span className={style["form-link"]}>
                 {" "}
-                Register here:{" "}
-                <a className={style["link__register"]} href="/driver/register">
-                  Register
-                </a>
-              </span>
-              <span className={style["form-link"]}>
-                {" "}
-                <a
-                  className={style["link__register"]}
-                  href="/password/password-request-driver"
-                >
-                  Forgot Password
+                Already Have an Account:{" "}
+                <a className={style["link__register"]} href="/customer/login">
+                  Login
                 </a>
               </span>
             </div>
@@ -355,4 +306,4 @@ const LoginDriver = () => {
   );
 };
 
-export default LoginDriver;
+export default ResetPasswordCustomer;

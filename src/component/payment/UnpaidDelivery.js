@@ -9,20 +9,26 @@ import TableRow from "@mui/material/TableRow";
 import { IconButton } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
+import style from "../style/form/StudentRegistration.module.css";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
 import PropTypes from "prop-types";
-import { getPayments } from "../../redux/reducer/paymentSlice";
+import DeliveryActionMenuDeleteEditView from "../utility/DeliveryActionMenuDeleteEditView";
+import {
+    getPaymentsPending as getPaymentsSuccess
+ 
+} from "../../redux/reducer/paymentSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { deleteDeliveryRequest } from "../../redux/reducer/deliveryRequestSlice";
 import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
+// import ClassScoreSheet from "../result/ClassScoreSheet";
 
 // Import for dashboard Below
 
@@ -36,6 +42,7 @@ import {
 } from "@mui/icons-material";
 import { Unstable_Popup as BasePopup } from "@mui/base/Unstable_Popup";
 import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import PreviewIcon from "@mui/icons-material/Preview";
 
 import {
   Drawer,
@@ -70,7 +77,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const Payments = () => {
+const UnpaidDelivery = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -99,7 +106,7 @@ const Payments = () => {
   // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC.........................................................................................
 
   const paymentState = useSelector((state) => state.payments);
-  const { payments, fetchingStatus } = paymentState;
+  const {  payments,  fetchingStatus } = paymentState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,14 +124,21 @@ const Payments = () => {
   useEffect(() => {
     fetchData();
 
-    console.log(payments);
   }, [location.pathname]);
 
   const fetchData = () => {
-    dispatch(getPayments());
+    dispatch(getPaymentsSuccess());
+  };
+
+
+   const handleViewDetails = (id) => {
+     navigate(`/delivery/delivery-details/${id}`);
   };
 
   const rows = Array.isArray(payments) ? payments : [];
+
+ 
+ 
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -138,6 +152,8 @@ const Payments = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  console.log("Checking for " + JSON.stringify(rows) );
 
   return (
     <>
@@ -196,7 +212,7 @@ const Payments = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -266,10 +282,10 @@ const Payments = () => {
               </Box>
 
               {/* Drawer Content */}
-              <List>
+           <List>
                 {/* Dashboard Navbar Content */}
                 {/* Dashboard Navbar Content */}
-            <div
+                <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-0")}
                   className={[
@@ -352,9 +368,9 @@ const Payments = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#student"></use>
+                        <use href="../images/sprite.svg#customer"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Students</p>
+                      <p className={navbar["collapsible__heading"]}>Customers</p>
                     </div>
 
                     <span
@@ -375,18 +391,14 @@ const Payments = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
+                 
                     <a
-                      href="/student/add-student"
+                      href="/customer/view-customers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Add Student
+                      View Customers
                     </a>
-                    <a
-                      href="/student/view-students"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      View Students
-                    </a>
+               
                   </div>
                 </div>
 
@@ -505,7 +517,7 @@ const Payments = () => {
                   </div>
                 </div>
 
-                {/* Delivery Request  Navbar Content */}
+            
                 <div
                   style={{ cursor: "pointer" }}
                   onClick={() => toggleChevron("chevron-4")}
@@ -549,44 +561,56 @@ const Payments = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                  
-                    <a
-                      href="/delivery/view-deliveries"
+
+                  <a
+                      href="/delivery/pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      View Deliveries
+                      Pending
+                    </a>     
+
+
+                    
+                   <a
+                      href="/delivery/awaiting-transit"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Awaiting Transit
                     </a>
 
 
                     <a
-                      href="/delivery/waiting-deliveries"
+                      href="/delivery/on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Waiting Deliveries
+                      On Transit 
                     </a>
+                    
 
-
-  		    <a
-                      href="/delivery/enroute-deliveries"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Enroute Deliveries
-                    </a>
 
                     <a
-                      href="/delivery/completed-deliveries"
+                      href="/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Completed Deliveries
+                      Arrived
                     </a>
 
+
+                    <a
+                      href="/delivery/delivered"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Delivered
+                    </a>
 
                       <a
-                      href="/delivery/cancelled-deliveries"
+                      href="/delivery/view-all-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Cancelled Deliveries
+                      View All Deliveries
                     </a>
+                  
+                  
                   </div>
                 </div>
 
@@ -613,9 +637,9 @@ const Payments = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#result"></use>
+                        <use href="../images/sprite.svg#location"></use>
                       </svg>
-                      <p className={navbar["collapsible__heading"]}>Results</p>
+                      <p className={navbar["collapsible__heading"]}>Locations</p>
                     </div>
 
                     <span
@@ -637,10 +661,10 @@ const Payments = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/result/show-results"
+                      href="/location"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
-                      Generate Result
+                      Live Location
                     </a>
                   </div>
                 </div>
@@ -697,7 +721,7 @@ const Payments = () => {
                     >
                       Paid Deliveries
                     </a>
-  		   <a
+         <a
                       href="/payment/unpaid-deliveries"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
@@ -754,7 +778,7 @@ const Payments = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -784,87 +808,107 @@ const Payments = () => {
               }}
             >
               <div className={dashboard["secondary--container"]}>
-                {/* <div>{payments}</div> */}
+              
 
-                <TableContainer component={Paper} sx={{ marginTop: 1 }}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell>Payment Date</StyledTableCell>
-                        <StyledTableCell align="left">Status</StyledTableCell>
-                        <StyledTableCell align="left">Term</StyledTableCell>
-                        <StyledTableCell align="left">Session</StyledTableCell>
-                        <StyledTableCell align="right">
-                          Payment Ref
-                        </StyledTableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {(rowsPerPage > 0
-                        ? rows.slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                        : rows
-                      ).map((row) => (
-                        <StyledTableRow key={row.id}>
-                          <StyledTableCell component="th" scope="row">
-                            {row.paymentDate}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                             <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.term}
-                          </StyledTableCell>
-                          <StyledTableCell align="left">
-                            {row.session}
-                          </StyledTableCell>
-                          <StyledTableCell align="right">
-                            {row.paymentRef}
-                          </StyledTableCell>
-                        </StyledTableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TablePagination
-                          rowsPerPageOptions={[
-                            5,
-                            10,
-                            25,
-                            { label: "All", value: -1 },
-                          ]}
-                          colSpan={3}
-                          count={rows.length}
-                          rowsPerPage={rowsPerPage}
-                          page={page}
-                          slotProps={{
-                            select: {
-                              inputProps: {
-                                "aria-label": "rows per page",
-                              },
-                              native: true,
-                            },
-                          }}
-                          onPageChange={handleChangePage}
-                          onRowsPerPageChange={handleChangeRowsPerPage}
-                          ActionsComponent={TablePaginationActions}
-                          sx={{
-                            "& .MuiTablePagination-toolbar": { fontSize: 18 }, // Adjust font size
-                            "& .MuiTablePagination-selectLabel": {
-                              fontSize: 14,
-                            },
-                            "& .MuiTablePagination-input": { fontSize: 18 },
-                            "& .MuiTablePagination-displayedRows": {
-                              fontSize: 14,
-                            },
-                          }}
-                        />
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
+              <TableContainer component={Paper} sx={{ marginTop: 1 }}>
+                          <Table
+                            sx={{ minWidth: 650 }}
+                            aria-label="simple table"
+                          >
+                            <TableHead>
+                              <TableRow>
+                          
+                                   <StyledTableCell align="left">
+                                Status
+                                </StyledTableCell>
+                                <StyledTableCell>Ref</StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Date
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Amount
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  Email
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                  View Delivery
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {(rowsPerPage > 0
+                                ? rows.slice(
+                                    page * rowsPerPage,
+                                    page * rowsPerPage + rowsPerPage
+                                  )
+                                : rows
+                              ).map((row) => (
+                                <StyledTableRow key={row.id}>
+                                 <StyledTableCell component="th" scope="row">
+                                 <span className={[dashboard["badge"], dashboard[row.status === "success" ?  "badge--secondary" : "badge--primary"]].join(' ')}>{row.status}</span>  
+                                 </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.paymentRef}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {row.paymentDate}
+                                  </StyledTableCell>
+                                  <StyledTableCell align="left">
+                                    {row.totalAmount}
+                                  </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                    {row.email}
+                                  </StyledTableCell>
+                                 <IconButton onClick={() => handleViewDetails(row.deliveryRequest.id)}>
+                                       <PreviewIcon sx={{ color: "#018965", fontSize: 30 }} />
+                                  </IconButton>
+                                </StyledTableRow>
+                              ))}
+                            </TableBody>
+                            <TableFooter>
+                              <TableRow>
+                                <TablePagination
+                                  rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: "All", value: -1 },
+                                  ]}
+                                  colSpan={3}
+                                  count={rows.length}
+                                  rowsPerPage={rowsPerPage}
+                                  page={page}
+                                  slotProps={{
+                                    select: {
+                                      inputProps: {
+                                        "aria-label": "rows per page",
+                                      },
+                                      native: true,
+                                    },
+                                  }}
+                                  onPageChange={handleChangePage}
+                                  onRowsPerPageChange={handleChangeRowsPerPage}
+                                  ActionsComponent={TablePaginationActions}
+                                  sx={{
+                                    "& .MuiTablePagination-toolbar": {
+                                      fontSize: 18,
+                                    }, // Adjust font size
+                                    "& .MuiTablePagination-selectLabel": {
+                                      fontSize: 14,
+                                    },
+                                    "& .MuiTablePagination-input": {
+                                      fontSize: 18,
+                                    },
+                                    "& .MuiTablePagination-displayedRows": {
+                                      fontSize: 14,
+                                    },
+                                  }}
+                                />
+                              </TableRow>
+                            </TableFooter>
+                          </Table>
+                        </TableContainer>
               </div>
             </Box>
           </Box>
@@ -874,7 +918,7 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default UnpaidDelivery;
 
 function TablePaginationActions(props) {
   const theme = useTheme();

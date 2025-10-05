@@ -241,7 +241,7 @@ const AcceptRequest = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -636,7 +636,12 @@ const AcceptRequest = () => {
                       View All Deliveries
                     </a>
                   
-                    
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -804,7 +809,7 @@ const AcceptRequest = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

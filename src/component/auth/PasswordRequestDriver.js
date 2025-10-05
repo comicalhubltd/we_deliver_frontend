@@ -13,9 +13,8 @@ import { ErrorMessage, Formik } from "formik";
 import { object, string, ref } from "yup";
 import { useNavigate } from "react-router-dom";
 import { IconButton, InputAdornment } from "@mui/material";
-import { sendPasswordResetStudent } from "../../redux/reducer/passwordSlice";
+import { sendPasswordRequestCustomer as sendPasswordRequestDriver } from "../../redux/reducer/passwordSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -78,16 +77,9 @@ background-size: cover;;`,
   },
 }));
 
-const StudentResetPassword = () => {
-  const resetPasswordSchema = object({
-    password: string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Password is required"),
-
-    confirmPassword: string()
-      .min(8, "Password must be at least 8 characters")
-      .oneOf([ref("password"), null], "Passwords must match")
-      .required("Password is required"),
+const PasswordRequestDriver = () => {
+  const passwordRequestSchema = object({
+    email: string().email("Invalid email").required("Email required"),
   });
 
   const [visibility, setVisibility] = useState(false);
@@ -96,10 +88,6 @@ const StudentResetPassword = () => {
   const [alertType, setAlertType] = useState(""); // "success" or "error"
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const queryParam = new URLSearchParams(location.search);
-  const resetToken = queryParam.get("resetToken");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -108,22 +96,9 @@ const StudentResetPassword = () => {
     setOpen(false); // Close the Snackbar
   };
 
-  const togglePasswordVisibility = () => {
-    setVisibility(!visibility);
-    if (inputType === "password") {
-      setInputType("text");
-    } else {
-      setInputType("password");
-    }
-  };
-
   const handleFormSubmit = async (values, { resetForm }) => {
-    console.log(resetToken);
-    console.log(values.password);
     try {
-      const body = await dispatch(
-        sendPasswordResetStudent({ password: values.password })
-      ).unwrap();
+      const body = await dispatch(sendPasswordRequestDriver(values.email)).unwrap();
       console.log(body);
       setAlertType("success");
       setMessage(body.message);
@@ -133,7 +108,7 @@ const StudentResetPassword = () => {
       setMessage(error.message);
     }
     // Handle form submission logic
-    console.log("Form values:", values.password);
+    console.log("Form values:", values);
     setOpen(true);
     resetForm(); // This will reset the form to the initial values
   };
@@ -142,10 +117,9 @@ const StudentResetPassword = () => {
     <SignInContainer>
       <Formik
         initialValues={{
-          password: "",
-          confirmPassword: "",
+          email: "",
         }}
-        validationSchema={resetPasswordSchema}
+        validationSchema={passwordRequestSchema}
         onSubmit={handleFormSubmit}
       >
         {({
@@ -165,84 +139,28 @@ const StudentResetPassword = () => {
             </section>
 
             {/*Card Header*/}
-            <p className={style["form-header"]}>Reset Password</p>
+            <p className={style["form-header"]}>Password Request</p>
 
             <TextField
-              type={inputType}
-              label="New Password"
+              label="Email"
               variant="outlined"
               fullWidth
               margin="normal"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.password}
-              name="password"
-              error={touched.password && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
+              value={values.user?.email}
+              name="email"
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
               slotProps={{
                 formHelperText: {
                   sx: { fontSize: 15 }, // Increase font size of helper text
                 },
-                inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
-                },
                 input: {
-                  style: { fontSize: 18 },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={togglePasswordVisibility} edge="end">
-                        {visibility ? (
-                          <VisibilityIcon
-                            sx={{ fontSize: 22, color: "#018965" }}
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            sx={{ fontSize: 22, color: "#018965" }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
-
-            <TextField
-              type={inputType}
-              label="Confirm New Password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.confirmPassword}
-              name="confirmPassword"
-              error={touched.confirmPassword && Boolean(errors.confirmPassword)}
-              helperText={touched.confirmPassword && errors.confirmPassword}
-              slotProps={{
-                formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  style: { fontSize: 18 }, // font size for input text
                 },
                 inputLabel: {
                   style: { fontSize: 16 }, // font size for label text
-                },
-                input: {
-                  style: { fontSize: 18 },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={togglePasswordVisibility} edge="end">
-                        {visibility ? (
-                          <VisibilityIcon
-                            sx={{ fontSize: 22, color: "#018965" }}
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            sx={{ fontSize: 22, color: "#018965" }}
-                          />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
                 },
               }}
             />
@@ -259,10 +177,18 @@ const StudentResetPassword = () => {
                 style["btn--primary"],
               ].join(" ")}
             >
-              {isSubmitting ? "Resetting..." : "Reset"}
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
 
-            <div className={style["form-link--container"]}></div>
+            <div className={style["form-link--container"]}>
+              <span className={style["form-link"]}>
+                {" "}
+                Already Have an Account:{" "}
+                <a className={style["link__register"]} href="/driver/login">
+                  Login
+                </a>
+              </span>
+            </div>
           </Card>
         )}
       </Formik>
@@ -298,4 +224,4 @@ const StudentResetPassword = () => {
   );
 };
 
-export default StudentResetPassword;
+export default PasswordRequestDriver;

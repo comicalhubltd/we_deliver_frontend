@@ -139,7 +139,7 @@ navigate("/school/login")
           <BasePopup sx={{zIndex: 2 }}   id={idProfile} open={openProfile} anchor={anchorProfile}>
           <div className={navbar['profile--selection__container']}>
           <div className={navbar['profile']}>
-           <a href="/customer/customer-profile" className={[navbar['link--profile'], navbar['']].join(' ')}>Profile</a>
+           <a href="/customer/profile" className={[navbar['link--profile'], navbar['']].join(' ')}>Profile</a>
           </div>
           <div className={navbar['logout']}>
            <a onClick={logout} className={[navbar['link--profile'], navbar['']].join(' ')}>Logout</a>
@@ -681,7 +681,7 @@ navigate("/school/login")
     
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--drawer"], navbar[""]].join(" ")}
                         >
                           Profile

@@ -20,12 +20,12 @@ export const savePayment = createAsyncThunk(
 
 
 
-export const getAuthSchool = createAsyncThunk(
-  'payment/getAuthSchool',
-  async (_,  { rejectWithValue }) => {
+export const getPaymentById = createAsyncThunk(
+  'payment/getPaymentById',
+  async (id,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.get(BASE_URL + `/get-auth-school`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.get(BASE_URL + `/get/${id}`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       console.log(JSON.stringify("Dowara " + response.data))
       return response.data; // Return the saved user response
     } catch (error) {
@@ -36,13 +36,43 @@ export const getAuthSchool = createAsyncThunk(
 
 
 
-export const getPayments = createAsyncThunk(
-  'payment/getPayment',
+export const getPaymentsPending = createAsyncThunk(
+  'payment/getPaymentPending',
   async (_,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.get(BASE_URL + `/get-payments`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.get(BASE_URL + `/get-all-pending`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       console.log(JSON.stringify(response.data))
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+export const getPaymentsSuccess = createAsyncThunk(
+  'payment/getPaymentSuccess',
+  async (_,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.get(BASE_URL + `/get-all-success`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      console.log(JSON.stringify(response.data))
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
+export const getCustomerPayment = createAsyncThunk(
+  'payment/getCustomerPayment',
+  async (_,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.get(BASE_URL + `/get-all-customer-payment`,  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      console.log("Salamatu" + JSON.stringify(response.data))
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong"});
@@ -70,12 +100,12 @@ export const getExpiryDate = createAsyncThunk(
 
 
 const paymentSlice = createSlice({
-    name: 'School',
+    name: 'Payment',
     initialState: {
         payments: [],
         schools: [],
         expiryDate: "",
-        school: null,
+        payment: null,
         schoolStatus: 'idle',
         savingStatus: 'idle',
         fetchingStatus: 'idle',
@@ -101,28 +131,55 @@ const paymentSlice = createSlice({
           })
 
                 // GET AUTH SCHOOL
-          .addCase(getAuthSchool.pending, (state) => {
+          .addCase(getPaymentById.pending, (state) => {
             state.fetchingStatus = 'loading';
           })
-          .addCase(getAuthSchool.fulfilled, (state, action) => {
+          .addCase(getPaymentById.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
-            state.school = action.payload;
+            state.payment = action.payload;
           })
-          .addCase(getAuthSchool.rejected, (state) => {
+          .addCase(getPaymentById.rejected, (state) => {
             state.fetchingStatus = 'failed';
           })
 
 
 
                     // GET PAYMENTS 
-          .addCase(getPayments.pending, (state) => {
+          .addCase(getPaymentsPending.pending, (state) => {
             state.fetchingStatus = 'loading';
           })
-          .addCase(getPayments.fulfilled, (state, action) => {
+          .addCase(getPaymentsPending.fulfilled, (state, action) => {
             state.fetchingStatus = 'succeeded';
             state.payments = action.payload;
           })
-          .addCase(getPayments.rejected, (state) => {
+          .addCase(getPaymentsPending.rejected, (state) => {
+            state.fetchingStatus = 'failed';
+          })
+
+
+
+          .addCase(getPaymentsSuccess.pending, (state) => {
+            state.fetchingStatus = 'loading';
+          })
+          .addCase(getPaymentsSuccess.fulfilled, (state, action) => {
+            state.fetchingStatus = 'succeeded';
+            state.payments = action.payload;
+          })
+          .addCase(getPaymentsSuccess.rejected, (state) => {
+            state.fetchingStatus = 'failed';
+          })
+
+
+
+
+          .addCase(getCustomerPayment.pending, (state) => {
+            state.fetchingStatus = 'loading';
+          })
+          .addCase(getCustomerPayment.fulfilled, (state, action) => {
+            state.fetchingStatus = 'succeeded';
+            state.payments = action.payload;
+          })
+          .addCase(getCustomerPayment.rejected, (state) => {
             state.fetchingStatus = 'failed';
           })
 

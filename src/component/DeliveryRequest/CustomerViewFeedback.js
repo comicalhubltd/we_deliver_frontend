@@ -139,6 +139,42 @@ const CustomerViewFeedback = () => {
      navigate(`/delivery/feedback-description/${id}`);
   };
 
+
+   const handleNaviagateToPay= (id) => {
+     navigate(`/payment/pay-delivery/${id}`);
+  };
+
+
+
+
+    const STATUS_ACTIONS = {
+    'pending': (id) => (
+    <button
+       onClick={() => handleNaviagateToPay(id)}
+         className={[
+          style["btn"],
+          style["btn--block"],
+          style["btn--accent"],
+          ].join(" ")}
+          >
+        {"pay"}
+      </button>
+    ),
+    'success': (id) => (
+      <button
+
+      //  onClick={() => handleNaviagateToPay(id)}
+         className={[
+          style["btn"],
+          style["btn--block"],
+          style["btn--primar"],
+          ].join(" ")}
+          >
+        {"PAID"}
+      </button>
+    )
+  };
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -151,6 +187,8 @@ const CustomerViewFeedback = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  console.log("Checking for " + JSON.stringify(rows) );
 
   return (
     <>
@@ -209,7 +247,7 @@ const CustomerViewFeedback = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -327,18 +365,11 @@ const CustomerViewFeedback = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
+                    <a
                       href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
-                    </a>
-
-                     <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Request Delivery
                     </a>
                  
                   </div>
@@ -442,7 +473,12 @@ const CustomerViewFeedback = () => {
                     </a>
 
 
-                    
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -549,7 +585,7 @@ const CustomerViewFeedback = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -588,6 +624,12 @@ const CustomerViewFeedback = () => {
                           >
                             <TableHead>
                               <TableRow>
+                                <StyledTableCell align="left">
+                                  Pay To Deliver
+                                </StyledTableCell>
+                                   <StyledTableCell align="left">
+                                  View Feedback
+                                </StyledTableCell>
                                 <StyledTableCell>Item Type</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
@@ -601,9 +643,7 @@ const CustomerViewFeedback = () => {
                                  <StyledTableCell align="left">
                                   Status
                                 </StyledTableCell>
-                                <StyledTableCell align="left">
-                                   Action &nbsp;
-                                </StyledTableCell>
+                             
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -615,8 +655,26 @@ const CustomerViewFeedback = () => {
                                 : rows
                               ).map((row) => (
                                 <StyledTableRow key={row.id}>
+                                    <StyledTableCell align="right">
+                                         {STATUS_ACTIONS[row.payment?.status]?.(row.payment?.id)}
+            </StyledTableCell>
+
+                 <StyledTableCell align="right">
+                                                                  <button
+                                          
+                                           onClick={() => handleNaviagateToFeedbackDescription(row.id)}
+                                            className={[
+                                              style["btn"],
+                                              style["btn--block"],
+                                              style["btn--primary"],
+                                            ].join(" ")}
+                                          >
+                                            {"View Feedback"}
+                                          </button>
+                         </StyledTableCell>
+                                 
                                   <StyledTableCell component="th" scope="row">
-                                    {row.item?.type}
+                                    {row.payment?.status}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
                                     {row.from?.state + "/" + row.from?.lga}
@@ -631,19 +689,7 @@ const CustomerViewFeedback = () => {
                                      <span className={[dashboard["badge"], dashboard["badge--secondary"]].join(' ')}>{row.status}</span>  
                                   </StyledTableCell>
                                   <StyledTableCell align="right">
-                                <StyledTableCell align="right">
-                                                                  <button
-                                          
-                                           onClick={() => handleNaviagateToFeedbackDescription(row.id)}
-                                            className={[
-                                              style["btn"],
-                                              style["btn--block"],
-                                              style["btn--primary"],
-                                            ].join(" ")}
-                                          >
-                                            {"Feedback"}
-                                          </button>
-                                                                </StyledTableCell>
+                           
                                   </StyledTableCell>
                                 </StyledTableRow>
                               ))}

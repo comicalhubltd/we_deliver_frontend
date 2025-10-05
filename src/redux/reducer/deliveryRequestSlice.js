@@ -361,6 +361,20 @@ export const saveDeliveryRequest = createAsyncThunk(
 );
 
 
+export const saveDeliveryRequestOnline = createAsyncThunk(
+  'delivery/saveDeliveryRequestOnline',
+  async (classData,  { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.post(BASE_URL + '/add-online', classData, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
 
 export const getOnTransitDelivery = createAsyncThunk(
   'delivery/getOnTransitDelivery',
@@ -644,14 +658,26 @@ const deliveryRequestSlice = createSlice({
             state.savingStatus = 'loading';
           })
           .addCase(saveDeliveryRequest.fulfilled, (state, action) => {
-            state.classNamesSpecific = action.payload.classDto;
             state.savingStatus = 'succeeded';
           })
           .addCase(saveDeliveryRequest.rejected, (state) => {
             state.savingStatus = 'failed';
           })
 
-          // delete class
+
+
+
+           .addCase(saveDeliveryRequestOnline.pending, (state) => {
+            state.savingStatus = 'loading';
+          })
+          .addCase(saveDeliveryRequestOnline.fulfilled, (state, action) => {
+            state.savingStatus = 'succeeded';
+          })
+          .addCase(saveDeliveryRequestOnline.rejected, (state) => {
+            state.savingStatus = 'failed';
+          })
+
+        
 
           .addCase(deleteDeliveryRequest.pending, (state) => {
             state.deletingStatus = 'loading';

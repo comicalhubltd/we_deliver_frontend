@@ -168,8 +168,8 @@ const LoginCustomer = () => {
       localStorage.setItem("token", JSON.stringify(body.jwt));
      
 
-      // setAlertType("success");
-      //   setMessage("Login Successfully")
+      setAlertType("success");
+        setMessage("Login Successfully")
       // if statement here
       if (body.redirectUrl !== "error") {
         navigate(body.redirectUrl);
@@ -316,7 +316,7 @@ const LoginCustomer = () => {
                 {" "}
                 <a
                   className={style["link__register"]}
-                  href="/password/password-request"
+                  href="/password/password-request-customer"
                 >
                   Forgot Password
                 </a>

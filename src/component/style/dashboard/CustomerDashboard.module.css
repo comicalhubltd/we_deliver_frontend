@@ -389,7 +389,7 @@
  }
  
  .btn--accent {
-     background: var(--color-accent);
+     background: var(--color-secondary-text);
      color: #fff;
  }
 
@@ -406,7 +406,7 @@
  
  
  .btn--accent:hover {
-     background: #e6b915;
+     background: #06af93;
  }
  
  .btn--block {

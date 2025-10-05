@@ -4,12 +4,26 @@ import api from '../../component/routing/Interceptor';
 
 const BASE_URL = `${process.env.REACT_APP_API_URL}/v1/api/password`;
 
-export const sendPasswordRequest = createAsyncThunk(
-  'teacher/sendPasswordRequest',
+export const sendPasswordRequestCustomer = createAsyncThunk(
+  'teacher/sendPasswordRequestCustomer',
   async (email, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.post(BASE_URL + `/save-password-request/${email}`, {}, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      const response = await api.post(BASE_URL + `/save-password-request-customer/${email}`, {}, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
+      return response.data; // Return the saved user response
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  }
+);
+
+
+export const sendPasswordRequestDriver = createAsyncThunk(
+  'teacher/sendPasswordRequestDriver',
+  async (email, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await api.post(BASE_URL + `/save-password-request-customer/${email}`, {}, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -33,13 +47,13 @@ export const sendPasswordReset = createAsyncThunk(
 );
 
 
-export const sendPasswordResetStudent = createAsyncThunk(
-  'password/sendPasswordResetStudent',
+export const sendPasswordResetCustomer = createAsyncThunk(
+  'password/sendPasswordResetCustomer',
   async (passwordResetRequest, { rejectWithValue }) => {
     try {
       console.log(passwordResetRequest)
       const token = localStorage.getItem('token');
-      const response = await api.post(BASE_URL + `/save-reset-password-student`, passwordResetRequest, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
+      const response = await api.post(BASE_URL + `/save-reset-password-customer`, passwordResetRequest, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -48,13 +62,13 @@ export const sendPasswordResetStudent = createAsyncThunk(
 );
 
 
-export const sendPasswordResetTeacher = createAsyncThunk(
-  'password/sendPasswordResetTeacher',
+export const sendPasswordResetDriver = createAsyncThunk(
+  'password/sendPasswordResetDriver',
   async (passwordResetRequest, { rejectWithValue }) => {
     try {
       console.log(passwordResetRequest)
       const token = localStorage.getItem('token');
-      const response = await api.post(BASE_URL + `/save-reset-password-teacher`, passwordResetRequest, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
+      const response = await api.post(BASE_URL + `/save-reset-password-driver`, passwordResetRequest, { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
       return response.data; // Return the saved user response
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
@@ -113,14 +127,28 @@ const passwordSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-          .addCase(sendPasswordRequest.pending, (state) => {
+          .addCase(sendPasswordRequestCustomer.pending, (state) => {
             state.savingStatus = 'loading';
           })
-          .addCase(sendPasswordRequest.fulfilled, (state, action) => {
+          .addCase(sendPasswordRequestCustomer.fulfilled, (state, action) => {
             state.savingStatus = 'succeeded';
            
           })
-          .addCase(sendPasswordRequest.rejected, (state) => {
+          .addCase(sendPasswordRequestCustomer.rejected, (state) => {
+            state.savingStatus = 'failed';
+          })
+
+
+
+
+            .addCase(sendPasswordRequestDriver.pending, (state) => {
+            state.savingStatus = 'loading';
+          })
+          .addCase(sendPasswordRequestDriver.fulfilled, (state, action) => {
+            state.savingStatus = 'succeeded';
+           
+          })
+          .addCase(sendPasswordRequestDriver.rejected, (state) => {
             state.savingStatus = 'failed';
           })
 
@@ -139,14 +167,14 @@ const passwordSlice = createSlice({
           
           // Save Password request student
 
-          .addCase(sendPasswordResetStudent.pending, (state) => {
+          .addCase(sendPasswordResetCustomer.pending, (state) => {
             state.savingStatus = 'loading';
           })
-          .addCase(sendPasswordResetStudent.fulfilled, (state, action) => {
+          .addCase(sendPasswordResetCustomer.fulfilled, (state, action) => {
             state.savingStatus = 'succeeded';
            
           })
-          .addCase(sendPasswordResetStudent.rejected, (state) => {
+          .addCase(sendPasswordResetCustomer.rejected, (state) => {
             state.savingStatus = 'failed';
           })
 
@@ -154,14 +182,14 @@ const passwordSlice = createSlice({
 
           // Save Teacher request student
 
-          .addCase(sendPasswordResetTeacher.pending, (state) => {
+          .addCase(sendPasswordResetDriver.pending, (state) => {
             state.savingStatus = 'loading';
           })
-          .addCase(sendPasswordResetTeacher.fulfilled, (state, action) => {
+          .addCase(sendPasswordResetDriver.fulfilled, (state, action) => {
             state.savingStatus = 'succeeded';
            
           })
-          .addCase(sendPasswordResetTeacher.rejected, (state) => {
+          .addCase(sendPasswordResetDriver.rejected, (state) => {
             state.savingStatus = 'failed';
           })
 

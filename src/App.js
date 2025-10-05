@@ -13,16 +13,16 @@ import Delivered from './component/DeliveryRequest/Delivered';
 import AcceptRequest from './component/newRequest/AcceptRequest';
 import AdminDashboard from './component/dashboards/AdminDashboard';
 import DriverDashboard from './component/dashboards/DriverDashboard';
-import PasswordRequest from './component/auth/PasswordRequest';
-import ResetPassword from './component/auth/ResetPassword';
+import PasswordRequestCustomer from './component/auth/PasswordRequestCustomer';
+import ResetPasswordCustomer from './component/auth/ResetPasswordCustomer';
 import NavBar from './component/Chunks/NavBar';
-import PayUS from './component/subscription/PayUs';
-import Payments from './component/subscription/Payments';
+import PayUS from './component/payment/PayUs';
+import PaidDelivery from './component/payment/PaidDelivery';
+import CustomerPayments from './component/payment/CustomerPayments';
 import CustomerProfile from './component/customer/CustomerProfile';
 import Services from './component/home/Services';
 import ContactUs from './component/home/ContactUs';
 import AboutUs from './component/home/AboutUs';
-import StudentResetPassword from './component/driver/StudentResetPassword';
 import DriverRegistration from './component/driver/DriverRegistration';
 import LoginAdmin from './component/auth/LoginAdmin';
 import LoginCustomer from './component/auth/LoginCustomer';
@@ -58,6 +58,10 @@ import DriverLocationIdentifier from './component/location/DriverLocationFinder'
 import DriverMovements from './component/driver/DriverMovements';
 import ViewDriverVehicle from './component/driver/ViewDriverVehicle';
 import AdminLocationIdentifier from './component/location/AdminLocationView';
+import AddDeliveryRequestOnline from './component/DeliveryRequest/AddDeliveryRequestOnline';
+import UnpaidDelivery from './component/payment/UnpaidDelivery';
+import PasswordRequestDriver from './component/auth/PasswordRequestDriver';
+import ResetPasswordDriver from './component/auth/ResetPasswordDriver';
 
 
 function App() {
@@ -83,6 +87,7 @@ function App() {
         <Route exact path='/delivery/feedback-description/:id'  element={ <FeedbackDescription/>}/>
         <Route exact path='/delivery/delivery-details/:id'  element={ <DeliveryDetails/> }/>
         <Route exact path='/delivery/add-delivery'  element={ <AddDeliveryRequest/> }/>
+        <Route exact path='/delivery/add-delivery-online'  element={ <AddDeliveryRequestOnline/> }/>
          <Route exact path='/delivery/update-delivery/:id'  element={ <UpdateDelivery/> }/>
          {/*new request releted Releted*/}
    
@@ -91,16 +96,18 @@ function App() {
          <Route exact path='/delivery/add-request-to-transit/:driverId'  element={ <AddRequestToTransit/> }/> 
           
               {/*Payment Releted*/}
-        <Route exact path='/payment/pay-subscription'  element={ <PayUS/> }/>
-        <Route exact path='/payment/all-payments'  element={ <Payments/> }/>
-
+        <Route exact path='/payment/pay-delivery/:id'  element={ <PayUS/> }/>
+        <Route exact path='/payment/paid-deliveries'  element={ <PaidDelivery/> }/>
+         <Route exact path='/payment/unpaid-deliveries'  element={ <UnpaidDelivery/> }/>
+        <Route exact path='/payment/all-customer-payments'  element={ <CustomerPayments/> }/>
           {/*Password Releted*/}
-        <Route exact path='/password/password-request'  element={<PasswordRequest/>}/>
-         <Route exact path='/password/password-reset'  element={<ResetPassword/>}/>
-         <Route exact path='/password/password-reset-student'  element={<StudentResetPassword/>}/>
+        <Route exact path='/password/password-request-customer'  element={<PasswordRequestCustomer/>}/>
+         <Route exact path='/password/password-request-driver'  element={<PasswordRequestDriver/>}/>
+         <Route exact path='/password/password-reset-customer'  element={<ResetPasswordCustomer/>}/>
+         <Route exact path='/password/password-reset-driver'  element={<ResetPasswordDriver/>}/>
         {/*school Releted*/}
            
-            <Route exact path='/customer/customer-profile' element={ <CustomerProfile/> }/>
+            <Route exact path='/customer/profile' element={ <CustomerProfile/> }/>
 
                {/*Admin Releted*/}
               <Route exact path='/delivery/view-all-delivery'  element={ <ViewAllRequest/> }/>

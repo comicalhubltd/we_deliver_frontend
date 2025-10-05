@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  getCustomerDeliveredDelivery, getCustomerAllDelivery
+  getCustomerDeliveredDelivery, getCustomerAllDelivery, getOnTransitDelivery
  
 } from "../../redux/reducer/deliveryRequestSlice";
 import { object, string, array } from "yup";
@@ -30,6 +30,7 @@ import ActionMenu from "../utility/ActionMenu";
 import Loading from "../Chunks/loading";
 import { useLocation, useParams } from "react-router-dom";
 import { getExpiryDate } from "../../redux/reducer/paymentSlice";
+import CustomerLocationIdentifier from "../location/CustomerLocationView";
 
 // Import for dashboard Below
 
@@ -108,7 +109,7 @@ const CustomerDashboard = () => {
  
 
    const deliveryState = useSelector((state) => state.deliveryRequests);
-   const { customerDeliveredDelivery, customerDeliveryRequests,  fetchingStatus } = deliveryState;
+   const { customerDeliveredDelivery, onTransitDelivery, customerDeliveryRequests,  fetchingStatus } = deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -140,6 +141,7 @@ const CustomerDashboard = () => {
    const fetchData = () => {
      dispatch(getCustomerDeliveredDelivery());
      dispatch(getCustomerAllDelivery());
+     dispatch(getOnTransitDelivery());
    };
 
   const handleClose = (event, reason) => {
@@ -153,6 +155,19 @@ const CustomerDashboard = () => {
    const navigateToFeedback = () => {
     navigate("/delivery/customer-view-feedback");
   };
+
+     const handleNavigateToPayments = () => {
+    navigate("/payment/all-customer-payments");
+  };
+
+
+
+  
+
+    const handleNavigateToAddDelivery = () => {
+    navigate("/delivery/add-delivery-online");
+  };
+
 
   console.log("ARRAY " + rows);
 
@@ -234,7 +249,7 @@ const CustomerDashboard = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -352,18 +367,11 @@ const CustomerDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
+                    <a
                       href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
-                    </a>
-
-                     <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Request Delivery
                     </a>
                  
                   </div>
@@ -467,7 +475,12 @@ const CustomerDashboard = () => {
                     </a>
 
 
-                    
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -574,7 +587,7 @@ const CustomerDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -686,7 +699,7 @@ const CustomerDashboard = () => {
                                     >
                                       <div class={dashboard["card_body"]}>
                                         <div class={dashboard["card--small-head"]}>
-                                          View Feedback
+                                          View Feedback and pay
                                         </div>
                   
                                         <button
@@ -698,35 +711,13 @@ const CustomerDashboard = () => {
                                           ].join(" ")}
                                         >
                                           {" "}
-                                          View Feedback
+                                          View Feedback and pay
                                         </button>
                                       </div>
                                     </div>
                 </div>
 
-                {/* <div class={[dashboard['card--count'], dashboard['card--primary']].join(' ')}>
-            <div class={dashboard['card_body']}>
-            
-            <div class={dashboard['card_button_and_icon']}>
-            
-            <span class={dashboard['icon-container']}>
-            <svg class={[dashboard['icon--big'], dashboard['icon--primary']].join(' ')}>
-            <use href="../images/sprite.svg#school"></use>
-            </svg>
-            </span>
-
-            <div>{rows.find((r) => r.school.name)?.school.name ?? 0}</div>
-            
-          
-            </div>
-            
-            
-            
-           
-            
-            </div>
-            
-            </div> */}
+               
 
                 <div
                   class={[dashboard["grid"], dashboard["grid--1x2"]].join(" ")}
@@ -753,7 +744,7 @@ const CustomerDashboard = () => {
                         <span
                           class={[dashboard["badge"], dashboard[""]].join(" ")}
                         >
-                          { 0}
+                          {onTransitDelivery.length}
                         </span>
                       </div>
                       Current Movements
@@ -761,33 +752,52 @@ const CustomerDashboard = () => {
                   </div>
 
 
-                  <div
-                    class={[
-                      dashboard["card--add"],
-                      dashboard["card--primary"],
-                    ].join(" ")}
-                  >
-                    <div class={dashboard["card_body"]}>
-                      <div class={dashboard["card--small-head"]}>
-                        Accept Request
-                      </div>
-
-                      <button
-                        onClick={navigateAddDeliveryRequest}
-                        className={[
-                          dashboard["btn"],
-                          dashboard["btn--block"],
-                          dashboard["btn--primary"],
-                        ].join(" ")}
-                      >
-                        {" "}
-                        Add Delivery Requests
-                      </button>
-                    </div>
-                  </div>
+                         <div
+                                 class={[
+                            dashboard["card--confirmation"],
+                              dashboard["card--primary"],
+                                                         ].join(" ")}
+                                                       >
+                                                         <div class={dashboard["card_body"]}>
+                                                           <div  
+                                                            style={{
+                                                            width: "100%",
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            zIndex: 1
+                                                            }} 
+                                                            class={dashboard["card--small-head"]}>
+                                                             <button
+                                                             
+                                                             onClick={handleNavigateToPayments}
+                                                               className={[
+                                                                 dashboard["btn"],
+                                                                 dashboard["btn--block"],
+                                                                 dashboard["btn--primary"],
+                                                               ].join(" ")}
+                                                             >
+                                                               Payments
+                                                             </button>
+               
+                                                                <button
+                                                             
+                                                              onClick={handleNavigateToAddDelivery}
+                                                               className={[
+                                                                 dashboard["btn"],
+                                                                 dashboard["btn--block"],
+                                                                 dashboard["btn--accent"],
+                                                               ].join(" ")}
+                                                             >
+                                                               Add Delivery
+                                                             </button>
+                                                           </div>
+                                                         </div>
+                                                       </div>
+                          
+                             
                 </div>
 
-               
+                 <CustomerLocationIdentifier/>
               </div>
             </Box>
             {/*This Area is for Snackbar*/}

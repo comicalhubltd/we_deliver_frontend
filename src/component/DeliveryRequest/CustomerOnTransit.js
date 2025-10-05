@@ -220,7 +220,7 @@ const CustomerOnTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/customer-profile"
+                          href="/customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -338,18 +338,11 @@ const CustomerOnTransit = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
+                    <a
                       href="/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
-                    </a>
-
-                     <a
-                      href="/delivery/add-delivery"
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
-                    >
-                      Request Delivery
                     </a>
                  
                   </div>
@@ -453,7 +446,12 @@ const CustomerOnTransit = () => {
                     </a>
 
 
-                    
+                    <a
+                      href="/delivery/add-delivery"
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Deliveries
+                    </a>
                   </div>
                 </div>
 
@@ -560,7 +558,7 @@ const CustomerOnTransit = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                      href="/customer/customer-profile"
+                      href="/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

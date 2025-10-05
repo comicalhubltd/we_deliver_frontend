@@ -16,12 +16,10 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { saveDeliveryRequest, resetStatus } from "../../redux/reducer/deliveryRequestSlice";
+import { saveDeliveryRequestOnline, resetStatus } from "../../redux/reducer/deliveryRequestSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LngAndLatStateData } from "../utility/LngAndLatStateData";
-// Import for dashboard Below
-
 import React from "react";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import navbar from "../style/dashboard/CustomerDashboard.module.css";
@@ -103,7 +101,7 @@ background-size: cover;;`,
   },
 }));
 
-const AddDeliveryRequest = () => {
+const AddDeliveryRequestOnline = () => {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -128,8 +126,6 @@ const AddDeliveryRequest = () => {
   const handleClickAway = () => {
     setAnchorProfile(null);
   };
-
-  // ABOVE IS DRAWER LOGIC BELOW IS THE APP LOGIC
 
    const deliveryRegistrationSchema = object({
      from: object({
@@ -163,33 +159,13 @@ const AddDeliveryRequest = () => {
     }),
 
  item: object({
-    weight: string()
-      .max(5, "Weight must not exceed 5 characters")
-      .required("weight is required"),
     type: string()
     .max(15, "Type must not exceed 15 characters"),
     description: string()
     .max(200, "Description must not exceed 200 characters"),
-     size: object({ 
-     unit: string()
-      .max(5, "Unit must not exceed 5 characters")
-      .required("Unit is required"),
-     width:  number()
-      .positive("Must be positive number")
-      .min(0.01, "Width must be greater than 0")
-      .required("Width is required"),
-      height: number()
-      .positive("Must be positive number")
-      .min(0.01, "Height must be greater than 0")
-      .required("Height is required"),
-      length: number()
-      .positive("Must be positive number")
-      .min(0.01, "Lenght must be greater than 0")
-      .required("Length is required"),
-      }),
      value: number()
     .min(0.01, "Value must be greater than 0")
-    .required("Value Name is required")
+    .required("Value is required")
     }),
 
     pickerName: string()
@@ -230,7 +206,7 @@ const AddDeliveryRequest = () => {
     1: "Item Description",
     2: "Pickup Address",
     3: "Destination Address",
-    4: "Size Measurement",
+    4: "Payment Details",
     5: "Picker Contact"
   }
 
@@ -248,15 +224,8 @@ const AddDeliveryRequest = () => {
 
  const initialValues = {
                     item: {
-                    weight: "",
                     type: "",
                     description: "",
-                    size: {
-                    unit: "",
-                    width: 0,
-                    height: 0,
-                    length: 0
-                    },
                     value: 0
                     },
           
@@ -286,46 +255,40 @@ const AddDeliveryRequest = () => {
                     }
                   };
 
-  // Function to convert measurements to meters
-  const convertToMeters = (value, unit) => {
-    const conversions = {
-      'Inch': 0.0254,
-      'Feet': 0.3048,
-      'CM': 0.01
-    };
-    return value * (conversions[unit] || 1);
-  };
-
   // Function to calculate delivery fees
   const calculateDeliveryFees = (values) => {
     const itemValue = parseFloat(values.item?.value) || 0;
-    const weight = parseFloat(values.item?.weight) || 0;
     const distance = distanceInfo?.distance ? parseFloat(distanceInfo.distance) : 0;
-    const width = parseFloat(values.item?.size?.width) || 0;
-    const length = parseFloat(values.item?.size?.length) || 0;
-    const unit = values.item?.size?.unit || '';
 
     let deliveryFee = 0;
 
-    // Weight charge (1% per kg)
-    const weightCharge = (Math.ceil(weight) / 100) * itemValue;
-    deliveryFee += weightCharge;
-
-    // Distance charge (0.5% per 100km)
-    const distanceCharge = (Math.ceil(distance / 100) * 0.5 / 100) * itemValue;
-    deliveryFee += distanceCharge;
-
-    // Size charge (1% per square meter)
-    const widthInMeters = convertToMeters(width, unit);
-    const lengthInMeters = convertToMeters(length, unit);
-    const squareMeters = widthInMeters * lengthInMeters;
-    const sizeCharge = (Math.ceil(squareMeters) / 100) * itemValue;
-    deliveryFee += sizeCharge;
+    // Distance charge calculation
+    // 0-100km: 2% of item value
+    // 100-300km: 2% + 0.5% per additional 100km
+    // Above 300km: accumulated from above + 1% per 100km
+    
+    if (distance <= 100) {
+      // 0-100km: 2%
+      deliveryFee = (2 / 100) * itemValue;
+    } else if (distance <= 300) {
+      // 100-300km: 2% base + 0.5% per 100km
+      const baseCharge = (2 / 100) * itemValue;
+      const additionalDistance = distance - 100;
+      const additionalCharge = (Math.ceil(additionalDistance / 100) * 0.5 / 100) * itemValue;
+      deliveryFee = baseCharge + additionalCharge;
+    } else {
+      // Above 300km: 2% + (200km worth at 0.5%) + remaining at 1%
+      const baseCharge = (2 / 100) * itemValue; // 0-100km
+      const midRangeCharge = (2 * 0.5 / 100) * itemValue; // 100-300km (2 x 100km blocks at 0.5%)
+      const additionalDistance = distance - 300;
+      const highRangeCharge = (Math.ceil(additionalDistance / 100) * 1 / 100) * itemValue;
+      deliveryFee = baseCharge + midRangeCharge + highRangeCharge;
+    }
 
     // Insurance (2% of value)
     const insurance = (2 / 100) * itemValue;
 
-    // VAT (assumed 7.5% of delivery fee)
+    // VAT (7.5% of delivery fee)
     const vat = (7.5 / 100) * deliveryFee;
 
     // Total amount
@@ -356,7 +319,6 @@ const AddDeliveryRequest = () => {
         );
         
         setDistanceInfo(result);
-        console.log("Resulta" + result);
         setIsCalculating(false);
       }
     } else {
@@ -372,20 +334,15 @@ const AddDeliveryRequest = () => {
     setSelectedFromState(value);
     setFieldValue('from.state', value);
     setFieldValue("from.lga", "");
-    // setFieldValue('calculatedDistance', '');
-    // setFieldValue('estimatedDuration', '');
   };
 
   const handleToStateChange = async (value, setFieldValue) => {
     setSelectedToState(value);
     setFieldValue('to.state', value);
     setFieldValue("to.lga", "");
-    // setFieldValue('calculatedDistance', '');
-    // setFieldValue('estimatedDuration', '');
   };
 
   const handleFormSubmit = async (values, { resetForm }) => {
-    // Calculate fees before submission
     const fees = calculateDeliveryFees(values);
     const submissionData = {
       ...values,
@@ -399,7 +356,7 @@ const AddDeliveryRequest = () => {
     console.log(submissionData);
 
     try {
-      const result = await dispatch(saveDeliveryRequest(submissionData)).unwrap();
+      const result = await dispatch(saveDeliveryRequestOnline(submissionData)).unwrap();
       console.log(result);
       setAlertType("success");
       setMessage(result.message);
@@ -745,7 +702,7 @@ const AddDeliveryRequest = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -851,8 +808,6 @@ const AddDeliveryRequest = () => {
                 Other
                </MenuItem>
                </TextField>
-                  
-                  
 
                           <TextField
                                     label="Description"
@@ -1169,21 +1124,8 @@ const AddDeliveryRequest = () => {
                        {step === 4 && 
                       (
                        <>
-
-
-                       
-                            <div
-                             style={{
-                               width: "100%",
-                               display: "flex",
-                               justifyContent: "center",
-                             }}
-                           >
-
-                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
-                        <TextField
-                        label="Price Value (N)"
+                     <TextField
+                        label="Price Value (₦)"
                         variant="outlined"
                         fullWidth
                         margin="normal"
@@ -1205,170 +1147,6 @@ const AddDeliveryRequest = () => {
                           },
                         }}
                      />
-
-                    </FormControl>
-
-                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
-                          <TextField
-                        label="Weight (KG)"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.weight}
-                        name="item.weight"
-                        error={touched.item?.weight && Boolean(errors.item?.weight)}
-                        helperText={touched.item?.weight && errors.item?.weight}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                      />
-                      
-                    </FormControl>
-
-                    <FormControl sx={{ m: 1, minWidth: "30%" }}>
-
-                              <TextField
-                        select
-                        label="Unit"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.size?.unit}
-                        name="item.size.unit"
-                        error={touched.item?.size?.unit && Boolean(errors.item?.size?.unit)}
-                        helperText={touched.item?.size?.unit && errors.item?.size?.unit}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                     >
-               <MenuItem sx={{ fontSize: 18 }}  value={"Inch"}>
-                 Inch
-               </MenuItem>
-               <MenuItem sx={{ fontSize: 18 }}  value={"Feet"}>
-                 Feet
-               </MenuItem>
-                <MenuItem sx={{ fontSize: 18 }}  value={"CM"}>
-                 CM
-               </MenuItem>
-           </TextField>
-                      
-                    </FormControl>
-
-                           </div>
-
-                       
-                   
-
-                     
-
-               
-
-                            <div
-                             style={{
-                               width: "100%",
-                               display: "flex",
-                               justifyContent: "center",
-                             }}
-                           >
-                                   <FormControl sx={{ m: 1, minWidth: "30%" }}>
-               <TextField
-                        label="Height"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.size?.height}
-                        name="item.size.height"
-                        error={touched.item?.size?.height && Boolean(errors.item?.size?.height)}
-                        helperText={touched.item?.size?.height && errors.item?.size?.height}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                      />              
-         </FormControl>
-
-           <FormControl sx={{ m: 1, minWidth: "30%" }}>
-              <TextField
-                        label="Width"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.size?.width}
-                        name="item.size.width"
-                        error={touched.item?.size?.width && Boolean(errors.item?.size?.width)}
-                        helperText={touched.item?.size?.width && errors.item?.size?.width}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                      />                
-         </FormControl>
-
-           <FormControl sx={{ m: 1, minWidth: "30%" }}>
-                          <TextField
-                        label="Length"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.size?.length}
-                        name="item.size.length"
-                        error={touched.item?.size?.length && Boolean(errors.item?.size?.length)}
-                        helperText={touched.item?.size?.length && errors.item?.size?.length}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                      />                 
-         </FormControl>
-                           </div>
 
                   <>
                                     <div
@@ -1709,7 +1487,7 @@ const AddDeliveryRequest = () => {
   );
 };
 
-export default AddDeliveryRequest;
+export default AddDeliveryRequestOnline;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
