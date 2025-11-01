@@ -98,7 +98,9 @@ const ResponsiveDrawer = () => {
               >
                 <div className={navbar["profile--selection__container"]}>
                   <div className={navbar["profile"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--profile"], navbar[""]].join(
                         " "
                       )}
@@ -213,25 +215,29 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/customer/home"
+                  href="#/
+             customer/home"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Home
                 </a>
                 <a
-                  href="/session/add-session"
+                  href="#/
+             session/add-session"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add Session
                 </a>
                 <a
-                  href="/session/setup-session"
+                  href="#/
+             session/setup-session"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Setup Session
                 </a>
                 <a
-                  href="/school/upload-school-logo"
+                  href="#/
+             school/upload-school-logo"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add School Logo
@@ -282,13 +288,15 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/student/add-student"
+                  href="#/
+             student/add-student"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add Student
                 </a>
                 <a
-                  href="/student/view-students"
+                  href="#/
+             student/view-students"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   View Students
@@ -339,37 +347,43 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/class/jss-classes"
+                  href="#/
+             class/jss-classes"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   JSS Classes
                 </a>
                 <a
-                  href="/class/sss-classes"
+                  href="#/
+             class/sss-classes"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   SSS Classes
                 </a>
                 <a
-                  href="/class/primary-classes"
+                  href="#/
+             class/primary-classes"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Primary Classes
                 </a>
                 <a
-                  href="/class/add-jss-class"
+                  href="#/
+             class/add-jss-class"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add JSS Class
                 </a>
                 <a
-                  href="/class/add-sss-class"
+                  href="#/
+             class/add-sss-class"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add SSS Class
                 </a>
                 <a
-                  href="/class/add-pri-class"
+                  href="#/
+             class/add-pri-class"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add Primary Class
@@ -420,13 +434,15 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/subject/view-subjects"
+                  href="#/
+             subject/view-subjects"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   View Subjects
                 </a>
                 <a
-                  href="/subject/add-subjects"
+                  href="#/
+             subject/add-subjects"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add Subjects
@@ -477,13 +493,15 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/teacher/add-teacher"
+                  href="#/
+             teacher/add-teacher"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Add Teacher
                 </a>
                 <a
-                  href="/teacher/view-teachers"
+                  href="#/
+             teacher/view-teachers"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   View Teachers
@@ -534,7 +552,8 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/settings/disable-adding-score"
+                  href="#/
+             settings/disable-adding-score"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Manage Score Input
@@ -585,13 +604,15 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/result/show-results"
+                  href="#/
+             result/show-results"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Generate Result
                 </a>
                 <a
-                  href="/result/student-result-by-regNo"
+                  href="#/
+             result/student-result-by-regNo"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Search Result
@@ -618,7 +639,8 @@ const ResponsiveDrawer = () => {
                       navbar["icon--primary"],
                     ].join(" ")}
                   >
-                    <use href="/images/sprite.svg#fee"></use>
+                    <use href="#/
+             images/sprite.svg#fee"></use>
                   </svg>
                   <p className={navbar["collapsible__heading"]}>School Fees</p>
                 </div>
@@ -635,14 +657,16 @@ const ResponsiveDrawer = () => {
                       navbar["collapsible--chevron"],
                     ].join(" ")}
                   >
-                    <use href="/images/sprite.svg#chevron"></use>
+                    <use href="#/
+             images/sprite.svg#chevron"></use>
                   </svg>
                 </span>
               </header>
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/receipt/view-student-reciept"
+                  href="#/
+             receipt/view-student-reciept"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   School Fees
@@ -693,13 +717,15 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/payment/pay-subscription"
+                  href="#/
+             payment/pay-subscription"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Make Payment
                 </a>
                 <a
-                  href="/payment/all-payments"
+                  href="#/
+             payment/all-payments"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Payments History
@@ -726,7 +752,8 @@ const ResponsiveDrawer = () => {
                       navbar["icon--primary"],
                     ].join(" ")}
                   >
-                    <use href="/images/sprite.svg#profile"></use>
+                    <use href="#/
+             images/sprite.svg#profile"></use>
                   </svg>
                   <p className={navbar["collapsible__heading"]}>Profile</p>
                 </div>
@@ -743,14 +770,16 @@ const ResponsiveDrawer = () => {
                       navbar["collapsible--chevron"],
                     ].join(" ")}
                   >
-                    <use href="/images/sprite.svg#chevron"></use>
+                    <use href="#/
+             images/sprite.svg#chevron"></use>
                   </svg>
                 </span>
               </header>
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="/customer/profile"
+                  href="#/
+             customer/profile"
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Profile

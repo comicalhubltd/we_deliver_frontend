@@ -432,7 +432,8 @@ const LoginCustomer = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Register here:{" "}
-                <a className={style["link__register"]} href="/customer/register">
+                <a className={style["link__register"]} href="#/
+             customer/register">
                   Register
                 </a>
               </span>
@@ -440,7 +441,8 @@ const LoginCustomer = () => {
                 {" "}
                 <a
                   className={style["link__register"]}
-                  href="/password/password-request-customer"
+                  href="#/
+             password/password-request-customer"
                 >
                   Forgot Password
                 </a>

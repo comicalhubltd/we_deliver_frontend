@@ -454,7 +454,9 @@ const AddDeliveryRequest = () => {
               >
                 <div className={navbar["profile--selection__container"]}>
                   <div className={navbar["profile"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--profile"], navbar[""]].join(
                         " "
                       )}
@@ -565,7 +567,9 @@ const AddDeliveryRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/home"
+                    <a
+             href="#/
+             customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -615,32 +619,44 @@ const AddDeliveryRequest = () => {
                     </span>
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
-                   <href="#/delivery/customer-pending"
+                   <a
+             href="#/
+             delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
                     </a>
-                     <href="#/delivery/customer-awaiting-transit"
+                     <a
+             href="#/
+             delivery/customer-awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
-                    <href="#/delivery/customer-on-transit"
+                    <a
+             href="#/
+             delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
                     </a>
-                     <href="#/delivery/customer-arrived"
+                     <a
+             href="#/
+             delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
-                    <href="#/delivery/customer-delivered"
+                    <a
+             href="#/
+             delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
-                    <href="#/delivery/add-delivery"
+                    <a
+             href="#/
+             delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
@@ -691,7 +707,9 @@ const AddDeliveryRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/location/show-locations"
+                    <a
+             href="#/
+             location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -719,7 +737,8 @@ const AddDeliveryRequest = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#profile"></use>
+                        <use href="#/
+             images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -736,13 +755,16 @@ const AddDeliveryRequest = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

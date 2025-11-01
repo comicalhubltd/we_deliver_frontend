@@ -266,7 +266,8 @@ const ResetPasswordDriver = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Already Have an Account:{" "}
-                <a className={style["link__register"]} href="/driver/login">
+                <a className={style["link__register"]} href="#/
+             driver/login">
                   Login
                 </a>
               </span>

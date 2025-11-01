@@ -361,48 +361,13 @@ const Home = () => {
                 </p>
             </header>
 
-             <div className={home["container"]}>
-                <div className={[home["card"], home["testimonial"]].join(' ')}>
-                    <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
-                     <div className={home["testimonial__image"]}>
-                         <img  src="/images/hammaaminu.jpg" alt="A happy smiling customer"/>
-                        <span className={home["icon-container"]}>
-                             <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
-                                 <use href="../images/sprite.svg#quote"></use>
-                               </svg>
-                         </span>
-                
-                        
-                     </div>
-                     
-                     <blockquote className={home["quote"]}>
-                         <p className={home["quote__text"]} >Parents are more involved now because everything is transparent and easy to access.</p>  
-                       
-                     
-                             <footer>
-                                 <div className={home["media"]}>
-                                     {/* <div className={home["media__image"]} >
-                                         <svg className={[home["icon"], home["icon--secondary"], home["quote__line"]].join(' ')}>
-                                             <use href="../images/sprite.svg#hyphen"></use>
-                                           </svg>
-                                     </div> */}
-                                      <div className={home["media__body"]}>
-                                         <h3 className={[home["media__title"], home["quote__author"]].join(' ')} >AL-AMIN SAHABO</h3>
-                                       <p className={home["quote__organization"]}>BOT Ray of Shunshine.</p>
-                                     </div>
-                                 </div>
-                             </footer>
-                     </blockquote>
-                    </div>
-                
-                </div>
-            </div>
+           
 
             <div className={home["container"]}>
                 <div className={[home["card"], home["testimonial"]].join(' ')}>
                     <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
                      <div className={home["testimonial__image"]}>
-                         <img  src="/images/saadan.jpg" alt="A happy smiling customer"/>
+                         <img  src="/images/customer1.png" alt="A happy smiling customer"/>
                         <span className={home["icon-container"]}>
                              <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
                                  <use href="../images/sprite.svg#quote"></use>
@@ -413,7 +378,7 @@ const Home = () => {
                      </div>
                      
                      <blockquote className={home["quote"]}>
-                          <p className={home["quote__text"]} >It's like having an entire admin team in one portal. Simple, smart, and time-saving..</p>
+                          <p className={home["quote__text"]} >We Deliver Doesn't just move packages, they move peace of mind</p>
                              <footer>
                                  <div className={home["media"]}>
                                      <div className={home["media__image"]} >
@@ -422,8 +387,8 @@ const Home = () => {
                                            </svg>
                                      </div>
                                      <div className={home["media__body"]}>
-                                         <h3 className={[home["media__title"], home["quote__author"]].join(' ')} >SA’AD ADAMU ESQ</h3>
-                                       <p className={home["quote__organization"]}>Founder Sadan Global & CO.</p>
+                                         <h3 className={[home["media__title"], home["quote__author"]].join(' ')} >IMAM ALIYU</h3>
+                                     
                                      </div>
                                  </div>
                              </footer>
@@ -437,7 +402,7 @@ const Home = () => {
                 <div className={[home["card"], home["testimonial"]].join(' ')}>
                     <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
                      <div className={home["testimonial__image"]}>
-                         <img  src="/images/aminu.jpg" alt="A happy smiling customer"/>
+                         <img  src="/images/customer2.png" alt="A happy smiling customer"/>
                         <span className={home["icon-container"]}>
                              <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
                                  <use href="../images/sprite.svg#quote"></use>
@@ -448,7 +413,7 @@ const Home = () => {
                      </div>
                      
                      <blockquote className={home["quote"]}>
-                         <p className={home["quote__text"]} >Clean designed, smooth perfomance, it's the best school management we've tried  so far.</p>
+                         <p className={home["quote__text"]} >Dependable curteous, Always on time, the kind of service you remember.</p>
                      
                              <footer>
                                  <div className={home["media"]}>
@@ -458,8 +423,8 @@ const Home = () => {
                                            </svg>
                                      </div>
                                      <div className={home["media__body"]}>
-                                         <h3 className={[home["media__title"], home["quote__author"]].join(' ')} >AMINU ADAMZ</h3>
-                                       <p className={home["quote__organization"]}>Founder Raan Study.</p>
+                                         <h3 className={[home["media__title"], home["quote__author"]].join(' ')} >HAMIDU MURTALA</h3>
+                                    
                                      </div>
                                  </div>
                              </footer>

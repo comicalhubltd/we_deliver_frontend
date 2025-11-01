@@ -214,7 +214,8 @@ const {  driversCount } = driverState;
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/profile"
+                          href="#/
+             customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -332,13 +333,17 @@ const {  driversCount } = driverState;
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <href="#/customer/home"
+                      <a
+             href="#/
+             customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <href="#/delivery/add-delivery"
+                     <a
+             href="#/
+             delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
@@ -392,7 +397,9 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                  
-                    <href="#/customer/view-customers"
+                    <a
+             href="#/
+             customer/view-customers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Customers
@@ -445,13 +452,17 @@ const {  driversCount } = driverState;
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/driver/view-drivers"
+                    <a
+             href="#/
+             driver/view-drivers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Drivers
                     </a>
                     
-                    <href="#/driver/assign-vehicle"
+                    <a
+             href="#/
+             driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                      Assign Vehicle
@@ -505,7 +516,9 @@ const {  driversCount } = driverState;
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/vehicle/view-vehicles"
+                    <a
+             href="#/
+             vehicle/view-vehicles"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Vehicles
@@ -564,7 +577,9 @@ const {  driversCount } = driverState;
 
                     <div className={navbar["collapsible__content--drawer"]}>
 
-                  <href="#/delivery/pending"
+                  <a
+             href="#/
+             delivery/pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -572,14 +587,18 @@ const {  driversCount } = driverState;
 
 
                     
-                   <href="#/delivery/awaiting-transit"
+                   <a
+             href="#/
+             delivery/awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <href="#/delivery/on-transit"
+                    <a
+             href="#/
+             delivery/on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -587,20 +606,26 @@ const {  driversCount } = driverState;
                     
 
 
-                    <href="#/delivery/arrived"
+                    <a
+             href="#/
+             delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
 
 
-                    <href="#/delivery/delivered"
+                    <a
+             href="#/
+             delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
-                      <href="#/delivery/view-all-delivery"
+                      <a
+             href="#/
+             delivery/view-all-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View All Deliveries
@@ -656,7 +681,9 @@ const {  driversCount } = driverState;
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/location/show-locations"
+                    <a
+             href="#/
+             location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -685,7 +712,8 @@ const {  driversCount } = driverState;
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#fee"></use>
+                        <use href="#/
+             images/sprite.svg#fee"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Payments
@@ -704,18 +732,23 @@ const {  driversCount } = driverState;
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/payment/paid-deliveries"
+                    <a
+             href="#/
+             payment/paid-deliveries"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Paid Deliveries
                     </a>
-         <href="#/payment/unpaid-deliveries"
+         <a
+             href="#/
+             payment/unpaid-deliveries"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Unpaid Deliveries
@@ -747,7 +780,8 @@ const {  driversCount } = driverState;
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#profile"></use>
+                        <use href="#/
+             images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -764,13 +798,16 @@ const {  driversCount } = driverState;
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

@@ -306,7 +306,8 @@ const StudentDetails = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/profile"
+                          href="#/
+             customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -396,7 +397,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#dashboard"></use>
+                        <use href="#/
+             images/sprite.svg#dashboard"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -415,7 +417,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -474,7 +477,9 @@ const StudentDetails = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                  
-                    <href="#/customer/view-customers"
+                    <a
+             href="#/
+             customer/view-customers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Customers
@@ -505,7 +510,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#request"></use>
+                        <use href="#/
+             images/sprite.svg#request"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Classes</p>
                     </div>
@@ -522,38 +528,51 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/class/jss-classes"
+                    <a
+             href="#/
+             class/jss-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       JSS Classes
                     </a>
-                    <href="#/class/sss-classes"
+                    <a
+             href="#/
+             class/sss-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       SSS Classes
                     </a>
-                    <href="#/class/primary-classes"
+                    <a
+             href="#/
+             class/primary-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Primary Classes
                     </a>
-                    <href="#/class/add-jss-class"
+                    <a
+             href="#/
+             class/add-jss-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add JSS Class
                     </a>
-                    <href="#/class/add-sss-class"
+                    <a
+             href="#/
+             class/add-sss-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add SSS Class
                     </a>
-                    <href="#/class/add-pri-class"
+                    <a
+             href="#/
+             class/add-pri-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Primary Class
@@ -580,7 +599,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#subject"></use>
+                        <use href="#/
+             images/sprite.svg#subject"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Subjects</p>
                     </div>
@@ -597,7 +617,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -630,7 +651,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#teacher"></use>
+                        <use href="#/
+             images/sprite.svg#teacher"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Teachers</p>
                     </div>
@@ -647,7 +669,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -680,7 +703,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#score"></use>
+                        <use href="#/
+             images/sprite.svg#score"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Scores</p>
                     </div>
@@ -697,7 +721,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -730,7 +755,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#result"></use>
+                        <use href="#/
+             images/sprite.svg#result"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Results</p>
                     </div>
@@ -747,7 +773,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -780,7 +807,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#fee"></use>
+                        <use href="#/
+             images/sprite.svg#fee"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         School Fees
@@ -799,7 +827,8 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -859,7 +888,9 @@ const StudentDetails = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/payment/pay-subscription"
+                    <a
+             href="#/
+             payment/pay-subscription"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pay Subscription
@@ -888,7 +919,8 @@ const StudentDetails = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#profile"></use>
+                        <use href="#/
+             images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -905,13 +937,16 @@ const StudentDetails = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

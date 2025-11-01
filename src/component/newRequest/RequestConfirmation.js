@@ -324,7 +324,8 @@ const RequestConfirmation = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/profile"
+                          href="#/
+             customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -418,7 +419,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#dashboard"></use>
+                                   <use href="#/
+             images/sprite.svg#dashboard"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>
                                    Dashboard
@@ -437,14 +439,16 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/admin/home"
+                                 href="#/
+             admin/home"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Home
@@ -474,7 +478,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#customer"></use>
+                                   <use href="#/
+             images/sprite.svg#customer"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>Customers</p>
                                </div>
@@ -491,7 +496,8 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
@@ -499,7 +505,8 @@ const RequestConfirmation = () => {
                              <div className={navbar["collapsible__content--drawer"]}>
                             
                                <a
-                                 href="/customer/view-customers"
+                                 href="#/
+             customer/view-customers"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  View Customers
@@ -529,7 +536,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#driver"></use>
+                                   <use href="#/
+             images/sprite.svg#driver"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>Drivers</p>
                                </div>
@@ -546,26 +554,30 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/driver/view-drivers"
+                                 href="#/
+             driver/view-drivers"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  View Drivers
                                </a>
                                <a
-                                 href="/driver/sss-classes"
+                                 href="#/
+             driver/sss-classes"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Available Drivers
                                </a>
                                <a
-                                 href="/class/primary-classes"
+                                 href="#/
+             class/primary-classes"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Drivers Enroute
@@ -595,7 +607,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#vehicle"></use>
+                                   <use href="#/
+             images/sprite.svg#vehicle"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>Vehicles</p>
                                </div>
@@ -612,14 +625,16 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/vehicle/view-vehicles"
+                                 href="#/
+             vehicle/view-vehicles"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  View Vehicles
@@ -654,7 +669,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#request"></use>
+                                   <use href="#/
+             images/sprite.svg#request"></use>
                                  </svg>
                                   <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                                </div>
@@ -671,7 +687,8 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
@@ -682,7 +699,8 @@ const RequestConfirmation = () => {
            
            
                                <a
-                                 href="/delivery/on-transit"
+                                 href="#/
+             delivery/on-transit"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  On Transit 
@@ -690,14 +708,16 @@ const RequestConfirmation = () => {
            
            
                      <a
-                                 href="/delivery/awaiting-transit"
+                                 href="#/
+             delivery/awaiting-transit"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Awaiting Transit
                                </a>
            
                                <a
-                                 href="/delivery/delivered"
+                                 href="#/
+             delivery/delivered"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Delivered
@@ -705,21 +725,24 @@ const RequestConfirmation = () => {
            
            
                                  <a
-                                 href="/delivery/pending"
+                                 href="#/
+             delivery/pending"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Pending
                                </a>
            
                                  <a
-                                 href="/delivery/view-all-delivery"
+                                 href="#/
+             delivery/view-all-delivery"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  View All Deliveries
                                </a>
                              
                                <a
-                                 href="/delivery/add-delivery"
+                                 href="#/
+             delivery/add-delivery"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Add Deliveries
@@ -750,7 +773,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#location"></use>
+                                   <use href="#/
+             images/sprite.svg#location"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>Locations</p>
                                </div>
@@ -767,14 +791,16 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/location/show-locations"
+                                 href="#/
+             location/show-locations"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Live Location
@@ -803,7 +829,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#fee"></use>
+                                   <use href="#/
+             images/sprite.svg#fee"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>
                                    Payments
@@ -822,20 +849,23 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/payment/paid-deliveries"
+                                 href="#/
+             payment/paid-deliveries"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Paid Deliveries
                                </a>
                     <a
-                                 href="/payment/unpaid-deliveries"
+                                 href="#/
+             payment/unpaid-deliveries"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Unpaid Deliveries
@@ -867,7 +897,8 @@ const RequestConfirmation = () => {
                                      navbar["icon--primary"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#profile"></use>
+                                   <use href="#/
+             images/sprite.svg#profile"></use>
                                  </svg>
                                  <p className={navbar["collapsible__heading"]}>Profile</p>
                                </div>
@@ -884,14 +915,16 @@ const RequestConfirmation = () => {
                                      navbar["collapsible--chevron"],
                                    ].join(" ")}
                                  >
-                                   <use href="/images/sprite.svg#chevron"></use>
+                                   <use href="#/
+             images/sprite.svg#chevron"></use>
                                  </svg>
                                </span>
                              </header>
            
                              <div className={navbar["collapsible__content--drawer"]}>
                                <a
-                                 href="/customer/profile"
+                                 href="#/
+             customer/profile"
                                  className={[navbar["link--drawer"], navbar[""]].join(" ")}
                                >
                                  Profile
@@ -1378,7 +1411,8 @@ const RequestConfirmation = () => {
                               dashboard["icon--success"],
                             ].join(" ")}
                           >
-                            <use href="/images/sprite.svg#success-icon"></use>
+                            <use href="#/
+             images/sprite.svg#success-icon"></use>
                           </svg>
                         </span>
 
@@ -1414,7 +1448,8 @@ const RequestConfirmation = () => {
                               dashboard["icon--error"],
                             ].join(" ")}
                           >
-                            <use href="/images/sprite.svg#error-icon"></use>
+                            <use href="#/
+             images/sprite.svg#error-icon"></use>
                           </svg>
                         </span>
                         <Typography sx={{ fontSize: 21 }}>

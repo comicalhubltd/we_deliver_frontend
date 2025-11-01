@@ -306,7 +306,8 @@ const LoginDriver = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Register here:{" "}
-                <a className={style["link__register"]} href="/driver/register">
+                <a className={style["link__register"]} href="#/
+             driver/register">
                   Register
                 </a>
               </span>
@@ -314,7 +315,8 @@ const LoginDriver = () => {
                 {" "}
                 <a
                   className={style["link__register"]}
-                  href="/password/password-request-driver"
+                  href="#/
+             password/password-request-driver"
                 >
                   Forgot Password
                 </a>

@@ -257,7 +257,8 @@ const AdminProfile = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/profile"
+                          href="#/
+             customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -375,18 +376,24 @@ const AdminProfile = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <href="#/customer/home"
+                      <a
+             href="#/
+             customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <href="#/delivery/add-delivery"
+                     <a
+             href="#/
+             delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
                     </a>
-                    <href="#/admin/schools"
+                    <a
+             href="#/
+             admin/schools"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Schools
@@ -415,7 +422,8 @@ const AdminProfile = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#profile"></use>
+                        <use href="#/
+             images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -432,13 +440,16 @@ const AdminProfile = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/admin/profile"
+                    <a
+             href="#/
+             admin/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

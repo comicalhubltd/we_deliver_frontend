@@ -221,7 +221,8 @@ const CustomerAwatingTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="/customer/profile"
+                          href="#/
+             customer/profile"
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -339,7 +340,9 @@ const CustomerAwatingTransit = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/home"
+                    <a
+             href="#/
+             customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -400,7 +403,9 @@ const CustomerAwatingTransit = () => {
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
 
-                   <href="#/delivery/customer-pending"
+                   <a
+             href="#/
+             delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -408,14 +413,18 @@ const CustomerAwatingTransit = () => {
 
 
                     
-                     <href="#/delivery/customer-awaiting-transit"
+                     <a
+             href="#/
+             delivery/customer-awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <href="#/delivery/customer-on-transit"
+                    <a
+             href="#/
+             delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -425,7 +434,9 @@ const CustomerAwatingTransit = () => {
 
 
 
-                     <href="#/delivery/customer-arrived"
+                     <a
+             href="#/
+             delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
@@ -434,14 +445,18 @@ const CustomerAwatingTransit = () => {
 
 
                     
-                    <href="#/delivery/customer-delivered"
+                    <a
+             href="#/
+             delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
 
-                    <href="#/delivery/add-delivery"
+                    <a
+             href="#/
+             delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
@@ -494,7 +509,9 @@ const CustomerAwatingTransit = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/location/show-locations"
+                    <a
+             href="#/
+             location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -527,7 +544,8 @@ const CustomerAwatingTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#profile"></use>
+                        <use href="#/
+             images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -544,13 +562,16 @@ const CustomerAwatingTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="/images/sprite.svg#chevron"></use>
+                        <use href="#/
+             images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <href="#/customer/profile"
+                    <a
+             href="#/
+             customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
