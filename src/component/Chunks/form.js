@@ -280,7 +280,8 @@ const Form = () => {
             <span className={style["form-link"]}>
               {" "}
               Did not Have Class:{" "}
-              <a className={style["link__register"]} href="/class/add-class">
+              <a className={style["link__register"]} href="#/
+             class/add-class">
                 Add Class
               </a>
             </span>
