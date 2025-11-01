@@ -281,10 +281,11 @@ const LoginAdmin = () => {
             />
 
 
-            <ReCAPTCHA
-                        sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
-                        onChange={(token) => setFieldValue("captchaToken", token)}
-            />
+          <ReCAPTCHA
+    sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
+    onChange={(token) => setFieldValue("captchaToken", token)}
+    size="compact"
+/>
 
             {/* {BUTTON } */}
 

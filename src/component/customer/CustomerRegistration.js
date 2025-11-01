@@ -811,9 +811,10 @@ const CustomerRegistration = () => {
 
 
             <ReCAPTCHA
-                        sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
-                        onChange={(token) => setFieldValue("user.captchaToken", token)}
-             />
+    sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
+    onChange={(token) => setFieldValue("captchaToken", token)}
+    size="compact"
+/>
 
 
              {/* {  BACK BUTTON BUTTON } */}

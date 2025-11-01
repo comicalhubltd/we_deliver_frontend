@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import CustomerRegistration from './component/customer/CustomerRegistration';
 import CustomerDashboard from './component/dashboards/CustomerDashboard';
 import AddDeliveryRequest from './component/DeliveryRequest/AddDeliveryRequest';
