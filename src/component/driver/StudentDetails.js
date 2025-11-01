@@ -474,8 +474,7 @@ const StudentDetails = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                  
-                    <a
-                      href="/customer/view-customers"
+                    <href="#/customer/view-customers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Customers
@@ -529,38 +528,32 @@ const StudentDetails = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/class/jss-classes"
+                    <href="#/class/jss-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       JSS Classes
                     </a>
-                    <a
-                      href="/class/sss-classes"
+                    <href="#/class/sss-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       SSS Classes
                     </a>
-                    <a
-                      href="/class/primary-classes"
+                    <href="#/class/primary-classes"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Primary Classes
                     </a>
-                    <a
-                      href="/class/add-jss-class"
+                    <href="#/class/add-jss-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add JSS Class
                     </a>
-                    <a
-                      href="/class/add-sss-class"
+                    <href="#/class/add-sss-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add SSS Class
                     </a>
-                    <a
-                      href="/class/add-pri-class"
+                    <href="#/class/add-pri-class"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Primary Class
@@ -866,8 +859,7 @@ const StudentDetails = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/payment/pay-subscription"
+                    <href="#/payment/pay-subscription"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pay Subscription
@@ -919,8 +911,7 @@ const StudentDetails = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/profile"
+                    <href="#/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

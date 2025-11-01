@@ -20,6 +20,21 @@ export const loginRequest = createAsyncThunk(
 );
 
 
+export const googleLoginRequest = createAsyncThunk(
+  'login/googleLoginRequest ',
+  async (requestData, { rejectWithValue }) => {
+    try {
+      const response = await api.post(BASE_URL + '/google-login', requestData, {headers: {"Content-Type":"application/json"}});
+      return response.data; // Return the saved user response
+
+    } catch (error) {
+     
+      return rejectWithValue(error.response?.data || { message: "Something went wrong"});
+    }
+  }
+);
+
+
 export const getVerificationStatus = createAsyncThunk(
   'login/getVerificationStatus',
   async (resetToken, { rejectWithValue }) => {
@@ -62,6 +77,21 @@ const loginSlice = createSlice({
             
           })
           .addCase(loginRequest.rejected, (state) => {
+            state.loginStatus = 'failed';
+          })
+
+
+
+
+
+          .addCase(googleLoginRequest.pending, (state) => {
+            state.loginStatus = 'loading';
+          })
+          .addCase(googleLoginRequest.fulfilled, (state, action) => {
+            state.loginStatus = 'succeeded';
+            
+          })
+          .addCase(googleLoginRequest.rejected, (state) => {
             state.loginStatus = 'failed';
           })
 

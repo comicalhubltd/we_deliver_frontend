@@ -64,6 +64,7 @@ import PasswordRequestDriver from './component/auth/PasswordRequestDriver';
 import ResetPasswordDriver from './component/auth/ResetPasswordDriver';
 
 
+
 function App() {
 
   
@@ -82,6 +83,7 @@ function App() {
          <Route exact path='/delivery/customer-rejected'  element={ <CustomerRejected/> }/>
          <Route exact path='/delivery/customer-on-transit'  element={ <CustomerOnTransit/> }/>
          <Route exact path='/delivery/customer-delivered'  element={ <CustomerDelivered/> }/>
+         <Route exact path='/delivery/customer-arrived'  element={ <CustomerArrived/> }/>
          <Route exact path='/delivery/customer-awaiting-transit'  element={ <CustomerAwatingTransit/> }/>
          <Route exact path='/delivery/customer-view-feedback'  element={ <CustomerViewFeedback/>}/>
         <Route exact path='/delivery/feedback-description/:id'  element={ <FeedbackDescription/>}/>

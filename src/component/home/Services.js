@@ -17,11 +17,11 @@ const Services = () => {
 
 
  const navigateToRegister = () => {
-    navigate("/school/register");
+    navigate("/customer/register");
   }
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/customer/login");
   }
 
   const navigateToService = () => {
@@ -111,27 +111,29 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#student"></use>
+                            <use href="../images/sprite.svg#request"></use>
                           </svg>
                     </span>
-                    <h3 className={home["features__heading"]} >Student Management</h3>
+                    <h3 className={home["features__heading"]} >Delivery Request</h3>
                     <p>
-                  Easily register and manage student profiles. Each student gets a personal dashboard with login access using their registration number. 
-                  They can view their results. </p>
+                 Easily create and manage delivery requests in just a few taps. 
+                 Whether it’s a single parcel or multiple orders, 
+                 our platform makes scheduling quick, simple, and reliable.
+                  </p>
                        
                 </div>
         
                   <div   className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#teacher"></use>
+                            <use href="../images/sprite.svg#location"></use>
                           </svg>
                     </span>
-                    <h3 className={home["features__heading"]} >Teacher Management</h3>
+                    <h3 className={home["features__heading"]} >Location</h3>
                     <p>
-                  Assign subjects, manage classrooms, and give teachers personalized access. Teachers also log in using their registration number, with the ability to enter scores, 
-                  view performance history, and update their password from their dashboard. </p>
-                      
+                 Track every delivery in real time. Our smart location system ensures accurate pickup and drop-off points, 
+                 giving you full visibility and peace of mind. 
+                 </p>
                 </div>
                
              </article>
@@ -141,27 +143,25 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#result"></use>
+                            <use href="../images/sprite.svg#vehicle"></use>
                           </svg>
                     </span>
-                    <h3 className={home["features__heading"]} > Result Processing</h3>
+                    <h3 className={home["features__heading"]} > Vehicles</h3>
                     <p>
-                Generate and calculate student results using a modern, automated system. Results are based on configurable scores like First CA, 
-                Second CA, and Exams — all calculated in seconds with high accuracy. </p>
+             Choose the right vehicle for every delivery — from bikes to vans. We match your package size and urgency with the best option to ensure efficiency and safety. </p>
                        
                 </div>
         
                   <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#session"></use>
+                            <use href="../images/sprite.svg#driver"></use>
                           </svg>
                     </span>
-                    <h3 className={home["features__heading"]} > Session Management</h3>
+                    <h3 className={home["features__heading"]} > Drivers</h3>
                     <p>
-                Create, update, and organize academic sessions and terms with ease. 
-                Set up each academic year’s structure to match your school’s system — everything stays neat, trackable, and reusable. </p>
-                      
+               Our verified and professional drivers are trained to handle every delivery with care. With constant support and route optimization, they ensure timely and secure service.   
+                 </p>
                 </div>
                
              </article>
@@ -171,60 +171,32 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
+                            <use href="../images/sprite.svg#customer"></use>
+                          </svg>
+                    </span>
+                    <h3 className={home["features__heading"]} >Customer</h3>
+                    <p>
+               We put our customers first. From seamless app experience to responsive support, every feature is designed to make your deliveries faster, safer, and more convenient
+                </p>
+                       
+                </div>
+        
+                  <div className={home["feature__content"]} >
+                    <span className={home["icon-container"]} >
+                        <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
                             <use href="../images/sprite.svg#subscription"></use>
                           </svg>
                     </span>
-                    <h3 className={home["features__heading"]} >Enjoy 90 Days Free</h3>
+                    <h3 className={home["features__heading"]} >Payment</h3>
                     <p>
-                 Get full access to all features completely free for the first 90 days. No upfront payment, no commitment. 
-                 Try We Deliver with your actual school data before deciding to subscribe. </p>
-                       
-                </div>
-        
-                  <div className={home["feature__content"]} >
-                    <span className={home["icon-container"]} >
-                        <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#score"></use>
-                          </svg>
-                    </span>
-                    <h3 className={home["features__heading"]} >Score Sheet Generation</h3>
-                    <p>
-               Easily generate and download printable score sheets for each class, subject, or session.
-                Useful for internal reviews, teacher records, and offline use. </p>
+              Enjoy flexible and secure payment options. Whether you prefer cash, card, or wallet, our system ensures fast and hassle-free transactions for every delivery. </p>
                       
                 </div>
                
              </article>
 
 
-              <article style={{margin: 0}} className={[home["grid"], home["grid--1x2"], home["feature"]].join(' ')}>
-                <div className={home["feature__content"]} >
-                    <span className={home["icon-container"]} >
-                        <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#fee"></use>
-                          </svg>
-                    </span>
-                    <h3 className={home["features__heading"]} >Fee Management</h3>
-                    <p>
-              Track and manage school fees digitally. Generate PDF receipts, 
-              view payment history, and keep all financial records organized without paperwork. </p>
-                       
-                </div>
-        
-                  <div className={home["feature__content"]} >
-                    <span className={home["icon-container"]} >
-                        <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#school"></use>
-                          </svg>
-                    </span>
-                    <h3 className={home["features__heading"]} >Activation Control</h3>
-                    <p>
-               Control when teachers can or cannot enter student scores. 
-               Admins can activate or disable score entry for CA or Exams to maintain data accuracy and prevent unauthorized edits. </p>
-                      
-                </div>
-               
-             </article>
+            
         
         </section>
 
@@ -303,13 +275,13 @@ const Services = () => {
                      </p>
         
                      <p>
-                        Tel: +2348169863672, +2348033314662
+                        Tel:  +2347064939047, +2348169863672
                     </p>
                      <p>
                         {/* Mail: miqwiitechnologies@gmail.com */}
                     </p>
                      <p>
-                        WhatsApp: +2348169863672
+                        WhatsApp: +2347064939047
                     </p>
         
                     </div>

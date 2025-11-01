@@ -380,8 +380,7 @@ const DriverDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/driver/home"
+                    <href="#/driver/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -491,8 +490,7 @@ const DriverDashboard = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                  <a
-                      href="/driver/driver-movements"
+                  <href="#/driver/driver-movements"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Driver Movements
@@ -549,8 +547,7 @@ const DriverDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/driver/driver-profile"
+                    <href="#/driver/driver-profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

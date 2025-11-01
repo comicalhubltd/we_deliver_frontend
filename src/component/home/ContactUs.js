@@ -17,11 +17,11 @@ const ContactUs = () => {
 
 
  const navigateToRegister = () => {
-    navigate("/school/register");
+    navigate("/customer/register");
   }
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/customer/login");
   }
 
   const navigateToService = () => {
@@ -121,7 +121,7 @@ const ContactUs = () => {
                     <div className={home["media__body"]} >
                         <h3 className={home["media__title"]}>Tel </h3>
                       <p>
-                       +2348169863672, +2349126396147, +2348033314662
+                      +2347064939047, +2348169863672
                       </p>
                     </div>
                 </div>
@@ -135,7 +135,7 @@ const ContactUs = () => {
                     <div className={home["media__body"]} >
                         <h3 className={home["media__title"]}>Mail </h3>
                       <p>
-                       miqwiitechnologies@gmail.com, aliyusahaboadam@gmail.com, codingtechniques15@gmail.com
+                       comicalhultechnolgies@gmail.com, evercorpmultipurposecoop@gmail.com
                       </p>
                     </div>
                 </div>
@@ -149,8 +149,7 @@ const ContactUs = () => {
                     <div className={home["media__body"]} >
                         <h3 className={home["media__title"]}>Address </h3>
                       <p>
-                         Off Numan Road Opp. Road Safety Office, 
-                        Behind Nyako's Quaters Jimeta-Yola Adamawa State Nigeria.
+                         
                       </p>
                     </div>
                 </div>

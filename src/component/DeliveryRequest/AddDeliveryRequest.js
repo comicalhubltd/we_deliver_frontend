@@ -454,8 +454,7 @@ const AddDeliveryRequest = () => {
               >
                 <div className={navbar["profile--selection__container"]}>
                   <div className={navbar["profile"]}>
-                    <a
-                      href="/customer/profile"
+                    <href="#/customer/profile"
                       className={[navbar["link--profile"], navbar[""]].join(
                         " "
                       )}
@@ -566,8 +565,7 @@ const AddDeliveryRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/home"
+                    <href="#/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -617,38 +615,32 @@ const AddDeliveryRequest = () => {
                     </span>
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
-                   <a
-                      href="/delivery/customer-pending"
+                   <href="#/delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
                     </a>
-                     <a
-                      href="/delivery/customer-awaiting-transit"
+                     <href="#/delivery/customer-awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
-                    <a
-                      href="/delivery/customer-on-transit"
+                    <href="#/delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
                     </a>
-                     <a
-                      href="/delivery/customer-arrived"
+                     <href="#/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
-                    <a
-                      href="/delivery/customer-delivered"
+                    <href="#/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
-                    <a
-                      href="/delivery/add-delivery"
+                    <href="#/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
@@ -699,8 +691,7 @@ const AddDeliveryRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/location/show-locations"
+                    <href="#/location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -751,8 +742,7 @@ const AddDeliveryRequest = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/profile"
+                    <href="#/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

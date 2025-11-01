@@ -705,7 +705,7 @@ body {
 
 .block--primary {
     background: var(--color-primary);
-    color: var(--color-secondary);
+    color: #ccc;
 }
 
 .block--dark {

@@ -336,15 +336,13 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
-                      href="/customer/home"
+                      <href="#/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <a
-                      href="/delivery/add-delivery"
+                     <href="#/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
@@ -398,8 +396,7 @@ const Delivered = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                  
-                    <a
-                      href="/customer/view-customers"
+                    <href="#/customer/view-customers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Customers
@@ -452,14 +449,12 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/driver/view-drivers"
+                    <href="#/driver/view-drivers"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Drivers
                     </a>
-                      <a
-                      href="/driver/assign-vehicle"
+                      <href="#/driver/assign-vehicle"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                      Assign Vehicle
@@ -513,8 +508,7 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/vehicle/view-vehicles"
+                    <href="#/vehicle/view-vehicles"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Vehicles
@@ -573,8 +567,7 @@ const Delivered = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                  <a
-                      href="/delivery/pending"
+                  <href="#/delivery/pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -582,16 +575,14 @@ const Delivered = () => {
 
 
                     
-                   <a
-                      href="/delivery/awaiting-transit"
+                   <href="#/delivery/awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <a
-                      href="/delivery/on-transit"
+                    <href="#/delivery/on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -599,23 +590,20 @@ const Delivered = () => {
                     
 
 
-                    <a
-                      href="/delivery/arrived"
+                    <href="#/delivery/arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
 
 
-                    <a
-                      href="/delivery/delivered"
+                    <href="#/delivery/delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
-                      <a
-                      href="/delivery/view-all-delivery"
+                      <href="#/delivery/view-all-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View All Deliveries
@@ -671,8 +659,7 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/location/show-locations"
+                    <href="#/location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -726,14 +713,12 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/payment/paid-deliveries"
+                    <href="#/payment/paid-deliveries"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Paid Deliveries
                     </a>
-         <a
-                      href="/payment/unpaid-deliveries"
+         <href="#/payment/unpaid-deliveries"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Unpaid Deliveries
@@ -788,8 +773,7 @@ const Delivered = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/profile"
+                    <href="#/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

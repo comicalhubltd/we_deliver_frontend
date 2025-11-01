@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  getCustomerDeliveredDelivery, getCustomerAllDelivery, getOnTransitDelivery
+  getCustomerDeliveredDelivery, getCustomerAllDelivery, getCustomerOnTransitDelivery
  
 } from "../../redux/reducer/deliveryRequestSlice";
 import { object, string, array } from "yup";
@@ -109,7 +109,7 @@ const CustomerDashboard = () => {
  
 
    const deliveryState = useSelector((state) => state.deliveryRequests);
-   const { customerDeliveredDelivery, onTransitDelivery, customerDeliveryRequests,  fetchingStatus } = deliveryState;
+   const { customerDeliveredDelivery,  customerOnTransitDelivery, customerDeliveryRequests,  fetchingStatus } = deliveryState;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -141,7 +141,7 @@ const CustomerDashboard = () => {
    const fetchData = () => {
      dispatch(getCustomerDeliveredDelivery());
      dispatch(getCustomerAllDelivery());
-     dispatch(getOnTransitDelivery());
+     dispatch(getCustomerOnTransitDelivery());
    };
 
   const handleClose = (event, reason) => {
@@ -367,8 +367,7 @@ const CustomerDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/home"
+                    <href="#/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -429,8 +428,7 @@ const CustomerDashboard = () => {
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
 
-                   <a
-                      href="/delivery/customer-pending"
+                   <href="#/delivery/customer-pending"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -438,16 +436,14 @@ const CustomerDashboard = () => {
 
 
                     
-                     <a
-                      href="/delivery/customer-awaiting-transit"
+                     <href="#/delivery/customer-awaiting-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <a
-                      href="/delivery/customer-on-transit"
+                    <href="#/delivery/customer-on-transit"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -457,8 +453,7 @@ const CustomerDashboard = () => {
 
 
 
-                     <a
-                      href="/delivery/customer-arrived"
+                     <href="#/delivery/customer-arrived"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
@@ -467,16 +462,14 @@ const CustomerDashboard = () => {
 
 
                     
-                    <a
-                      href="/delivery/customer-delivered"
+                    <href="#/delivery/customer-delivered"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
 
-                    <a
-                      href="/delivery/add-delivery"
+                    <href="#/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
@@ -529,8 +522,7 @@ const CustomerDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/location/show-locations"
+                    <href="#/location/show-locations"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -586,8 +578,7 @@ const CustomerDashboard = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/customer/profile"
+                    <href="#/customer/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -744,7 +735,7 @@ const CustomerDashboard = () => {
                         <span
                           class={[dashboard["badge"], dashboard[""]].join(" ")}
                         >
-                          {onTransitDelivery.length}
+                          {customerOnTransitDelivery.length}
                         </span>
                       </div>
                       Current Movements

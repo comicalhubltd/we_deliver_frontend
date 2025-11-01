@@ -18,11 +18,11 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   const navigateToRegister = () => {
-    navigate("/school/register");
+    navigate("/customer/register");
   };
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/customer/login");
   };
 
   const navigateToService = () => {

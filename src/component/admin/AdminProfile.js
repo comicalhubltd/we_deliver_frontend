@@ -375,21 +375,18 @@ const AdminProfile = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
-                      href="/customer/home"
+                      <href="#/customer/home"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <a
-                      href="/delivery/add-delivery"
+                     <href="#/delivery/add-delivery"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
                     </a>
-                    <a
-                      href="/admin/schools"
+                    <href="#/admin/schools"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Schools
@@ -441,8 +438,7 @@ const AdminProfile = () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-                      href="/admin/profile"
+                    <href="#/admin/profile"
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile

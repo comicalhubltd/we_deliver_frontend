@@ -94,12 +94,20 @@ const AboutUs = () => {
                     <div className={home["media__body"]} >
                        
                       <p style={{textAlign: "center"}}>
-                       We Deliver is an all in one school management portal founded by Aliyu Sahabo Adam designed to simplify and strengthen how educational institutions operate. Whether you're running a small private school or a large secondary institution, We Deliver provides the tools you need to manage students, staff, results, and communication — all in one secure platform.
+                       At We Deliver, we believe delivery should be simple, reliable, and built around people. What started as a small idea — to make sending and receiving items easier — has grown into a powerful platform that connects customers, riders, and businesses across cities.
 
-We believe school administrators, teachers, and parents deserve a system that works with them, not against them. That's why Miqwii is built to be user-friendly, flexible, and powerful — so schools can focus less on paperwork and more on what truly matters: student success.
+We’re transforming the way logistics works by combining smart technology, skilled teams, and a commitment to customer satisfaction. From individual users who need fast parcel delivery to large businesses managing multiple orders, our system is designed for efficiency, transparency, and trust.
 
-Our solution offers three tailored packages — Miqwii Lite, Miqwii Standard, and Miqwii Enterprise — so institutions of all sizes can benefit, no matter their needs or budget.
-                      </p>
+Our goal is to take the stress out of moving goods. Whether you’re sending documents across town, delivering groceries to families, or powering e-commerce fulfillment — we ensure your items reach their destination safely and on time. With real-time tracking, flexible payment options, and strong team support, you’re always in control.
+
+Behind every successful delivery is a dedicated team that believes in excellence. Our riders are trained, verified, and supported by advanced logistics tools that make their work smoother and more rewarding. We stand for teamwork, innovation, and service you can count on.
+
+At the heart of our mission is simplicity — making technology work for people, not the other way around. Every click, every route, and every experience is carefully designed to make your day easier.
+
+As we continue to grow, our promise remains the same:
+To deliver not just packages, but trust, convenience, and connection — one delivery at a time.
+
+Would you like me to adapt it slightly to fit a specific audience (for example, “for individuals and small businesses” or “for corporate and e-commerce clients”)? That would make it sound even more tailored to your target users.     </p>
                     </div>
                 </div>
             </li>

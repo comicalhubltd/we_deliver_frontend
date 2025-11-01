@@ -17,11 +17,11 @@ const Home = () => {
 
 
     const navigateToRegister = () => {
-    navigate("/school/register");
+    navigate("/customer/register");
   }
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/customer/login");
   }
 
   const navigateToService = () => {
@@ -80,11 +80,9 @@ const Home = () => {
         <div className={[home['grid'], home['grid--1x2']].join(' ')}>
       
           <header style={{marginTop: "-2rem"}} className={[home["block__header"], home["hero__content"]].join(' ')}>
-            <h2  >From Chalk to Cloud!</h2>
+            <h2  >Motion Meets Meaning!</h2>
             <p className={[home["hero__tagline"], home["p"]].join(' ')}>
-               Miqwii School Management opens doors, not just one but three —
-                For schools, teachers, and learners. A single platform, 
-                Each user guided by their own chart.
+               We move with precision, powered by integrity, guided by technology, and built on trust. Every delivery carries our promise — fast, safe, and unforgettable.
     
             </p>
                <a onClick={() => navigateToRegister()} className={[home["btn"], home["btn--primary"], home["btn--stretched"], home["btn--hero"]].join(' ')}>Get Started</a>
@@ -117,10 +115,10 @@ const Home = () => {
 
          <section className={[home["block"], home["container"], home["block-domain"]].join(' ')}>
         <header className={home["block__header"]}>
-            <h2 className={home["block__heading"]}>Three Roles, One Vision</h2>
+            <h2 className={home["block__heading"]}>Aims and Objectives</h2>
             <p>
-                Logins for all, secure and refined, With dashboards that suit every curious mind.
-Whether you lead, teach, or learn with pride, Miqwii walks with you, side by side..</p>
+             To build a scalable, technology-driven logistics company that revolutionizes interstate parcel delivery in Nigeria by offering affordable, secure, and efficient courier services tailored to the needs of SMEs, e-commerce platforms, and individuals.
+</p>
         </header>
     
         <div className={home["input-group"]}>
@@ -138,11 +136,11 @@ Whether you lead, teach, or learn with pride, Miqwii walks with you, side by sid
             </button>
         </div>
         <ul className={[home["list"], home["block-domain__prices"]].join(' ')}>
-            <li><span className={[home["badge"], home["badge--secondary"]].join(' ')}>Roles</span></li>
-            <li>School</li>
-            <li>Teacher</li>
-            <li>Student</li>
-
+            <li><span className={[home["badge"], home["badge--secondary"]].join(' ')}>Technology</span></li>
+            <li>Integration</li>
+            <li> Innovation</li>
+            
+         <li> Transparency</li>
             
         </ul>
      </section>
@@ -162,19 +160,20 @@ Whether you lead, teach, or learn with pride, Miqwii walks with you, side by sid
              <div className={home["plan"]}>
                  <div className={[home["card"], home["card--secondary"]].join(' ')}>
                      <header className={home["card_header"]} >
-                        <h3 className={home["plan__name"]} >Miqwii Lite</h3>
+                        <h3 className={home["plan__name"]} >Phase 1</h3>
                         <span className={home["plan__price"]} >1x</span>
-                        <span className={home["plan__billing-cycle"]} >/Size</span>
-                        <span className={[home["badge"], home["badge--secondary"], home["badge--small"]].join(' ')}>Students</span>
-                        <span className={home["plan__description"]}>0 - 300 Student Capacity</span>
+                        <span className={home["plan__billing-cycle"]} >Scale</span>
+                        <span className={[home["badge"], home["badge--secondary"], home["badge--small"]].join(' ')}>Strategy</span>
+                        <span className={home["plan__description"]}>Strategic Objectives</span>
              
                      </header>
                      <div className={home["card_body"]}>
                          <ul className={[home["list"], home["list--tick"]].join(' ')}>
-                             <li className={home["list__item"]}>New or Small School Starting Digital Management</li>
-                             <li className={home["list__item"]}>School under 300 Student</li>
-                             <li className={home["list__item"]}>Limited Staff Account</li>
-
+                             <li className={home["list__item"]}>Deploy 30 vans (10 each in Abuja, Lagos and Kano)</li>
+                             <li className={home["list__item"]}>Adopt dual-driver safety model for nonstop delivery</li>
+                             <li className={home["list__item"]}>Set up branch offices in all 3 cities (Admin, Service & Storage)</li>
+                              <li className={home["list__item"]}>Secure licenses and fleet insurance for compliance</li>
+                              
                          </ul>
                          <button onClick={() => navigateToRegister()} className={[home["btn"], home["btn--outline"], home["btn--block"]].join(' ')}>Get Started</button>
                      </div>
@@ -183,21 +182,24 @@ Whether you lead, teach, or learn with pride, Miqwii walks with you, side by sid
              </div>
         
         
-             <div className={[home["plan"], home["plan--popular"]].join(' ')}>
+             <div className={[home["plan"]].join(' ')}>
                  <div className={[home["card"], home["card--primary"]].join(' ')}>
                      <header className={home["card_header"]}>
-                        <h3 className={home["plan__name"]}>Miqwii Standard</h3>
-                        <span className={home["plan__price"]} >3x</span>
-                        <span className={home["plan__billing-cycle"]}>/Size</span>
-                        <span className={[home["badge"], home["badge--primary"], home["badge--small"]].join(' ')}>Students</span>
-                        <span className={home["plan__description"]}>300 - 1000 Capacity</span>
+                        <h3 className={home["plan__name"]}>Phase 2</h3>
+                        <span className={home["plan__price"]} >2x</span>
+                        <span className={home["plan__billing-cycle"]}>Scale</span>
+                        <span className={[home["badge"], home["badge--primary"], home["badge--small"]].join(' ')}>Strategy</span>
+                        <span className={home["plan__description"]}>Strategic Objectives</span>
              
                      </header>
                      <div className={home["card_body"]}>
                          <ul className={[home["list"], home["list--tick"]].join(' ')}>
-                               <li className={home["list__item"]}>Medium-sized school</li>
-                             <li className={home["list__item"]}>Expanding schools needing automation</li>
-                             <li className={home["list__item"]}>Unlimited Staff Account</li>
+                               <li className={home["list__item"]}>Logistics automation</li>
+                             <li className={home["list__item"]}>Smart routing</li>
+                             <li className={home["list__item"]}>Digital payments and receipts</li>
+                               <li className={home["list__item"]}>Transparent pricing and instant support.</li>
+                               <li className={home["list__item"]}>Smart dispatch orchestration</li>
+                           
                             
                          </ul>
                          <button onClick={() => navigateToRegister()} className={[home["btn"], home["btn--outline"], home["btn--block"]].join(' ')}>Get Started</button>
@@ -210,19 +212,19 @@ Whether you lead, teach, or learn with pride, Miqwii walks with you, side by sid
              <div className={home["plan"]}>
                  <div className={[home["card"], home["card--secondary"]].join(' ')}>
                      <header className={home["card_header"]} >
-                        <h3 className={home["plan__name"]}>Miqwii Enterprise</h3>
-                        <span className={home["plan__price"]} >7x</span>
-                        <span className={home["plan__billing-cycle"]}>/Size</span>
-                        <span className={[home["badge"], home["badge--secondary"], home["badge--small"]].join(' ')}>Students</span>
-                        <span className={home["plan__description"]} >1000 -  2000+ Capacity</span>
+                        <h3 className={home["plan__name"]}>Phase 3</h3>
+                        <span className={home["plan__price"]} >3x</span>
+                        <span className={home["plan__billing-cycle"]}>/Scale</span>
+                        <span className={[home["badge"], home["badge--secondary"], home["badge--small"]].join(' ')}>Strategy</span>
+                        <span className={home["plan__description"]} >Strategic Objectives</span>
              
                      </header>
                      <div className={home["card_body"]}>
                          <ul className={[home["list"], home["list--tick"]].join(' ')}>
-                             <li className={home["list__item"]}>Large School Groups</li>
-                             <li className={home["list__item"]}>Unlimited Users Account</li>
-                             <li className={home["list__item"]}>2000 Plus Student</li>
-                            
+                             <li className={home["list__item"]}>Maintain 60–65% operating margin via cost efficiency</li>
+                             <li className={home["list__item"]}>Capture 10–15% market share across 3 major cities</li>
+                             <li className={home["list__item"]}>Partner with 50 SMEs, 5 e-commerce aggregators, 10 agents</li>
+                                 <li className={home["list__item"]}>Sustaining 60–65% profit margins</li>
                          </ul>
                          <button onClick={() => navigateToRegister()} className={[home["btn"], home["btn--outline"], home["btn--block"]].join(' ')}>Get Started</button>
                      </div>
@@ -243,19 +245,9 @@ Whether you lead, teach, or learn with pride, Miqwii walks with you, side by sid
      <section>
         <section className={[home["block"], home["container"]].join(' ')}>
             <header className={home["block__header"]}>
-                <h2>Try, Test, and Trust — Free for 90 Days</h2>
+                <h2>Driven by Purpose</h2>
                 <p>
-            Miqwii Automatically draws the line,
-And places you in the plan that’s fine.
-
-🌱 Miqwii Lite for schools just born,
-Small in size, but big each dawn.
-
-🌿 Miqwii Standard for growing halls,
-With hundreds walking through the calls.
-
-🌳 Miqwii Enterprise when numbers soar,
-For schools with many dreams </p>
+            We don’t just move parcels — we move possibilities. Every route we take strengthens businesses, builds trust, and connects destinies.</p>
             </header>
         
             <article className={[home["grid"], home["grid--1x2"], home["feature"]].join(' ')}>
@@ -267,27 +259,12 @@ For schools with many dreams </p>
                     </span>
                     <h3 className={home["features__heading"]} >Strong Team Support</h3>
                     <p>
-                       Backed by a Strong Team, Built for Simplicity
-At We Deliver, you're never alone.
- Behind the platform is a dedicated team of developers, educators, and support professionals working to ensure everything runs smoothly for your school.
-                        </p>
+    Our team stands as the backbone of every success story we create. 
+    With experienced professionals across every department, we ensure that every challenge is met with collaboration, dedication, and innovation. Together, we deliver excellence and reliability you can count on.          </p>
                         <a onClick={() => navigateToService()} className={home["link-arrow"]} >Learn More</a>
                 </div>
         
-                <picture>
-                    <source
-                      type="image/webp"
-                      srcset="/images/team@1x.webp 1x, /images/team@2x.webp"
-                    />
-        
-                    <source
-                    type="image/png"
-        
-                    srcset="/images/team@1x.png 1x, /images/team@2x.png"
-                    />
-                    <img className={home["feature__image"]} src="/images/team@1x.png" alt=""/>
-                </picture>
-               
+             <img className={home["hero__image"]} src="/images/team@1x.png" alt=""/>
              </article>
         
         
@@ -300,26 +277,11 @@ At We Deliver, you're never alone.
                     </span>
                     <h3 className={home["features__heading"]} >Designed for Simplicity</h3>
                     <p>
-                        Quick onboarding and simple controls to manage sessions, results, fees, and more
-
-Whether you're managing 50 students or 5,000, We Deliver is built to work for you — simply, securely, and efficiently.
-                        </p>
+                  Every feature we build is crafted with simplicity in mind. From clean interfaces to seamless functionality, our design ensures that users can focus on what truly matters — getting things done effortlessly.   </p>
                         <a onClick={() => navigateToService()} className={home["link-arrow"]}>Learn More</a>
                 </div>
         
-                <picture>
-                    <source
-                      type="image/webp"
-                      srcset="/images/target@1x.webp 1x, /images/target@2x.webp"
-                    />
-        
-                    <source
-                    type="image/png"
-        
-                    srcset="/images/target@1x.png 1x, /images/target@2x.png"
-                    />
-                    <img className={home["feature__image"]} src="/images/target@1x.png" alt=""/>
-                </picture>
+                 <img className={home["hero__image"]} src="/images/target@1x.png" alt=""/>
                
              </article>
         
@@ -342,18 +304,7 @@ Whether you're managing 50 students or 5,000, We Deliver is built to work for yo
             </header>
         
             <div className={[home["grid"], home["grid--1x2"]].join(' ')}>
-                <picture className={home["block-showcase__image"]}>
-                    <source
-                     type="image/webp"
-                     srcset="/images/ipad@1x.webp 1x, /images/ipad@2x.webp 2x"
-                    />
-        
-                    <source
-                     type="image/png"
-                     srcset="/images/ipad@1x.png 1x, /images/ipad@2x.png 2x"
-                    />
-                    <img  src="/images/ipad@1x.png" alt=""/>
-                </picture>
+              <img className={home["hero__image"]} src="/images/ipad@1x.png" alt=""/>
                
               <ul className={home["list"]}>
                 <li>
@@ -548,14 +499,14 @@ Whether you're managing 50 students or 5,000, We Deliver is built to work for yo
                    
                     <div className={home["collapsible__content"]}>
                         <ul className={home["list"]} >
-                            <li>Bulk Result Generation</li>
-                            <li>Student Analytics</li>
-                            <li>Manage  records, results</li>
-                            <li>Assessments</li>
-                            <li>Student performance</li>
-                            <li>Full CA & exam result management</li>
-                            <li>Advanced analytics</li>
-                            <li>Core management tools</li>
+                            <li>Multi-City Delivery Network</li>
+                            <li>Business & Merchant Solutions</li>
+                            <li>Real-Time Tracking</li>
+                            <li>Cash & Digital Payment Options</li>
+                            <li>Secure & Verified Drivers</li>
+                            <li>Customer Support</li>
+                            <li>Advanced Location Tracking</li>
+                            <li>Map Visualization</li>
                             <li>Many More</li>
                            
                         </ul>
@@ -603,14 +554,14 @@ Whether you're managing 50 students or 5,000, We Deliver is built to work for yo
                         Behind Nyako's Quaters Jimeta-Yola Adamawa State Nigeria.
                      </p>
         
-                     <p>
-                        Tel: +2348169863672, +2348033314662
+                   <p>
+                        Tel:  +2347064939047, +2348169863672
                     </p>
                      <p>
                         {/* Mail: miqwiitechnologies@gmail.com */}
                     </p>
                      <p>
-                        WhatsApp: +2348169863672
+                        WhatsApp: +2347064939047
                     </p>
         
                     </div>
