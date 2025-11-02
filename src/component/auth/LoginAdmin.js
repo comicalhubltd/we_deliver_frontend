@@ -311,8 +311,7 @@ const LoginAdmin = () => {
                 {" "}
                 <a
                   className={style["link__register"]}
-                  href="#/
-             password/password-request-customer"
+                  href="#/password/password-request-customer"
                 >
                   Forgot Password
                 </a>
