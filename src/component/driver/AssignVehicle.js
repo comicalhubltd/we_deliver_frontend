@@ -93,7 +93,7 @@ const AssignVehicle = () => {
     
 const logout = () => {
 localStorage.removeItem('token');
-navigate("/school/login")
+navigate("/customer/login")
 
 }
 

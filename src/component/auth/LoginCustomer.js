@@ -212,7 +212,8 @@ const LoginCustomer = () => {
     }
     
     const body = await dispatch(googleLoginRequest(values)).unwrap();
-
+     
+      
       localStorage.setItem("token", JSON.stringify(body.jwt));
      
 

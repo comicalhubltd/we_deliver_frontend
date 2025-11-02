@@ -28,7 +28,7 @@ export const getAllCustomerLocationOnTransit = createAsyncThunk(
   async (_,  { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await api.put(BASE_URL + '/get-all-customer-location',  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
+      const response = await api.get(BASE_URL + '/get-all-customer-location',  { headers: {"Authorization":`Bearer ${JSON.parse(token)}`, "Content-Type":"application/json"}});
       console.log("Set Current Session " + response.data);
       return response.data; // Return the saved user response
       

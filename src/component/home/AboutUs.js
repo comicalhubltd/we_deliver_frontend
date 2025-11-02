@@ -17,11 +17,11 @@ const AboutUs = () => {
 
 
  const navigateToRegister = () => {
-    navigate("/school/register");
+    navigate("/customer/register");
   }
 
   const navigateToLogin = () => {
-    navigate("/school/login");
+    navigate("/customer/login");
   }
 
   const navigateToService = () => {
