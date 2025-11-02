@@ -25,6 +25,11 @@ const NavBar = () => {
     navigate("/customer/login");
   };
 
+
+   const navigateToDriver = () => {
+    navigate("/driver/login");
+  };
+
   const navigateToService = () => {
     navigate("/services");
   };
@@ -60,6 +65,21 @@ const NavBar = () => {
                 ].join(" ")}
               >
                 Login
+              </span>
+            </a>
+          </li>
+
+           <li onClick={() => navigateToDriver()} className={navbar["nav__item"]}>
+            <a style={{ cursor: "pointer" }}>
+              {" "}
+              <span
+                class={[
+                  navbar["badge"],
+                  navbar["badge--primary"],
+                  navbar["list--badge"],
+                ].join(" ")}
+              >
+                Driver
               </span>
             </a>
           </li>
@@ -163,6 +183,22 @@ const NavBar = () => {
               ].join(" ")}
             >
               Login
+            </span>
+          </a>
+        </li>
+
+
+         <li onClick={() => navigateToDriver()} className={navbar["nav__item"]}>
+          <a style={{ cursor: "pointer" }}>
+            {" "}
+            <span
+              class={[
+                navbar["badge"],
+                navbar["badge--primary"],
+                navbar["list--badge"],
+              ].join(" ")}
+            >
+              Driver
             </span>
           </a>
         </li>
