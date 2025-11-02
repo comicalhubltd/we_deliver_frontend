@@ -689,7 +689,7 @@ const Rejected = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#fee"   ></use>
+                        <use href="../images/sprite.svg#fee"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Payments
@@ -708,7 +708,7 @@ const Rejected = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
@@ -751,7 +751,7 @@ const Rejected = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#profile"   ></use>
+                        <use href="../images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -768,7 +768,7 @@ const Rejected = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>

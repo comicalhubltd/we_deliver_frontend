@@ -719,7 +719,7 @@ const AddDeliveryRequest = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#profile"   ></use>
+                        <use href="../images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -736,7 +736,7 @@ const AddDeliveryRequest = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
