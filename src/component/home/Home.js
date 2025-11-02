@@ -130,7 +130,7 @@ const Home = () => {
     
             <button className={[home["btn"], home["btn--accent"]].join(' ')}>
                 <svg  className={[home["icon"], home["icon--white"]].join(' ')}>
-                    <use href="../images/sprite.svg#search"></use>
+                    <use href="../images/sprite.svg#search"   ></use>
                   </svg>
                 Search
             </button>
@@ -254,7 +254,7 @@ const Home = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')} >
-                            <use href="../images/sprite.svg#team"></use>
+                            <use href="../images/sprite.svg#team"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Strong Team Support</h3>
@@ -272,7 +272,7 @@ const Home = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#easy"></use>
+                            <use href="../images/sprite.svg#easy"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Designed for Simplicity</h3>
@@ -311,7 +311,7 @@ const Home = () => {
                     <div className={home["media"]}>
                     <div className={home["media__image"]}>
                         <svg className={[home["icon"], home["icon--white"]].join(' ')}>
-                            <use href="../images/sprite.svg#snap"></use>
+                            <use href="../images/sprite.svg#snap"   ></use>
                           </svg>
                     </div>
                     <div className={home["media__body"]} >
@@ -326,7 +326,7 @@ const Home = () => {
                     <div className={home["media"]}>
                     <div className={home["media__image"]}>
                         <svg className={[home["icon"], home["icon--white"]].join(' ')}>
-                            <use href="../images/sprite.svg#graph"></use>
+                            <use href="../images/sprite.svg#graph"   ></use>
                           </svg>
                     </div>
                  <div className={home["media__body"]} >
@@ -370,7 +370,7 @@ const Home = () => {
                          <img  src="/images/customer1.png" alt="A happy smiling customer"/>
                         <span className={home["icon-container"]}>
                              <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
-                                 <use href="../images/sprite.svg#quote"></use>
+                                 <use href="../images/sprite.svg#quote"   ></use>
                                </svg>
                          </span>
                 
@@ -383,7 +383,7 @@ const Home = () => {
                                  <div className={home["media"]}>
                                      <div className={home["media__image"]} >
                                          <svg className={[home["icon"], home["icon--secondary"], home["quote__line"]].join(' ')}>
-                                             <use href="../images/sprite.svg#hyphen"></use>
+                                             <use href="../images/sprite.svg#hyphen"   ></use>
                                            </svg>
                                      </div>
                                      <div className={home["media__body"]}>
@@ -405,7 +405,7 @@ const Home = () => {
                          <img  src="/images/customer2.png" alt="A happy smiling customer"/>
                         <span className={home["icon-container"]}>
                              <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
-                                 <use href="../images/sprite.svg#quote"></use>
+                                 <use href="../images/sprite.svg#quote"   ></use>
                                </svg>
                          </span>
                 
@@ -419,7 +419,7 @@ const Home = () => {
                                  <div className={home["media"]}>
                                      <div className={home["media__image"]} >
                                          <svg className={[home["icon"], home["icon--secondary"], home["quote__line"]].join(' ')}>
-                                             <use href="../images/sprite.svg#hyphen"></use>
+                                             <use href="../images/sprite.svg#hyphen"   ></use>
                                            </svg>
                                      </div>
                                      <div className={home["media__body"]}>
@@ -455,7 +455,7 @@ const Home = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>Services</h2>
                         <span onClick={() => handleCollapsible2()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>
@@ -484,7 +484,7 @@ const Home = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>LINKS</h2>
                         <span onClick={() => handleCollapsible3()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>
@@ -492,11 +492,11 @@ const Home = () => {
                 
                      <div className={home["collapsible__content"]}>
                         <ul className={home["list"]} >
-                            <li onClick={() => navigateToRegister()}><a href="#">Create Account</a></li>
-                            <li onClick={() => navigateToLogin()}><a href="#">Login</a></li>
-                            <li onClick={() => navigateToAboutUs()}><a href="#">About Us</a></li>
-                            <li onClick={() => navigateToContactUs()}><a href="#">Contact Us</a></li>
-                            <li onClick={() => navigateToService()}><a href="#">Service</a></li>
+                            <li onClick={() => navigateToRegister()}><a href="#"   >Create Account</a></li>
+                            <li onClick={() => navigateToLogin()}><a href="#"   >Login</a></li>
+                            <li onClick={() => navigateToAboutUs()}><a href="#"   >About Us</a></li>
+                            <li onClick={() => navigateToContactUs()}><a href="#"   >Contact Us</a></li>
+                            <li onClick={() => navigateToService()}><a href="#"   >Service</a></li>
                         </ul>
                     </div>
                 
@@ -507,7 +507,7 @@ const Home = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>Contact US</h2>
                         <span onClick={() => handleCollapsible4()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>

@@ -221,8 +221,7 @@ const CustomerAwatingTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="#/
-             customer/profile"
+                          href="#/customer/profile"   
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -277,7 +276,7 @@ const CustomerAwatingTransit = () => {
                 <Box sx={{ textAlign: "center", flexGrow: 1 }}>
                   <a
                     className={[navbar["logo__link"], navbar["logo"]].join(" ")}
-                    href="#"
+                    href="#"   
                   >
                     <img src="/images/logo.png" alt="miqwii logo" />
                   </a>
@@ -315,7 +314,7 @@ const CustomerAwatingTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"></use>
+                        <use href="../images/sprite.svg#dashboard"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -334,15 +333,13 @@ const CustomerAwatingTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             customer/home"
+                    <a href="#/customer/home"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -380,7 +377,7 @@ const CustomerAwatingTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#request"></use>
+                        <use href="../images/sprite.svg#request"   ></use>
                       </svg>
                        <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
@@ -397,15 +394,13 @@ const CustomerAwatingTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
  <div className={navbar["collapsible__content--drawer"]}>
 
-                   <a
-             href="#/
-             delivery/customer-pending"
+                   <a href="#/delivery/customer-pending"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -413,18 +408,14 @@ const CustomerAwatingTransit = () => {
 
 
                     
-                     <a
-             href="#/
-             delivery/customer-awaiting-transit"
+                     <a href="#/delivery/customer-awaiting-transit"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <a
-             href="#/
-             delivery/customer-on-transit"
+                    <a href="#/delivery/customer-on-transit"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -434,9 +425,7 @@ const CustomerAwatingTransit = () => {
 
 
 
-                     <a
-             href="#/
-             delivery/customer-arrived"
+                     <a href="#/delivery/customer-arrived"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
@@ -445,18 +434,14 @@ const CustomerAwatingTransit = () => {
 
 
                     
-                    <a
-             href="#/
-             delivery/customer-delivered"
+                    <a href="#/delivery/customer-delivered"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
 
-                    <a
-             href="#/
-             delivery/add-delivery"
+                    <a href="#/delivery/add-delivery"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
@@ -486,7 +471,7 @@ const CustomerAwatingTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#location"></use>
+                        <use href="../images/sprite.svg#location"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Locations</p>
                     </div>
@@ -503,15 +488,13 @@ const CustomerAwatingTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             location/show-locations"
+                    <a href="#/location/show-locations"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -544,8 +527,7 @@ const CustomerAwatingTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#profile"></use>
+                        <use href="#/images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -562,16 +544,13 @@ const CustomerAwatingTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#chevron"></use>
+                        <use href="#/images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             customer/profile"
+                    <a href="#/customer/profile"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -619,7 +598,7 @@ const CustomerAwatingTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                         </span>
 
@@ -648,7 +627,7 @@ const CustomerAwatingTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                         </span>
 

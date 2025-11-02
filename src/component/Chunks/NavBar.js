@@ -91,7 +91,7 @@ const NavBar = () => {
               <svg
                 className={[navbar["icon"], navbar["icon--white"]].join(" ")}
               >
-                <use href="/images/sprite.svg#rocket"></use>
+                <use href="/images/sprite.svg#rocket"   ></use>
               </svg>
               Get Started
             </button>
@@ -103,7 +103,7 @@ const NavBar = () => {
 
   return (
     <div className={[navbar["nav"], navbar["collapsible"]].join(" ")}>
-      <a className={navbar["logo__link"]} href="#">
+      <a className={navbar["logo__link"]} href="#"   >
         <img src="/images/logo.png" alt="miqwii logo" />
       </a>
 
@@ -186,7 +186,7 @@ const NavBar = () => {
             className={[navbar["btn"], navbar["btn--icon"]].join(" ")}
           >
             <svg className={[navbar["icon"], navbar["icon--white"]].join(" ")}>
-              <use href="/images/sprite.svg#rocket"></use>
+              <use href="/images/sprite.svg#rocket"   ></use>
             </svg>
             Get Started
           </button>

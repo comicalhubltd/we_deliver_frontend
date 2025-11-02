@@ -122,7 +122,7 @@ const  DeliveryActionMenuDeleteEditView = ({ row, onDelete, onEdit,  onView}) =>
         
                   <span class={dashboard['icon-container']}>
                           <svg class={[dashboard['icon--big'], dashboard['icon--error']].join(' ')}>
-                              <use href="/images/sprite.svg#success-icon"></use>
+                              <use href="/images/sprite.svg#success-icon"   ></use>
                             </svg>
                       </span>
                       <Typography

@@ -220,8 +220,7 @@ const OnTransit = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="#/
-             customer/profile"
+                          href="#/customer/profile"   
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -276,7 +275,7 @@ const OnTransit = () => {
                 <Box sx={{ textAlign: "center", flexGrow: 1 }}>
                   <a
                     className={[navbar["logo__link"], navbar["logo"]].join(" ")}
-                    href="#"
+                    href="#"   
                   >
                     <img src="/images/logo.png" alt="miqwii logo" />
                   </a>
@@ -314,7 +313,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"></use>
+                        <use href="../images/sprite.svg#dashboard"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -333,23 +332,19 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
-             href="#/
-             customer/home"
+                      <a href="#/customer/home"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <a
-             href="#/
-             delivery/add-delivery"
+                     <a href="#/delivery/add-delivery"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
@@ -379,7 +374,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#customer"></use>
+                        <use href="../images/sprite.svg#customer"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Customers</p>
                     </div>
@@ -396,16 +391,14 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
                  
-                    <a
-             href="#/
-             customer/view-customers"
+                    <a href="#/customer/view-customers"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Customers
@@ -435,7 +428,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#driver"></use>
+                        <use href="../images/sprite.svg#driver"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Drivers</p>
                     </div>
@@ -452,22 +445,18 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             driver/view-drivers"
+                    <a href="#/driver/view-drivers"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Drivers
                     </a>
-                      <a
-             href="#/
-             driver/assign-vehicle"
+                      <a href="#/driver/assign-vehicle"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                      Assign Vehicle
@@ -498,7 +487,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#vehicle"></use>
+                        <use href="../images/sprite.svg#vehicle"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Vehicles</p>
                     </div>
@@ -515,15 +504,13 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             vehicle/view-vehicles"
+                    <a href="#/vehicle/view-vehicles"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Vehicles
@@ -558,7 +545,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#request"></use>
+                        <use href="../images/sprite.svg#request"   ></use>
                       </svg>
                        <p className={navbar["collapsible__heading"]}>Delivery Status</p>
                     </div>
@@ -575,16 +562,14 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                  <a
-             href="#/
-             delivery/pending"
+                  <a href="#/delivery/pending"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Pending
@@ -592,18 +577,14 @@ const OnTransit = () => {
 
 
                     
-                   <a
-             href="#/
-             delivery/awaiting-transit"
+                   <a href="#/delivery/awaiting-transit"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Awaiting Transit
                     </a>
 
 
-                    <a
-             href="#/
-             delivery/on-transit"
+                    <a href="#/delivery/on-transit"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       On Transit 
@@ -611,26 +592,20 @@ const OnTransit = () => {
                     
 
 
-                    <a
-             href="#/
-             delivery/arrived"
+                    <a href="#/delivery/arrived"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Arrived
                     </a>
 
 
-                    <a
-             href="#/
-             delivery/delivered"
+                    <a href="#/delivery/delivered"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Delivered
                     </a>
 
-                      <a
-             href="#/
-             delivery/view-all-delivery"
+                      <a href="#/delivery/view-all-delivery"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View All Deliveries
@@ -663,7 +638,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#location"></use>
+                        <use href="../images/sprite.svg#location"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Locations</p>
                     </div>
@@ -680,15 +655,13 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             location/show-locations"
+                    <a href="#/location/show-locations"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Live Location
@@ -717,8 +690,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#fee"></use>
+                        <use href="#/images/sprite.svg#fee"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Payments
@@ -737,23 +709,18 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#chevron"></use>
+                        <use href="#/images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             payment/paid-deliveries"
+                    <a href="#/payment/paid-deliveries"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Paid Deliveries
                     </a>
-         <a
-             href="#/
-             payment/unpaid-deliveries"
+         <a href="#/payment/unpaid-deliveries"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Unpaid Deliveries
@@ -785,8 +752,7 @@ const OnTransit = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#profile"></use>
+                        <use href="#/images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -803,16 +769,13 @@ const OnTransit = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#chevron"></use>
+                        <use href="#/images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             customer/profile"
+                    <a href="#/customer/profile"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -860,7 +823,7 @@ const OnTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                         </span>
 
@@ -889,7 +852,7 @@ const OnTransit = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                         </span>
 

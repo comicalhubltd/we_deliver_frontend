@@ -376,7 +376,7 @@ useEffect(() => {
       style={{ height: "400px", width: "100%", borderRadius: "8px" }}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright"   >OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {userLocation && (
@@ -463,7 +463,7 @@ useEffect(() => {
                                        dashboard["icon--primary"],
                                      ].join(" ")}
                                    >
-                                     <use href="../images/sprite.svg#location"></use>
+                                     <use href="../images/sprite.svg#location"   ></use>
                                    </svg>
                                  </span>
          
@@ -496,7 +496,7 @@ useEffect(() => {
                                        dashboard["icon--primary"],
                                      ].join(" ")}
                                    >
-                                     <use href="../images/sprite.svg#location"></use>
+                                     <use href="../images/sprite.svg#location"   ></use>
                                    </svg>
                                  </span>
          

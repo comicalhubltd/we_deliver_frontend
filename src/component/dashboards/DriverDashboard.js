@@ -190,7 +190,7 @@ const DriverDashboard = () => {
     style={{ height: "400px", width: "100%" }}
   >
     <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright"   >OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
     <Marker position={position}>
@@ -262,8 +262,7 @@ const DriverDashboard = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="#/
-             driver/driver-profile"
+                          href="#/driver/driver-profile"   
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -318,7 +317,7 @@ const DriverDashboard = () => {
                 <Box sx={{ textAlign: "center", flexGrow: 1 }}>
                   <a
                     className={[navbar["logo__link"], navbar["logo"]].join(" ")}
-                    href="#"
+                    href="#"   
                   >
                     <img src="/images/logo.png" alt="miqwii logo" />
                   </a>
@@ -356,7 +355,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"></use>
+                        <use href="../images/sprite.svg#dashboard"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -375,15 +374,13 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             driver/home"
+                    <a href="#/driver/home"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
@@ -414,7 +411,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#vehicle"></use>
+                        <use href="../images/sprite.svg#vehicle"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Vehicles</p>
                     </div>
@@ -431,15 +428,14 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a
-                       href="#/
-             vehicle/view-driver-vehicle"
+                       href="#/vehicle/view-driver-vehicle"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       View Vehicles
@@ -470,7 +466,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#request"></use>
+                        <use href="../images/sprite.svg#request"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Tasks</p>
                     </div>
@@ -487,16 +483,14 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
 
-                  <a
-             href="#/
-             driver/driver-movements"
+                  <a href="#/driver/driver-movements"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Driver Movements
@@ -530,8 +524,7 @@ const DriverDashboard = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#profile"></use>
+                        <use href="#/images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -548,16 +541,13 @@ const DriverDashboard = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#chevron"></use>
+                        <use href="#/images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             driver/driver-profile"
+                    <a href="#/driver/driver-profile"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -605,7 +595,7 @@ const DriverDashboard = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                         </span>
 
@@ -631,7 +621,7 @@ const DriverDashboard = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#request-approve"></use>
+                            <use href="../images/sprite.svg#request-approve"   ></use>
                           </svg>
                         </span>
 
@@ -672,7 +662,7 @@ const DriverDashboard = () => {
                               dashboard["icon--primary"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#display"></use>
+                            <use href="../images/sprite.svg#display"   ></use>
                           </svg>
                         </span>
 
@@ -775,7 +765,7 @@ const DriverDashboard = () => {
                               dashboard["icon--success"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#success-icon"></use>
+                            <use href="../images/sprite.svg#success-icon"   ></use>
                           </svg>
                         </span>
 
@@ -811,7 +801,7 @@ const DriverDashboard = () => {
                               dashboard["icon--error"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#error-icon"></use>
+                            <use href="../images/sprite.svg#error-icon"   ></use>
                           </svg>
                         </span>
                         <Typography sx={{ fontSize: 21 }}>

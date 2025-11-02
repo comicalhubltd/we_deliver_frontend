@@ -7,7 +7,7 @@
 
       <button className={[dashboard['btn'], dashboard['btn--icon-accent']].join(' ')}>
     <svg className={[dashboard["icon"], dashboard["icon--white"]].join(' ')}>
-        <use href="/images/sprite.svg#add"></use>
+        <use href="/images/sprite.svg#add"   ></use>
       </svg>
    Add Classes
 </button>
@@ -15,7 +15,7 @@
 
 <button className={[dashboard['btn'], dashboard['btn--icon']].join(' ')}>
     <svg className={[dashboard["icon"], dashboard["icon--white"]].join(' ')}>
-        <use href="/images/sprite.svg#add"></use>
+        <use href="/images/sprite.svg#add"   ></use>
       </svg>
     Add Subject
 </button>

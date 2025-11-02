@@ -111,7 +111,7 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#request"></use>
+                            <use href="../images/sprite.svg#request"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Delivery Request</h3>
@@ -126,7 +126,7 @@ const Services = () => {
                   <div   className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#location"></use>
+                            <use href="../images/sprite.svg#location"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Location</h3>
@@ -143,7 +143,7 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#vehicle"></use>
+                            <use href="../images/sprite.svg#vehicle"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} > Vehicles</h3>
@@ -155,7 +155,7 @@ const Services = () => {
                   <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#driver"></use>
+                            <use href="../images/sprite.svg#driver"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} > Drivers</h3>
@@ -171,7 +171,7 @@ const Services = () => {
                 <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#customer"></use>
+                            <use href="../images/sprite.svg#customer"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Customer</h3>
@@ -184,7 +184,7 @@ const Services = () => {
                   <div className={home["feature__content"]} >
                     <span className={home["icon-container"]} >
                         <svg className={[home["icon"], home["icon--primary"]].join(' ')}>
-                            <use href="../images/sprite.svg#subscription"></use>
+                            <use href="../images/sprite.svg#subscription"   ></use>
                           </svg>
                     </span>
                     <h3 className={home["features__heading"]} >Payment</h3>
@@ -210,7 +210,7 @@ const Services = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>Services</h2>
                         <span onClick={() => handleCollapsible2()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>
@@ -239,7 +239,7 @@ const Services = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>LINKS</h2>
                         <span onClick={() => handleCollapsible3()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>
@@ -247,11 +247,11 @@ const Services = () => {
                 
                      <div className={home["collapsible__content"]}>
                         <ul className={home["list"]} >
-                            <li onClick={() => navigateToRegister()}><a href="#">Create Account</a></li>
-                            <li onClick={() => navigateToLogin()}><a href="#">Login</a></li>
-                            <li onClick={() => navigateToAboutUs()}><a href="#">About Us</a></li>
-                            <li onClick={() => navigateToContactUs()}><a href="#">Contact Us</a></li>
-                            <li onClick={() => navigateToService()}><a href="#">Service</a></li>
+                            <li onClick={() => navigateToRegister()}><a href="#"   >Create Account</a></li>
+                            <li onClick={() => navigateToLogin()}><a href="#"   >Login</a></li>
+                            <li onClick={() => navigateToAboutUs()}><a href="#"   >About Us</a></li>
+                            <li onClick={() => navigateToContactUs()}><a href="#"   >Contact Us</a></li>
+                            <li onClick={() => navigateToService()}><a href="#"   >Service</a></li>
                         </ul>
                     </div>
                 
@@ -262,7 +262,7 @@ const Services = () => {
                         <h2 className={[home["collapsible__heading"], home["footer__heading"]].join(' ')}>Contact US</h2>
                         <span onClick={() => handleCollapsible4()} className={home["icon-container"]}>
                             <svg className={[home["icon"], home["icon--primary"], home["icon--white"], home["collapsible--chevron"]].join(' ')}>
-                                <use href="../images/sprite.svg#chevron"></use>
+                                <use href="../images/sprite.svg#chevron"   ></use>
                               </svg>
                         </span>
                     </header>

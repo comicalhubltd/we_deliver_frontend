@@ -895,8 +895,7 @@ const DriverRegistration = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Already Have an Account:{" "}
-                <a className={style["link__register"]} href="#/
-             driver/login">
+                <a className={style["link__register"]} href="#/driver/login"   >
                   Login
                 </a>
               </span>
@@ -957,7 +956,7 @@ const DriverRegistration = () => {
                         dashboard["icon--success"],
                       ].join(" ")}
                     >
-                      <use href="../images/sprite.svg#success-icon"></use>
+                      <use href="../images/sprite.svg#success-icon"   ></use>
                     </svg>
                   </span>
 
@@ -989,7 +988,7 @@ const DriverRegistration = () => {
                         dashboard["icon--error"],
                       ].join(" ")}
                     >
-                      <use href="../images/sprite.svg#error-icon"></use>
+                      <use href="../images/sprite.svg#error-icon"   ></use>
                     </svg>
                   </span>
 

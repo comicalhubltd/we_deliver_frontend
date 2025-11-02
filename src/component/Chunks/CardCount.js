@@ -5,7 +5,7 @@
 
   <span class={dashboard['icon-container']}>
         <svg class={[dashboard['icon--big'], dashboard['icon--primary']].join(' ')}>
-            <use href="../images/sprite.svg#student"></use>
+            <use href="../images/sprite.svg#student"   ></use>
           </svg>
     </span>
 

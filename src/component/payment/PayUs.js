@@ -538,7 +538,7 @@ const PayUS = () => {
                               dashboard["icon--success"],
                             ].join(" ")}
                           >
-                            <use href="/images/sprite.svg#success-icon"></use>
+                            <use href="/images/sprite.svg#success-icon"   ></use>
                           </svg>
                         </span>
 
@@ -574,7 +574,7 @@ const PayUS = () => {
                               dashboard["icon--error"],
                             ].join(" ")}
                           >
-                            <use href="/images/sprite.svg#error-icon"></use>
+                            <use href="/images/sprite.svg#error-icon"   ></use>
                           </svg>
                         </span>
                         <Typography sx={{ fontSize: 21 }}>

@@ -21,18 +21,18 @@ const SchoolNavBar = () =>{
 
       <ul className={[navbar["list"], navbar["drawer__list"], navbar[""]].join(' ')}>
         
-        <li className={navbar["nav__item"]}><a href="#">  <span class={[navbar["badge"], navbar["badge--secondary"], navbar['list--badge']].join(' ')}>Home</span></a></li>
-          <li className={navbar["nav__item"]}><a href="#">Service</a></li>
-          <li className={navbar["nav__item"]}><a href="#">About Us</a></li>
-          <li className={navbar["nav__item"]}><a href="#">Contact Us</a></li>
-          <li className={navbar["nav__item"]}><a href="#">pricing</a></li>
-          <li className={navbar["nav__item"]}><a href="#">About us</a></li>
+        <li className={navbar["nav__item"]}><a href="#"   >  <span class={[navbar["badge"], navbar["badge--secondary"], navbar['list--badge']].join(' ')}>Home</span></a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >Service</a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >About Us</a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >Contact Us</a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >pricing</a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >About us</a></li>
          
           <li className={navbar["nav__item"]}>
            
           <button className={[navbar['btn'], navbar['btn--icon']].join(' ')}>
               <svg className={[navbar["icon"], navbar["icon--white"]].join(' ')}>
-                  <use href="/images/sprite.svg#rocket"></use>
+                  <use href="/images/sprite.svg#rocket"   ></use>
                 </svg>
               Get Started
           </button>
@@ -59,12 +59,12 @@ const SchoolNavBar = () =>{
    
     <div onClick={toggleDrawer(true)} className={[navbar["collapsible__icon"], navbar["menu"]].join(' ')}>
    <svg  className={[navbar["icon"], navbar["icon--primary"], navbar["nav__toggler"], navbar[""]].join(' ')}>
-      <use href="/images/sprite.svg#menu"></use>
+      <use href="/images/sprite.svg#menu"   ></use>
       </svg>  
     </div>
      </IconButton>
 
-        <a className={[navbar["logo__link"], navbar["logo"]].join(' ')} href="#"><img src="/images/logo.png" alt="miqwii logo"/></a>
+        <a className={[navbar["logo__link"], navbar["logo"]].join(' ')} href="#"   ><img src="/images/logo.png" alt="miqwii logo"/></a>
       
     </div>
 
@@ -78,7 +78,7 @@ const SchoolNavBar = () =>{
 
   <div onClick={toggleDrawer(true)} className={navbar["collapsible__icon"]}>
   <svg  className={[navbar["icon"], navbar["icon--primary"], navbar["nav__toggler"], navbar[""]].join(' ')}>
-      <use href="/images/sprite.svg#menu"></use>
+      <use href="/images/sprite.svg#menu"   ></use>
       </svg>  
   </div>
 
@@ -94,18 +94,18 @@ const SchoolNavBar = () =>{
            
           <ul className={[navbar["list"], navbar["nav__list"], navbar[""]].join(' ')}>
         
-          <li className={navbar["nav__item"]}><a href="#">  <span class={[navbar["badge"], navbar["badge--secondary"], navbar['list--badge']].join(' ')}>Home</span></a></li>
-            <li className={navbar["nav__item"]}><a href="#">Service</a></li>
-            <li className={navbar["nav__item"]}><a href="#">About Us</a></li>
-            <li className={navbar["nav__item"]}><a href="#">Contact Us</a></li>
-            <li className={navbar["nav__item"]}><a href="#">pricing</a></li>
-            <li className={navbar["nav__item"]}><a href="#">About us</a></li>
+          <li className={navbar["nav__item"]}><a href="#"   >  <span class={[navbar["badge"], navbar["badge--secondary"], navbar['list--badge']].join(' ')}>Home</span></a></li>
+            <li className={navbar["nav__item"]}><a href="#"   >Service</a></li>
+            <li className={navbar["nav__item"]}><a href="#"   >About Us</a></li>
+            <li className={navbar["nav__item"]}><a href="#"   >Contact Us</a></li>
+            <li className={navbar["nav__item"]}><a href="#"   >pricing</a></li>
+            <li className={navbar["nav__item"]}><a href="#"   >About us</a></li>
            
             <li className={navbar["nav__item"]}>
              
             <button className={[navbar['btn'], navbar['btn--icon']].join(' ')}>
                 <svg className={[navbar["icon"], navbar["icon--white"]].join(' ')}>
-                    <use href="/images/sprite.svg#rocket"></use>
+                    <use href="/images/sprite.svg#rocket"   ></use>
                   </svg>
                 Get Started
             </button>

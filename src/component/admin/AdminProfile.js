@@ -257,8 +257,7 @@ const AdminProfile = () => {
                     <div className={navbar["profile--selection__container"]}>
                       <div className={navbar["profile"]}>
                         <a
-                          href="#/
-             customer/profile"
+                          href="#/customer/profile"   
                           className={[navbar["link--profile"], navbar[""]].join(
                             " "
                           )}
@@ -313,7 +312,7 @@ const AdminProfile = () => {
                 <Box sx={{ textAlign: "center", flexGrow: 1 }}>
                   <a
                     className={[navbar["logo__link"], navbar["logo"]].join(" ")}
-                    href="#"
+                    href="#"   
                   >
                     <img src="/images/logo.png" alt="miqwii logo" />
                   </a>
@@ -351,7 +350,7 @@ const AdminProfile = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"></use>
+                        <use href="../images/sprite.svg#dashboard"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -370,30 +369,24 @@ const AdminProfile = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"></use>
+                        <use href="../images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                      <a
-             href="#/
-             customer/home"
+                      <a href="#/customer/home"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
                     </a>
 
-                     <a
-             href="#/
-             delivery/add-delivery"
+                     <a href="#/delivery/add-delivery"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Request Delivery
                     </a>
-                    <a
-             href="#/
-             admin/schools"
+                    <a href="#/admin/schools"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Schools
@@ -422,8 +415,7 @@ const AdminProfile = () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#profile"></use>
+                        <use href="#/images/sprite.svg#profile"   ></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -440,16 +432,13 @@ const AdminProfile = () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="#/
-             images/sprite.svg#chevron"></use>
+                        <use href="#/images/sprite.svg#chevron"   ></use>
                       </svg>
                     </span>
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a
-             href="#/
-             admin/profile"
+                    <a href="#/admin/profile"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Profile
@@ -589,7 +578,7 @@ const AdminProfile = () => {
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"></use>
+                                <use href="../images/sprite.svg#success-icon"   ></use>
                               </svg>
                             </span>
 
@@ -621,7 +610,7 @@ const AdminProfile = () => {
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"></use>
+                                <use href="../images/sprite.svg#error-icon"   ></use>
                               </svg>
                             </span>
 
@@ -683,7 +672,7 @@ const AdminProfile = () => {
                               dashboard["icon--success"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#success-icon"></use>
+                            <use href="../images/sprite.svg#success-icon"   ></use>
                           </svg>
                         </span>
 
@@ -719,7 +708,7 @@ const AdminProfile = () => {
                               dashboard["icon--error"],
                             ].join(" ")}
                           >
-                            <use href="../images/sprite.svg#error-icon"></use>
+                            <use href="../images/sprite.svg#error-icon"   ></use>
                           </svg>
                         </span>
                         <Typography sx={{ fontSize: 21 }}>

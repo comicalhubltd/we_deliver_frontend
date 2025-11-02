@@ -947,7 +947,7 @@ const CustomerRegistration = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Already Have an Account:{" "}
-                <a className={style["link__register"]} href="#/customer/login">
+                <a className={style["link__register"]} href="#/customer/login"   >
                   Login
                 </a>
               </span>
@@ -1008,7 +1008,7 @@ const CustomerRegistration = () => {
                         dashboard["icon--success"],
                       ].join(" ")}
                     >
-                      <use href="../images/sprite.svg#success-icon"></use>
+                      <use href="../images/sprite.svg#success-icon"   ></use>
                     </svg>
                   </span>
 
@@ -1040,7 +1040,7 @@ const CustomerRegistration = () => {
                         dashboard["icon--error"],
                       ].join(" ")}
                     >
-                      <use href="../images/sprite.svg#error-icon"></use>
+                      <use href="../images/sprite.svg#error-icon"   ></use>
                     </svg>
                   </span>
 

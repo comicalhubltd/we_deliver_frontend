@@ -292,7 +292,7 @@ const CustomerDetails = () => {
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"></use>
+                                <use href="../images/sprite.svg#success-icon"   ></use>
                               </svg>
                             </span>
 
@@ -324,7 +324,7 @@ const CustomerDetails = () => {
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"></use>
+                                <use href="../images/sprite.svg#error-icon"   ></use>
                               </svg>
                             </span>
 

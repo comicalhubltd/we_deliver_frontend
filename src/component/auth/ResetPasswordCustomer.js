@@ -266,8 +266,7 @@ const ResetPasswordCustomer = () => {
               <span className={style["form-link"]}>
                 {" "}
                 Already Have an Account:{" "}
-                <a className={style["link__register"]} href="#/
-             customer/login">
+                <a className={style["link__register"]} href="#/customer/login"   >
                   Login
                 </a>
               </span>
