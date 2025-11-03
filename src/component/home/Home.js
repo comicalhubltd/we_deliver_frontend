@@ -115,10 +115,17 @@ const Home = () => {
 
          <section className={[home["block"], home["container"], home["block-domain"]].join(' ')}>
         <header className={home["block__header"]}>
-            <h2 className={home["block__heading"]}>Aims and Objectives</h2>
+            <h2 className={home["block__heading"]}>We-Deliver Mission</h2>
             <p>
-             To build a scalable, technology-driven logistics company that revolutionizes interstate parcel delivery in Nigeria by offering affordable, secure, and efficient courier services tailored to the needs of SMEs, e-commerce platforms, and individuals.
-</p>
+            To provide fast, reliable, and secure delivery services that connect people and businesses with ease. We-Deliver is committed to ensuring timely deliveries, exceptional customer experience, and innovative logistics solutions that make moving goods simple, efficient, and trustworthy.
+           </p>
+        </header>
+
+           <header className={home["block__header"]}>
+            <h2 className={home["block__heading"]}>We-Deliver Vision</h2>
+            <p>
+            To become the most trusted and efficient delivery service across Africa—redefining logistics through innovation, speed, and reliability, while making every delivery a seamless experience for individuals and businesses alike.
+           </p>
         </header>
     
         <div className={home["input-group"]}>
@@ -135,14 +142,14 @@ const Home = () => {
                 Search
             </button>
         </div>
-        <ul className={[home["list"], home["block-domain__prices"]].join(' ')}>
+        {/* <ul className={[home["list"], home["block-domain__prices"]].join(' ')}>
             <li><span className={[home["badge"], home["badge--secondary"]].join(' ')}>Technology</span></li>
             <li>Integration</li>
             <li> Innovation</li>
             
          <li> Transparency</li>
             
-        </ul>
+        </ul> */}
      </section>
 
 
@@ -154,7 +161,7 @@ const Home = () => {
 
 
 
-        <section className={[home["block"], home["container"], home["block-plans"]].join(' ')}>
+        {/* <section className={[home["block"], home["container"], home["block-plans"]].join(' ')}>
             <div className={[home["grid"], home["grid--1x3"]].join(' ')}>
         
              <div className={home["plan"]}>
@@ -232,7 +239,7 @@ const Home = () => {
              
              </div>
           </div>
-         </section>
+         </section> */}
          
     
 
@@ -317,7 +324,7 @@ const Home = () => {
                     <div className={home["media__body"]} >
                         <h3 className={home["media__title"]}>Smart Insights </h3>
                       <p>
-                        Get real-time information on school activities, student progress, and system performance. With our intuitive interface, everything you need is just a glance away.
+                      Get real-time updates on deliveries, driver locations, and order performance. With our intuitive dashboard, everything you need to manage your logistics is just a glance away.
                       </p>
                     </div>
                 </div>
@@ -332,8 +339,7 @@ const Home = () => {
                  <div className={home["media__body"]} >
                         <h3 className={home["media__title"]}>Growth Analytics </h3>
                       <p>
-                        Track your institution’s growth with easy-to-read bar chart analytics. From student enrollment trends to usage reports, Miqwii helps you visualize your progress and make smarter decisions.
-                      </p>
+                       Track your business growth with easy-to-read charts and analytics. From daily delivery trends to customer order patterns, WeDeliver helps you visualize your progress and make smarter business decisions. </p>
                     </div>
                 </div>
                </li>
@@ -464,11 +470,11 @@ const Home = () => {
                    
                     <div className={home["collapsible__content"]}>
                         <ul className={home["list"]} >
-                            <li>Multi-City Delivery Network</li>
-                            <li>Business & Merchant Solutions</li>
+                            <li>Inter-state Delivery Network</li>
                             <li>Real-Time Tracking</li>
-                            <li>Cash & Digital Payment Options</li>
+                            <li>Cash & Digital Payment</li>
                             <li>Secure & Verified Drivers</li>
+                            <li>Insurance Backed Service</li>
                             <li>Customer Support</li>
                             <li>Advanced Location Tracking</li>
                             <li>Map Visualization</li>
@@ -515,10 +521,9 @@ const Home = () => {
                 
                     <div className={home["collapsible__content"]}>
                        <p>
-                        Address: Off Numan Road Opp. Road Safety Office, 
-                        Behind Nyako's Quaters Jimeta-Yola Adamawa State Nigeria.
+                        Address: No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                      </p>
-        
+                    No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                    <p>
                         Tel:  +2347064939047, +2348169863672
                     </p>
@@ -534,7 +539,7 @@ const Home = () => {
                 </section>
                 <section className={home["footer__brand"]}>
                     <img src="/images/logo.png" alt=""/>
-                    <p className={home["footer__copyright"]}>Copyright 2025 MIQWII, All Rights Reserved To The Owners</p>
+                    <p className={home["footer__copyright"]}>Copyright 2025 WE DELIVER, All Rights Reserved To The Owners</p>
                 </section>
             </div>
         

@@ -270,8 +270,7 @@ const Services = () => {
                 
                     <div className={home["collapsible__content"]}>
                        <p>
-                        Address: Off Numan Road Opp. Road Safety Office, 
-                        Behind Nyako's Quaters Jimeta-Yola Adamawa State Nigeria.
+                        Address: No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                      </p>
         
                      <p>
@@ -289,7 +288,7 @@ const Services = () => {
                 </section>
                 <section className={home["footer__brand"]}>
                     <img src="/images/logo.png" alt=""/>
-                    <p className={home["footer__copyright"]}>Copyright 2025 MIQWII, All Rights Reserved To The Owners</p>
+                    <p className={home["footer__copyright"]}>Copyright 2025 WE DELIVER, All Rights Reserved To The Owners</p>
                 </section>
             </div>
         

@@ -147,7 +147,7 @@
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>Picker Name:</span>
+                    <span>Reciever Name:</span>
 
                     {state.pickerName}
                   </div>
@@ -157,7 +157,7 @@
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>Picker Name:</span>
+                    <span>Reciever Name:</span>
 
                     {state.pickerPhone}
                   </div>

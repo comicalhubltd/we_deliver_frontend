@@ -193,8 +193,8 @@ const AddDeliveryRequest = () => {
     }),
 
     pickerName: string()
-      .max(30, "Picker Name must not exceed 30 characters")
-      .required("Picker Name is required"),
+      .max(30, "Reciever Name must not exceed 30 characters")
+      .required("Reciever Name is required"),
 
     pickerPhone: string()
           .max(11, "Phone number should not be more than 11")
@@ -1425,7 +1425,7 @@ const AddDeliveryRequest = () => {
                       (
                          <>
                          <TextField
-                        label="Picker Name"
+                        label="Reciever Name"
                         variant="outlined"
                         fullWidth
                         margin="normal"
@@ -1449,7 +1449,7 @@ const AddDeliveryRequest = () => {
                       /> 
 
                          <TextField
-                                    label="Picker Tel"
+                                    label="Reciever Tel"
                                     variant="outlined"
                                     fullWidth
                                     margin="normal"

@@ -37,7 +37,8 @@ html{
 body {
     font-family: Lato, Arial, Helvetica, sans-serif;
     color: var(--color-body);
-    font-size: 2.4rem;
+    font-size: 1.68rem;
+    /* font-size: 2.4rem; */
     line-height: 1.5;
 }
 
