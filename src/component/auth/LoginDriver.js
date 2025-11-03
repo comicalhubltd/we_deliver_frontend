@@ -304,13 +304,13 @@ const LoginDriver = () => {
             </button>
 
             <div className={style["form-link--container"]}>
-              <span className={style["form-link"]}>
+              {/* <span className={style["form-link"]}>
                 {" "}
                 Register here:{" "}
                 <a className={style["link__register"]} href="#/driver/register"   >
                   Register
                 </a>
-              </span>
+              </span> */}
               <span className={style["form-link"]}>
                 {" "}
                 <a

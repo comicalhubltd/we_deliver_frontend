@@ -165,7 +165,7 @@ const CustomerDashboard = () => {
   
 
     const handleNavigateToAddDelivery = () => {
-    navigate("/delivery/add-delivery-online");
+    navigate("/delivery/add-delivery-online-online");
   };
 
 
@@ -176,7 +176,7 @@ const CustomerDashboard = () => {
   };
 
   const navigateAddDeliveryRequest = () => {
-    navigate("/delivery/add-delivery");
+    navigate("/delivery/add-delivery-online");
   };
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -469,7 +469,7 @@ const CustomerDashboard = () => {
                     </a>
 
 
-                    <a href="#/delivery/add-delivery"   
+                    <a href="#/delivery/add-delivery-online"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries

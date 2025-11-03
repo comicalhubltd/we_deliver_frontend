@@ -467,7 +467,7 @@ const CustomerViewFeedback = () => {
                     </a>
 
 
-                    <a href="#/delivery/add-delivery"   
+                    <a href="#/delivery/add-delivery-online"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Add Deliveries
