@@ -165,7 +165,7 @@ const CustomerDashboard = () => {
   
 
     const handleNavigateToAddDelivery = () => {
-    navigate("/delivery/add-delivery-online-online");
+    navigate("/delivery/add-delivery-online");
   };
 
 
