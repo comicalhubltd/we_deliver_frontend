@@ -342,14 +342,12 @@ const Home = () => {
                         <div className={[home["card"], home["testimonial"]].join(' ')}>
                             <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
                                 <div className={home["testimonial__image"]}>
-                                    <img src="/images/customer1.png" alt="A happy smiling customer" />
+                                    <img src="/images/customer1.png" alt="A happy smiling customer" style={{ width: "30", maxWidth: "420px" }}  />
                                     <span className={home["icon-container"]}>
                                         <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
                                             <use href="../images/sprite.svg#quote"   ></use>
                                         </svg>
                                     </span>
-
-
                                 </div>
 
                                 <blockquote className={home["quote"]}>
@@ -377,7 +375,7 @@ const Home = () => {
                         <div className={[home["card"], home["testimonial"]].join(' ')}>
                             <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
                                 <div className={home["testimonial__image"]}>
-                                    <img src="/images/customer2.png" alt="A happy smiling customer" />
+                                    <img src="/images/customer2.png" alt="A happy smiling customer" style={{ width: "30%", maxWidth: "420px" }} />
                                     <span className={home["icon-container"]}>
                                         <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
                                             <use href="../images/sprite.svg#quote"   ></use>
@@ -442,12 +440,9 @@ const Home = () => {
                                     <li>Inter-state Delivery Network</li>
                                     <li>Real-Time Tracking</li>
                                     <li>Cash & Digital Payment</li>
-                                    <li>Secure & Verified Drivers</li>
                                     <li>Insurance Backed Service</li>
-                                    <li>Customer Support</li>
-                                    <li>Advanced Location Tracking</li>
-                                    <li>Map Visualization</li>
-                                    <li>Many More</li>
+                                    <li>Efective Customer Support</li>
+                                    <li>Corporate Delivery Service</li>
 
                                 </ul>
                             </div>
@@ -495,9 +490,6 @@ const Home = () => {
                                 No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                                 <p>
                                     Tel:  +2347064939047, +2348169863672
-                                </p>
-                                <p>
-                                    {/* Mail: miqwiitechnologies@gmail.com */}
                                 </p>
                                 <p>
                                     WhatsApp: +2347064939047
