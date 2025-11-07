@@ -68,6 +68,16 @@ body {
 }
 
 @media screen and (min-width: 1024px) {
+    .hero__image {
+        width: 76%;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
 
     body {
         font-size: 1.6rem;
@@ -587,6 +597,14 @@ a {
 
 @media screen and (min-width: 769px) {
 
+    .hero__image {
+        width: 76%;
+        /* 95% minus 20% */
+        margin: 0 auto;
+        padding: 1rem;
+        display: block;
+    }
+
     .testimonial .quote,
     .testimonial .quote__author {
         font-size: 2.16rem;
@@ -626,7 +644,9 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-.nav__list { font-size: 1.44rem; }
+    .nav__list {
+        font-size: 1.44rem;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -855,7 +875,10 @@ a {
     }
 
     .hero__image {
-        margin-top: 0;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 1rem auto;
+        display: block;
     }
 
 }
