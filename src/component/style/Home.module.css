@@ -1,13 +1,13 @@
 :root {
-   --color-primary: #018965;
-   --color-secondary: #67BD50;
-   --color-headings:#028766;
-   --color-body: #9a99ac;
-   --color-body-darker: #918ca4;
-   --color-accent: #F7C816;
-   --color-secondary-text: #12ABA5;
-   --color-border: #ccc; 
-   --border-radius: 30px;
+    --color-primary: #018965;
+    --color-secondary: #67BD50;
+    --color-headings: #028766;
+    --color-body: #9a99ac;
+    --color-body-darker: #918ca4;
+    --color-accent: #F7C816;
+    --color-secondary-text: #12ABA5;
+    --color-border: #ccc;
+    --border-radius: 30px;
 }
 
 .container {
@@ -16,7 +16,7 @@
 }
 
 *,
-*::after, 
+*::after,
 *::before {
     box-sizing: border-box;
 }
@@ -28,36 +28,38 @@
     color: #ccc;
 }
 
-html{
+html {
     /*Initialy is 16px: 16px X 62.5% = 10px there 1rem equivalent to 10px*/
-     /*since 1rem means 1x(font size of the html element)*/
-    font-size: 62.5%;
+    /*since 1rem means 1x(font size of the html element)*/
+    font-size: 56.25%;
 }
 
 body {
     font-family: Lato, Arial, Helvetica, sans-serif;
     color: var(--color-body);
-    font-size: 2rem;
+    font-size: 1.8rem;
     letter-spacing: 1px;
     line-height: 1.5;
 }
 
-.h1, .h2, .h3 {
-     color: var(--color-headings);
-     margin-bottom: 1rem;
-     line-height: 1.1;
+.h1,
+.h2,
+.h3 {
+    color: var(--color-headings);
+    margin-bottom: 1rem;
+    line-height: 1.1;
 }
 
 .h1 {
-    font-size: 7rem;
+    font-size: 6.3rem;
 }
 
 .h2 {
-    font-size: 4rem;
+    font-size: 3.6rem;
 }
 
 .h3 {
-    font-size: 3rem;
+    font-size: 2.7rem;
     font-weight: 500;
 }
 
@@ -66,55 +68,64 @@ body {
 }
 
 @media screen and (min-width: 1024px) {
-
-    body {
-        font-size: 1.8rem;
-    }
-
-    h1 {
-        font-size: 8rem;
-    }
-
-    h2 {
-        font-size: 4rem;
-    }
-
-    h3 {
-        font-size: 2.4rem;
+    .hero__image {
+        width: 68%;
+        max-width: 342px;
+        /* 380px - 10% */
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0.9rem;
     }
 }
 
-    /*Links*/
+@media screen and (min-width: 1024px) {
 
-    a{
-        text-decoration: none;
+    body {
+        font-size: 1.6rem;
     }
 
+    h1 {
+        font-size: 7.2rem;
+    }
+
+    h2 {
+        font-size: 3.6rem;
+    }
+
+    h3 {
+        font-size: 2.2rem;
+    }
+}
+
+/*Links*/
+
+a {
+    text-decoration: none;
+}
+
+.link-arrow {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.link-arrow::after {
+    content: ">>";
+    margin-left: 5px;
+    transition: margin 0.15s;
+}
+
+.link-arrow:hover::after {
+    margin-left: 10px;
+}
+
+@media screen and (min-width: 1024px) {
     .link-arrow {
-        color: var(--color-accent);
-        text-transform: uppercase;
-        font-size: 2rem;
-        font-weight: bold;
+        font-size: 1.3rem;
     }
+}
 
-    .link-arrow::after {
-        content: ">>";
-        margin-left: 5px;
-        transition: margin 0.15s;
-    }
-
-    .link-arrow:hover::after{
-        margin-left: 10px;
-    }
-
-    @media screen and (min-width: 1024px) {
-
-        
-            .link-arrow {
-                font-size: 1.5rem;
-             }
-    }
-    
 /*Badges*/
 
 .badge {
@@ -126,8 +137,8 @@ body {
 }
 
 .badge--primary {
-   background: var(--color-primary) ; 
-   color: #fff;
+    background: var(--color-primary);
+    color: #fff;
 }
 
 .badge--secondary {
@@ -151,13 +162,12 @@ body {
 @media screen and (min-width: 1024px) {
 
     .badge {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
     .badge--small {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
-    
 }
 
 /*Links*/
@@ -165,7 +175,7 @@ body {
 .list {
     list-style: none;
     padding-left: 0;
-    
+
 }
 
 .inline--list .list__item {
@@ -187,36 +197,33 @@ body {
 @media screen and (min-width: 1024px) {
     .list--tick .list__item {
         padding-left: 0;
-    
     }
-    
-    
 }
 
 /*Icons*/
 
 .icon {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
 }
 
 .icon--small {
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
 }
 
-.icon--primary{
+.icon--primary {
     fill: var(--color-primary);
 }
 
-.icon--secondary{
+.icon--secondary {
     fill: var(--color-secondary);
 }
 
 .icon-container {
     background: #f3f9fa;
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
     border-radius: 100%;
     display: inline-flex;
     justify-content: center;
@@ -227,27 +234,27 @@ body {
 
 .icon--container-secondary {
     background: var(--color-primary);
-    
+
 }
 
 .icon--white {
     fill: #fff;
 }
 
-.collapsible__header .icon-container  {
+.collapsible__header .icon-container {
     background: var(--color-headings);
     width: 30px;
     height: 30px;
 
 }
-   
+
 /*Buttons*/
 
 .btn {
-    font-size: 1.8rem;
+    font-size: 1.62rem;
+    padding: 1.8rem 3.6vw;
     font-weight: 600;
     text-transform: uppercase;
-    padding: 2rem 4vw;
     border: 0;
     text-align: center;
     border-radius: 40px;
@@ -257,15 +264,15 @@ body {
 }
 
 .btn .icon {
-    width: 2rem;
-    height: 2rem;
+    width: 1.8rem;
+    height: 1.8rem;
     margin-right: 1rem;
     vertical-align: middle;
 }
 
 .btn--primary {
     background: var(--color-primary);
-    color:#fff
+    color: #fff
 }
 
 .btn--primary:hover {
@@ -314,7 +321,7 @@ body {
 
 .btn--icon {
     background: var(--color-primary);
-    color:#fff;
+    color: #fff;
     padding: 1rem 3vw;
     border-radius: 15px;
     font-weight: 500;
@@ -325,23 +332,21 @@ body {
 
 
 @media screen and (min-width: 1024px) {
-
     .btn {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
-    
 }
 
 /*Inputs*/
 
 .input {
-    padding: 1.5rem 3.5rem;
+    font-size: 1.8rem; 
+    padding: 1.35rem 3.15rem;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     outline: 0;
     color: var(--color-headings);
-    font-size: 2rem;
-    
+
 }
 
 ::placeholder {
@@ -371,7 +376,7 @@ body {
 
 @media screen and (min-width: 1024px) {
     .input {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 }
 
@@ -383,7 +388,8 @@ body {
     overflow: hidden;
 }
 
-.card_header, .card_body {
+.card_header,
+.card_body {
     padding: 2rem 3rem;
 }
 
@@ -405,22 +411,22 @@ body {
     color: #fff;
     margin: 0;
     font-weight: 500;
-    font-size: 2.4rem;
+    font-size: 2.16rem;
 }
 
 .plan__price {
-    font-size: 6rem;
+    font-size: 5.4rem;
 }
 
 .plan__billing-cycle {
-    font-size: 2.4rem;
+    font-size: 2.16rem;
     font-weight: 300;
     opacity: 0.8;
     margin-right: 1rem;
 }
 
 .plan__description {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 300;
     letter-spacing: 1px;
     display: block;
@@ -439,11 +445,11 @@ body {
 }
 
 .plan:hover {
-   transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .plan {
-   transition: transform .3s ease-out;
+    transition: transform .3s ease-out;
 }
 
 .plan--popular .card_header::before {
@@ -453,21 +459,21 @@ body {
     position: absolute;
     top: -3px;
     right: 5%;
-   
+
 }
 
-@media screen  and (min-width: 1024px){
+@media screen and (min-width: 1024px) {
+    .plan__name {
+        font-size: 1.26rem;
+    }
 
-    .plan__name{
-        font-size: 1.4rem;
+    .plan__price {
+        font-size: 4.5rem;
     }
-    .plan__price{
-        font-size: 5rem;
+
+    .plan__description {
+        font-size: 1.53rem;
     }
-    .plan__description{
-        font-size: 1.7rem;
-    }
-    
 }
 
 /*Cards*/
@@ -485,7 +491,7 @@ body {
     margin: 0 2rem;
 }
 
-.media__image{
+.media__image {
     margin-top: 1rem;
 }
 
@@ -530,17 +536,17 @@ body {
 @media screen and (min-width: 1024px) {
 
     .quote {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .quote__author {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
 
     .quote__organization {
-        font-size: 1.6rem;
+        font-size: 1.44rem;
     }
-    
+
 }
 
 /*Grids*/
@@ -572,37 +578,49 @@ body {
 /*Testimonial*/
 
 .testimonial {
-    padding: 3rem;
+    padding: 2.7rem;
 }
 
-.testimonial__image > img {
+.testimonial__image>img {
     width: 100%;
-   
+
 }
 
 .testimonial__image {
     position: relative;
 }
 
- .testimonial__image > .icon-container {
+.testimonial__image>.icon-container {
     position: absolute;
     top: 3rem;
     right: -32px;
 }
 
 @media screen and (min-width: 769px) {
-    .testimonial .quote, .testimonial .quote__author {
-        font-size: 2.4rem;
+
+    .hero__image {
+        /* 95% minus 20% */
+        width: 68%;
+        /* 76% - 10% */
+        margin: 0 auto;
+        padding: 0.9rem;
+        display: block;
+    }
+
+    .testimonial .quote,
+    .testimonial .quote__author {
+        font-size: 1.9rem;
     }
 
     .testimonial .quote {
-        margin-left: 6rem;
+        margin-left: 5.4rem;
     }
 }
+
 /*Callout*/
 
 .callout {
-    padding: 4rem;
+    padding: 3.6rem;
     border-radius: 5px;
     overflow: hidden;
 }
@@ -615,7 +633,7 @@ body {
 .callout__heading {
     color: #fff;
     margin-top: 0;
-    font-size: 3rem;
+    font-size: 2.7rem;
 }
 
 .callout .btn {
@@ -625,6 +643,12 @@ body {
 
 .callout__content {
     text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .nav__list {
+        font-size: 1.44rem;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -639,9 +663,9 @@ body {
 
     .callout .btn {
         justify-self: start;
-        margin: 0 2rem;
+        margin: 0 1.8rem;
     }
-    
+
 }
 
 
@@ -650,7 +674,7 @@ body {
 .collapsible__header {
     display: flex;
     justify-content: space-between;
-    
+
 }
 
 .collapsible__heading {
@@ -685,21 +709,22 @@ body {
 /*Blocks*/
 
 .block {
-     --padding-vartical: 2rem;
-    padding: var(--padding-vartical) 2rem;  
+    --padding-vartical: 1rem;
+    padding: var(--padding-vartical) 2rem;
 }
 
 .firstBlock {
-     /* --padding-vartical: 6rem; */
+    /* --padding-vartical: 6rem; */
     margin: 0rem;
     padding-top: 0;
-    padding-bottom: var(--padding-vartical) 2rem;  
+    padding-bottom: var(--padding-vartical) 2rem;
 }
 
 .block__header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
+
 .block__heading {
     margin-top: 0;
 }
@@ -722,7 +747,7 @@ body {
 
 .block--primary h1,
 .block--primary h2,
-.block--primary h3{
+.block--primary h3 {
     color: #fff;
 }
 
@@ -739,7 +764,7 @@ body {
 /*Navigation Bar*/
 
 .nav {
-    background:  white;
+    background: white;
     width: 100%;
     top: 0;
     left: 0;
@@ -751,10 +776,10 @@ body {
     box-shadow: 0 0 15px 3px #f3f3f3;
     border-radius: 7px;
     align-items: center;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
-.logo__link > img {
+.logo__link>img {
     height: 60px;
     height: 60px;
     object-fit: cover;
@@ -764,7 +789,7 @@ body {
 .nav__list {
     width: 100%;
     margin: 0;
-    
+
 }
 
 .nav__item {
@@ -772,30 +797,30 @@ body {
     border-bottom: 1px solid var(--color-border);
 }
 
-.nav__item > a {
+.nav__item>a {
     color: var(--color-primary);
     transition: color .3s;
 }
 
-.nav__item > a:hover {
+.nav__item>a:hover {
     color: #848e9d;
 }
 
 .nav__toggler {
     opacity: 0.5;
-        width: 30px;
-        height: 30px;
-        
-    }
+    width: 30px;
+    height: 30px;
+
+}
 
 
 .collapsible--expanded .hide__menu {
     display: none;
-    
+
 }
 
 .collapsible__icon .collapsible__content {
-   transition: none;
+    transition: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -814,12 +839,12 @@ body {
     .nav__item {
         border: 0;
     }
-    
+
 }
 
 /*Hero*/
 
-.hero__tagline{
+.hero__tagline {
     font-size: 2rem;
     letter-spacing: 1px;
     color: var(--color-body-darker);
@@ -828,9 +853,10 @@ body {
 
 
 .hero__image {
-    width: 100%;
-    margin-top: 1.5rem;
-    padding: 1rem;
+    width: 85%;
+    margin-top: 1.2rem;
+    padding: 0.9rem;
+    padding-left: 3.2rem;
 }
 
 .hero {
@@ -844,21 +870,24 @@ body {
 
 @media screen and (min-width: 768px) {
 
-   
+
     .hero__content {
         text-align: left;
         align-self: center;
     }
 
     .hero__image {
-        margin-top: 0;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 1rem auto;
+        display: block;
     }
-    
+
 }
 
 /*Block Domain*/
 
-.block-domain .input-group  {
+.block-domain .input-group {
     box-shadow: 0 0 30px 20px #e6ebee;
     border: 0;
     margin: 4rem auto;
@@ -876,29 +905,29 @@ body {
     max-width: 700px;
     margin: 0 auto;
     color: var(--color-headings);
-  
+
 }
 
 @media screen and (min-width: 768px) {
     .block-domain__prices {
-     
+
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-       
-    
+
+
     }
-    
+
 }
 
 
 /*Block Plans*/
 
 .block-plans .grid {
-gap: 8rem 4rem;
+    gap: 8rem 4rem;
 }
 
-.block-plans .card{
-  max-width: 500px;
-  margin: 0 auto;
+.block-plans .card {
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 /*Features*/
@@ -924,18 +953,18 @@ gap: 8rem 4rem;
     .feature:nth-of-type(even) .feature__content {
         order: 2;
     }
-    
+
 }
 
 /*Show Case Block*/
 
-.block-showcase__image > img{
+.block-showcase__image>img {
     width: 100%;
 }
 
 @media screen and (min-width: 768px) {
     .block-showcase .grid {
-       grid-template-columns: 50% 50% ;
+        grid-template-columns: 50% 50%;
     }
 
     .block-showcase__image {
@@ -944,12 +973,12 @@ gap: 8rem 4rem;
         justify-self: end;
     }
 
-    .block-showcase__image > img {
+    .block-showcase__image>img {
         width: auto;
         max-width: 700px;
-        
+
     }
-    
+
 }
 
 /*Footer Block*/
@@ -968,18 +997,18 @@ gap: 8rem 4rem;
     font-weight: 600;
 }
 
-.footer__brand > img {
-    height: 60px;
+.footer__brand>img {
+    height: 54px;
     object-fit: cover;
     background: white;
     border-radius: 5px;
-    
+
 }
 
 .footer__brand {
     margin-top: 5rem;
     text-align: center;
-   
+
 }
 
 .footer a {
@@ -992,7 +1021,7 @@ gap: 8rem 4rem;
 }
 
 .footer__copyright {
-    font-size: 2.1rem;
+    font-size: 1.9rem;
     color: #ccc;
     opacity: .3;
 
@@ -1018,7 +1047,7 @@ gap: 8rem 4rem;
     }
 
     .footer__copyright {
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
     .footer__section {
@@ -1026,6 +1055,6 @@ gap: 8rem 4rem;
     }
 
     .footer__heading {
-        font-size: 1.6rem;
+        font-size: 1.44rem;
     }
 }
