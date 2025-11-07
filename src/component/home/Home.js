@@ -487,7 +487,6 @@ const Home = () => {
                                 <p>
                                     Address: No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                                 </p>
-                                No. 13 Donau creasent Off Amazon Street Maitama, FCT Abuja
                                 <p>
                                     Tel:  +2347064939047, +2348169863672
                                 </p>
