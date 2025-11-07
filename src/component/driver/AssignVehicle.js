@@ -108,7 +108,7 @@ navigate("/customer/login")
       <CssBaseline />
 
       {/* Navbar */}
-      <AppBar position="fixed" sx={{ zIndex: 2, background: "white", color: "#0e387a" }}>
+      <AppBar position="fixed" sx={{ zIndex: 2, background: "white", color: "#018965" }}>
         <Toolbar sx={{ zIndex: 2, display: "flex", justifyContent: "space-between" }}>
           {!isLargeScreen && (
             <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
@@ -123,9 +123,9 @@ navigate("/customer/login")
           {/** Profile Setup */}
           
           <IconButton onClick={profilePopup}    sx={{
-          backgroundColor: "#0e387a", // Custom background
+          backgroundColor: "#018965", // Custom background
           "&:hover": {
-            backgroundColor: "#0c3371"
+            backgroundColor: "#018965"
           }
         }}
       
@@ -189,7 +189,7 @@ navigate("/customer/login")
           {/* Close Button */}
           {!isLargeScreen && (
             <IconButton  onClick={toggleDrawer}>
-              <Cancel sx={{ color: "#0e387a", fontSize: 30 }} />
+              <Cancel sx={{ color: "#018965", fontSize: 30 }} />
             </IconButton>
           )}
         </Box>
