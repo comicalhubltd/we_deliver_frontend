@@ -1968,8 +1968,8 @@ export default AddDeliveryRequest;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
-    // Call your Spring Boot backend instead
-    const url = `/v1/api/routing/distance?fromLat=${fromLat}&fromLon=${fromLon}&toLat=${toLat}&toLon=${toLon}`;
+    // Use the correct backend domain
+    const url = `https://api.wedeleever.com/v1/api/routing/distance?fromLat=${fromLat}&fromLon=${fromLon}&toLat=${toLat}&toLon=${toLon}`;
     const response = await fetch(url);
     
     if (!response.ok) {
@@ -1977,7 +1977,7 @@ const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
     }
     
     const data = await response.json();
-    return data; // Already in the correct format from backend
+    return data;
     
   } catch (error) {
     console.error('Error calculating distance:', error);
