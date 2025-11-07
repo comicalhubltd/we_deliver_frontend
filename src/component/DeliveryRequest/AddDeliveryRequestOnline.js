@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveDeliveryRequestOnline, resetStatus } from "../../redux/reducer/deliveryRequestSlice";
 import { useEffect } from "react";
@@ -302,29 +303,34 @@ const AddDeliveryRequestOnline = () => {
     };
   };
 
-  const calculateDistance = async () => {
-    if (selectedFromState && selectedToState && LngAndLatStateData) {
-      const fromStateData = LngAndLatStateData.find(state => state.name === selectedFromState);
-      const toStateData = LngAndLatStateData.find(state => state.name === selectedToState);
-      
-      if (fromStateData && toStateData) {
-        setIsCalculating(true);
-        setDistanceInfo(null);
-        
-        const result = await calculateDrivingDistance(
-          parseFloat(fromStateData.lat),
-          parseFloat(fromStateData.lng),
-          parseFloat(toStateData.lat),
-          parseFloat(toStateData.lng)
-        );
-        
-        setDistanceInfo(result);
-        setIsCalculating(false);
-      }
-    } else {
+const calculateDistance = useCallback(async () => {
+  if (selectedFromState && selectedToState && LngAndLatStateData) {
+    const fromStateData = LngAndLatStateData.find(state => state.name === selectedFromState);
+    const toStateData = LngAndLatStateData.find(state => state.name === selectedToState);
+    
+    if (fromStateData && toStateData) {
+      setIsCalculating(true);
       setDistanceInfo(null);
+      
+      const result = await calculateDrivingDistance(
+        parseFloat(fromStateData.lat),
+        parseFloat(fromStateData.lng),
+        parseFloat(toStateData.lat),
+        parseFloat(toStateData.lng)
+      );
+      
+      if (!result.success) {
+        // Show error to user
+        setAlertType("error");
+        setMessage("Failed to calculate distance. Please try again.");
+        setOpen(true);
+      }
+      
+      setDistanceInfo(result);
+      setIsCalculating(false);
     }
-  };
+  }
+}, [selectedFromState, selectedToState]);
 
    useEffect(() => {
     calculateDistance();
@@ -1481,7 +1487,7 @@ export default AddDeliveryRequestOnline;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
-    const url = `http://router.project-osrm.org/route/v1/driving/${fromLon},${fromLat};${toLon},${toLat}?overview=false`;
+    const url = `https://router.project-osrm.org/route/v1/driving/${fromLon},${fromLat};${toLon},${toLat}?overview=false`;
     const response = await fetch(url);
     
     if (!response.ok) {
