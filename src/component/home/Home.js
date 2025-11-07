@@ -342,7 +342,7 @@ const Home = () => {
                         <div className={[home["card"], home["testimonial"]].join(' ')}>
                             <div className={[home["grid"], home["grid--1x2"]].join(' ')} >
                                 <div className={home["testimonial__image"]}>
-                                    <img src="/images/customer1.png" alt="A happy smiling customer" style={{ width: "30", maxWidth: "420px" }}  />
+                                    <img src="/images/customer1.png" alt="A happy smiling customer" style={{ width: "30%", maxWidth: "420px" }}  />
                                     <span className={home["icon-container"]}>
                                         <svg className={[home["icon"], home["icon--primary"], home["icon--small"]].join(' ')} >
                                             <use href="../images/sprite.svg#quote"   ></use>
