@@ -213,7 +213,7 @@ const ResponsiveDrawer = () => {
 
               <div className={navbar["collapsible__content--drawer"]}>
                 <a
-                  href="#/customer/home"   
+                  href="#/admin/home"   
                   className={[navbar["link--drawer"], navbar[""]].join(" ")}
                 >
                   Home

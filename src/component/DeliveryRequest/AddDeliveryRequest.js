@@ -569,7 +569,7 @@ const AddDeliveryRequest = () => {
                            </header>
          
                            <div className={navbar["collapsible__content--drawer"]}>
-                               <a href="#/customer/home"   
+                               <a href="#/admin/home"   
                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
                              >
                                Home
@@ -682,7 +682,13 @@ const AddDeliveryRequest = () => {
                            </header>
          
                            <div className={navbar["collapsible__content--drawer"]}>
-                             <a href="#/driver/view-drivers"   
+                              <a href="#/driver/register"   
+                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                    >
+                      Add Driver
+                    </a>
+
+		   <a href="#/driver/view-drivers"  
                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
                              >
                                View Drivers

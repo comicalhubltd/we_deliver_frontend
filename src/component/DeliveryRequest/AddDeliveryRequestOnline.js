@@ -528,7 +528,7 @@ const calculateDistance = useCallback(async () => {
                   </header>
 
                   <div className={navbar["collapsible__content--drawer"]}>
-                    <a href="#/customer/home"   
+                    <a href="#/admin/home"   
                       className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Home
