@@ -1968,7 +1968,8 @@ export default AddDeliveryRequest;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
-    const url = `https://router.project-osrm.org/route/v1/driving/${fromLon},${fromLat};${toLon},${toLat}?overview=false`;
+    // Call your Spring Boot backend instead
+    const url = `/v1/api/routing/distance?fromLat=${fromLat}&fromLon=${fromLon}&toLat=${toLat}&toLon=${toLon}`;
     const response = await fetch(url);
     
     if (!response.ok) {
@@ -1976,18 +1977,8 @@ const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
     }
     
     const data = await response.json();
+    return data; // Already in the correct format from backend
     
-    if (data.routes && data.routes.length > 0) {
-      const distanceInKm = (data.routes[0].distance / 1000).toFixed(2);
-      const durationInMinutes = Math.round(data.routes[0].duration / 60);
-      return {
-        distance: distanceInKm,
-        duration: durationInMinutes,
-        success: true
-      };
-    } else {
-      throw new Error('No route found');
-    }
   } catch (error) {
     console.error('Error calculating distance:', error);
     return {

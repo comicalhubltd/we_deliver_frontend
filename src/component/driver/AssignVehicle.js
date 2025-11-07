@@ -74,9 +74,9 @@ const AssignVehicle = () => {
   
 
     useEffect(() => {
-      if (fetchingStatus === 'idle') {
+
        fetchData();
-      }
+    
      
     }, [location.pathname]);
 
