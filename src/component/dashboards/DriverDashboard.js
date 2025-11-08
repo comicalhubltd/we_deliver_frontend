@@ -138,7 +138,7 @@ const DriverDashboard = () => {
   
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/admin/login");
+    navigate("/driver/login");
     
   };
 
