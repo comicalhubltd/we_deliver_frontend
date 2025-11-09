@@ -234,7 +234,7 @@ const CustomerDetails = () => {
                   >
                     <span>Email:</span>
 
-                    {state.user?.email}
+                    {state.user?.username}
                   </div>
 
                   <div

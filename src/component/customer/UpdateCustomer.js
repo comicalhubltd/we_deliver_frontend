@@ -105,8 +105,6 @@ const UpdateCustomer = () => {
     gender: string()
       .max(15, "gender must not exceed 15 characters"),
 
-     dob: string().required("Date of Birth is required"),
-
     phoneNumber: string()
       .max(11, "Phone number should not be more than 11")
       .min(11, "Phone number should not be less than 11")
@@ -214,7 +212,6 @@ const UpdateCustomer = () => {
           firstname: values.profile?.firstname,
           surname: values.profile?.surname,
           othername: values.profile?.othername,
-          dob: values.profile?.dob,
           gender: values.profile?.gender,
           phoneNumber: values.profile?.phoneNumber,
           address: values.address
@@ -256,7 +253,6 @@ const UpdateCustomer = () => {
           surname: state.profile?.surname || "",
           othername: state.profile?.othername || "",
           gender: state.profile?.gender || "",
-          dob: state.profile?.dob || "",
           phoneNumber: state.profile?.phoneNumber || "",
           },
 
@@ -415,31 +411,7 @@ const UpdateCustomer = () => {
             </TextField>
 
 
-                <TextField
-              label=""
-              variant="outlined"
-              fullWidth
-              type="date"
-              margin="normal"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.profile?.dob}
-              name="profile.dob"
-              error={touched.profile?.dob && Boolean(errors.profile?.dob)}
-              helperText={touched.profile?.dob && errors.profile?.dob}
-              slotProps={{
-                formHelperText: {
-                  sx: { fontSize: 15 },
-                },
-                input: {
-                  style: { fontSize: 18 },
-                },
-                inputLabel: {
-                  style: { fontSize: 16 },
-                },
-              }}
-            />
-
+            
 
                 <TextField
               label="Phone Number"

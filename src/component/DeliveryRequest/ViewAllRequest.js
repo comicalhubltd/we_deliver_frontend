@@ -817,6 +817,7 @@ const ViewAllRequest = () => {
                             <TableHead>
                               <TableRow>
                                 <StyledTableCell>Item Type</StyledTableCell>
+<StyledTableCell>Trk ID</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
                                 </StyledTableCell>
@@ -847,6 +848,11 @@ const ViewAllRequest = () => {
                                     {row.item?.type}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
+                                    {row.trackingId}
+                                  </StyledTableCell>  
+
+
+  				   <StyledTableCell align="left">
                                     {row.from?.state + "/" + row.from?.lga}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">

@@ -164,6 +164,7 @@ const DeliveryDetails = () => {
     pickerPhone: "",
     createdAt: "",
     status: "",
+    trackingId: "",
     distancekm: "",
     deliveryFee: "",
   });
@@ -189,6 +190,7 @@ const DeliveryDetails = () => {
             pickerPhone: result.pickerPhone,
             createdAt: result.createdAt,
             status: result.status,
+            trackingId: result.trackingId,
             distancekm: result.distancekm,
             deliveryFee: result.payment.totalAmount,
           });
@@ -231,6 +233,17 @@ const DeliveryDetails = () => {
 
                     {state.item?.type}
                   </div>
+
+
+                   <div
+                    style={{ whiteSpace: "normal" }}
+                    class={dashboard["card--details"]}
+                  >
+                    <span>Type:</span>
+
+                    {state.trackingId}
+                  </div>
+
 
                    <div
                     style={{ whiteSpace: "normal" }}

@@ -213,6 +213,12 @@ const AddDeliveryRequest = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const generateTrackingId = () => {
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
+  const randomCode = Math.random().toString(36).substr(2, 6).toUpperCase(); // 6-char alphanumeric
+  return `DLV_${date}_${randomCode}`;
+};
+
   const [open, setOpen] = useState(false);
   const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
@@ -392,7 +398,7 @@ const AddDeliveryRequest = () => {
     const submissionData = {
       ...values,
       distancekm: distanceInfo?.distance || 0,
-      
+      trackingId: generateTrackingId,
       payment: {
         ...fees,
         status: "pending"
@@ -406,6 +412,7 @@ const AddDeliveryRequest = () => {
       console.log(result);
       setAlertType("success");
       setMessage(result.message);
+      navigate("/delivery/pending");
     } catch (error) {
       console.log(error);
       setAlertType("error");

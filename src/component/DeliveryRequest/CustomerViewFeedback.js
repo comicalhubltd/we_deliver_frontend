@@ -622,6 +622,7 @@ const CustomerViewFeedback = () => {
                                   View Feedback
                                 </StyledTableCell>
                                 <StyledTableCell>Item Type</StyledTableCell>
+<StyledTableCell>Trk ID</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
                                 </StyledTableCell>
@@ -668,6 +669,11 @@ const CustomerViewFeedback = () => {
                                     {row.payment?.status}
                                   </StyledTableCell>
                                   <StyledTableCell align="left">
+                                    {row.trackingId}
+                                  </StyledTableCell>  
+
+
+  				   <StyledTableCell align="left">
                                     {row.from?.state + "/" + row.from?.lga}
                                   </StyledTableCell>
                                    <StyledTableCell align="left">
