@@ -392,6 +392,7 @@ const AddDeliveryRequest = () => {
     const submissionData = {
       ...values,
       distancekm: distanceInfo?.distance || 0,
+      
       payment: {
         ...fees,
         status: "pending"
