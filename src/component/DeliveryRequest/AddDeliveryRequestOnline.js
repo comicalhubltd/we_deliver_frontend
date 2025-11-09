@@ -359,7 +359,7 @@ const calculateDistance = useCallback(async () => {
     const submissionData = {
       ...values,
       distancekm: distanceInfo?.distance || 0,
-      trackingId: generateTrackingId,
+      trackingId: generateTrackingId(),
       payment: {
         ...fees,
         status: "pending"
