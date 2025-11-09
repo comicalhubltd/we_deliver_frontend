@@ -190,7 +190,7 @@ const DeliveryDetails = () => {
             createdAt: result.createdAt,
             status: result.status,
             distancekm: result.distancekm,
-            deliveryFee: result.payment.deliveryFee,
+            deliveryFee: result.payment.totalAmount,
           });
         });
     } catch (error) {
