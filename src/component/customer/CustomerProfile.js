@@ -216,9 +216,9 @@ const CustomerProfile = () => {
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>Lastname:</span>
+                    <span>Othername:</span>
 
-                     {state.profile?.lastname}
+                     {state.profile?.othername}
                   </div>
 
                   <div
@@ -295,7 +295,7 @@ const CustomerProfile = () => {
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"   ></use>
+                                <use href="../images/sprite.svg#success-icon"></use>
                               </svg>
                             </span>
 
@@ -327,7 +327,7 @@ const CustomerProfile = () => {
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"   ></use>
+                                <use href="../images/sprite.svg#error-icon"></use>
                               </svg>
                             </span>
 

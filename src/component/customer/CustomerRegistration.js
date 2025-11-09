@@ -93,8 +93,8 @@ const CustomerRegistration = () => {
         .max(15, "Surname must not exceed 15 characters")
         .required("Surname is required"),
         
-      lastname: string()
-        .max(15, "Lastname must not exceed 15 characters"),
+      othername: string()
+        .max(15, "Othername must not exceed 15 characters"),
 
       gender: string()
         .max(15, "Gender must not exceed 15 characters"),
@@ -181,7 +181,7 @@ const CustomerRegistration = () => {
       profile: {
         firstname: values.profile?.firstname,
         surname: values.profile?.surname,
-        lastname: values.profile?.lastname,
+        othername: values.profile?.othername,
         gender: values.profile?.gender,
         address: values.profile?.address,
         phoneNumber: values.profile?.phoneNumber,
@@ -218,7 +218,7 @@ const CustomerRegistration = () => {
           profile: {
             firstname: "",
             surname: "",
-            lastname: "",
+            othername: "",
             gender: "",
             address: "",
             phoneNumber: "",
@@ -301,16 +301,16 @@ const CustomerRegistration = () => {
             />
 
             <TextField
-              label="Lastname"
+              label="Othername"
               variant="outlined"
               fullWidth
               margin="normal"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.profile?.lastname}
-              name="profile.lastname"
-              error={touched.profile?.lastname && Boolean(errors.profile?.lastname)}
-              helperText={touched.profile?.lastname && errors.profile?.lastname}
+              value={values.profile?.othername}
+              name="profile.othername"
+              error={touched.profile?.othername && Boolean(errors.profile?.othername)}
+              helperText={touched.profile?.othername && errors.profile?.othername}
               slotProps={{
                 formHelperText: {
                   sx: { fontSize: 15 },
