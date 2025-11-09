@@ -212,9 +212,9 @@ const DriverDetails = () => {
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>Lastname:</span>
+                    <span>Othername:</span>
 
-                     {state.profile?.lastname}
+                     {state.profile?.othername}
                   </div>
 
                   <div
@@ -291,7 +291,7 @@ const DriverDetails = () => {
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"   ></use>
+                                <use href="../images/sprite.svg#success-icon"></use>
                               </svg>
                             </span>
 
@@ -323,7 +323,7 @@ const DriverDetails = () => {
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"   ></use>
+                                <use href="../images/sprite.svg#error-icon"></use>
                               </svg>
                             </span>
 

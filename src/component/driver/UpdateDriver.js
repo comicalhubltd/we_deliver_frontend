@@ -29,14 +29,13 @@ const Card = styled(MuiCard)(({ theme }) => ({
   alignSelf: "center",
   width: "100%",
   minHeight: "550px",
-  maxHeight: "77vh", // Fixed height
-  overflowY: "auto", // Enables vertical scrolling
+  maxHeight: "77vh",
+  overflowY: "auto",
   "&::-webkit-scrollbar": {
     display: "none",
   },
-  // Hide scrollbar for Firefox
-  scrollbarWidth: "none", // Firefox
-  msOverflowStyle: "none", // IE and Edge
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
   borderRadius: "10px",
   padding: theme.spacing(4),
   gap: theme.spacing(0),
@@ -101,8 +100,8 @@ const UpdateDriver = () => {
       .max(15, "Surname must not exceed 15 characters")
       .required("Surname is required"),
         
-    lastname: string()
-      .max(15, "Lastname must not exceed 15 characters"),
+    othername: string()
+      .max(15, "Othername must not exceed 15 characters"),
    
     gender: string()
       .max(15, "gender must not exceed 15 characters"),
@@ -153,8 +152,8 @@ const UpdateDriver = () => {
 
   const [visibility, setVisibility] = useState(false);
   const [inputType, setInputType] = useState("password");
-  const [open, setOpen] = useState(false); // Controls the Snackbar state
-  const [alertType, setAlertType] = useState(""); // "success" or "error"
+  const [open, setOpen] = useState(false);
+  const [alertType, setAlertType] = useState("");
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -165,9 +164,9 @@ const UpdateDriver = () => {
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      return; // Prevent closing if the user clicks away
+      return;
     }
-    setOpen(false); // Close the Snackbar
+    setOpen(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -218,7 +217,7 @@ const UpdateDriver = () => {
        profile: {
           firstname: values.profile?.firstname,
           surname: values.profile?.surname,
-          lastname: values.profile?.lastname,
+          othername: values.profile?.othername,
           dob: values.profile?.dob,
           gender: values.profile?.gender,
           phoneNumber: values.profile?.phoneNumber,
@@ -239,10 +238,9 @@ const UpdateDriver = () => {
       setAlertType("error");
       setMessage(error.message);
     }
-    // Handle form submission logic
     console.log("Form values:", values);
     setOpen(true);
-    resetForm(); // This will reset the form to the initial values
+    resetForm();
   };
 
   return (
@@ -261,7 +259,7 @@ const UpdateDriver = () => {
           profile: {
           firstname: state.profile?.firstname || "",
           surname: state.profile?.surname || "",
-          lastname: state.profile?.lastname || "",
+          othername: state.profile?.othername || "",
           gender: state.profile?.gender || "",
           dob: state.profile?.dob || "",
           phoneNumber: state.profile?.phoneNumber || "",
@@ -293,7 +291,7 @@ const UpdateDriver = () => {
           
         const handleStateChange = (event) => {
           setFieldValue("address.state", event.target.value);
-          setFieldValue("address.lga", ""); // reset LGA when state changes
+          setFieldValue("address.lga", "");
         };
           
           
@@ -327,13 +325,13 @@ const UpdateDriver = () => {
               helperText={touched.profile?.firstname && errors.profile?.firstname}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />
@@ -352,37 +350,37 @@ const UpdateDriver = () => {
               helperText={touched.profile?.surname && errors.profile?.surname}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />
 
             <TextField
-              label="Lastname"
+              label="Othername"
               variant="outlined"
               fullWidth
               margin="normal"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.profile?.lastname}
-              name="profile.lastname"
-              error={touched.profile?.lastname && Boolean(errors.profile?.lastname)}
-              helperText={touched.profile?.lastname && errors.profile?.lastname}
+              value={values.profile?.othername}
+              name="profile.othername"
+              error={touched.profile?.othername && Boolean(errors.profile?.othername)}
+              helperText={touched.profile?.othername && errors.profile?.othername}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />
@@ -403,13 +401,13 @@ const UpdateDriver = () => {
 
                slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             >
@@ -439,13 +437,13 @@ const UpdateDriver = () => {
               helperText={touched.profile?.dob && errors.profile?.dob}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />
@@ -464,13 +462,13 @@ const UpdateDriver = () => {
               helperText={touched.profile?.phoneNumber && errors.profile?.phoneNumber}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />
@@ -514,13 +512,13 @@ const UpdateDriver = () => {
 
                slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             >
@@ -551,13 +549,13 @@ const UpdateDriver = () => {
 
                slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             >
@@ -583,13 +581,13 @@ const UpdateDriver = () => {
               margin="normal"
                slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             >
@@ -617,13 +615,13 @@ const UpdateDriver = () => {
               helperText={touched.address?.city && errors.address?.city}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />   
@@ -643,13 +641,13 @@ const UpdateDriver = () => {
               helperText={touched.address?.street && errors.address?.street}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             /> 
@@ -669,13 +667,13 @@ const UpdateDriver = () => {
               helperText={touched.address?.postalCode && errors.address?.postalCode}
               slotProps={{
                 formHelperText: {
-                  sx: { fontSize: 15 }, // Increase font size of helper text
+                  sx: { fontSize: 15 },
                 },
                 input: {
-                  style: { fontSize: 18 }, // font size for input text
+                  style: { fontSize: 18 },
                 },
                 inputLabel: {
-                  style: { fontSize: 16 }, // font size for label text
+                  style: { fontSize: 16 },
                 },
               }}
             />   
@@ -730,21 +728,21 @@ const UpdateDriver = () => {
 
       <Snackbar
         open={open}
-        autoHideDuration={3000} // Automatically hide after 1 second
+        autoHideDuration={3000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "center", horizontal: "center" }} // Position at the top center
+        anchorOrigin={{ vertical: "center", horizontal: "center" }}
       >
         <div>
           <Dialog
             open={open}
             onClose={handleClose}
             BackdropProps={{
-              sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" }, // Darker overlay
+              sx: { backgroundColor: "rgba(157, 152, 202, 0.5)" },
             }}
             sx={{
               "& .MuiDialog-paper": {
                 width: "100%",
-                borderRadius: "15px", // Optional: Rounded corners
+                borderRadius: "15px",
               },
             }}
           >
@@ -772,7 +770,7 @@ const UpdateDriver = () => {
                         dashboard["icon--success"],
                       ].join(" ")}
                     >
-                      <use href="/images/sprite.svg#success-icon"   ></use>
+                      <use href="/images/sprite.svg#success-icon"></use>
                     </svg>
                   </span>
 
@@ -804,7 +802,7 @@ const UpdateDriver = () => {
                         dashboard["icon--error"],
                       ].join(" ")}
                     >
-                      <use href="/images/sprite.svg#error-icon"   ></use>
+                      <use href="/images/sprite.svg#error-icon"></use>
                     </svg>
                   </span>
 
