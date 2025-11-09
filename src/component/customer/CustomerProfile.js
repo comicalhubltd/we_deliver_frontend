@@ -164,7 +164,7 @@ const CustomerProfile = () => {
         .then((result) => {
           setState({
             profile: result.profile,
-            user: result.user
+            user: result.userDto
           });
         });
     } catch (error) {
