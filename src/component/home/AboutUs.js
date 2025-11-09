@@ -139,15 +139,9 @@ Would you like me to adapt it slightly to fit a specific audience (for example, 
                    
                     <div className={home["collapsible__content"]}>
                         <ul className={home["list"]} >
-                            <li>Bulk Result Generation</li>
-                            <li>Student Analytics</li>
-                            <li>Manage  records, results</li>
-                            <li>Assessments</li>
-                            <li>Student performance</li>
-                            <li>Full CA & exam result management</li>
-                            <li>Advanced analytics</li>
-                            <li>Core management tools</li>
-                            <li>Many More</li>
+                             <li>Inter state delivery service</li>
+                            <li>Home delivery service</li>
+                            <li>Corporate delivery service</li>
                            
                         </ul>
                     </div>

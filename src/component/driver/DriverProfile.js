@@ -216,13 +216,23 @@ const DriverProfile = () => {
                      {state.profile?.othername}
                   </div>
 
+                   <div
+                    style={{ whiteSpace: "normal" }}
+                    class={dashboard["card--details"]}
+                  >
+                    <span>Address:</span>
+
+                    {state.profile?.address}
+                  </div>
+
+
                   <div
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>D.O.B:</span>
+                    <span>Email:</span>
 
-                    {state.profile?.dob}
+                    {state.user?.email}
                   </div>
 
                   <div
