@@ -983,6 +983,62 @@
  .grid {
      display: grid;
  }
+
+ /* =========================================
+   MOBILE GRID OVERRIDE (0px – 768px)
+   Converts the grid into inline-flex/table-cell
+   for better mobile readability and alignment.
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    .grid {
+        display: inline-flex;        /* Inline-flex for fluid mobile rows */
+        flex-direction: column;      /* Stack items vertically */
+        width: 100%;
+        gap: 1.6rem;                 /* Improved spacing between items */
+        align-items: stretch;        /* Full width for consistent cards */
+    }
+
+    /* OPTIONAL alternative: use table-cell style
+       You can switch to this block instead of inline-flex 
+       if you prefer table layout on mobile.
+
+    .grid {
+        display: table;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 1.6rem 2rem;
+    }
+
+    .grid > * {
+        display: table-row;
+        width: 100%;
+    }
+    */
+
+    /* Ensure grid children fit mobile width properly */
+    .grid > * {
+        width: 100%;
+        margin: 0;                    /* Remove random spacing issues */
+        padding: 1rem 0;              /* Harmonize vertical rhythm */
+    }
+
+    /* Improve general mobile spacing */
+    .secondary--container,
+    .block,
+    .card,
+    .feature,
+    .plan,
+    .testimonial,
+    .callout {
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
  
  @media screen and (min-width: 769px) {
  
