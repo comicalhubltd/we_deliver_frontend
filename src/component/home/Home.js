@@ -87,7 +87,8 @@ const Home = () => {
                         <h2>Motion Meets Meaning!</h2>
                         <p className={[home.hero__tagline, home.p].join(" ")}
                             style={{ maxWidth: "500px" }}>
-                            We move with precision, powered by integrity, guided by technology, and built on trust.
+                            We move with precision, powered by integrity, guided by technology, and built on trust. 
+                            Every delivery carries our promise — fast, safe, and unforgettable.
                         </p>
                         <button
                             onClick={navigateToRegister}
@@ -116,13 +117,16 @@ const Home = () => {
             <section className={[home.block, home.container].join(" ")}>
                 <header className={home.block__header}>
                     <h2>We-Deliver Mission</h2>
-                    <p>Providing fast, reliable and secure delivery services...</p>
+                    <p>Providing fast, reliable, and secure delivery services that connect people and businesses with ease. 
+                    We-Deliver is committed to ensuring timely deliveries, exceptional customer experience, 
+                    and innovative logistics solutions that make moving goods simple, efficient, and trustworthy.</p>
                 </header>
 
 
                 <header className={home.block__header}>
                     <h2>We-Deliver Vision</h2>
-                    <p>To become the most trusted delivery service across Africa...</p>
+                    <p>To become the most trusted and efficient delivery service across Africa—redefining logistics through innovation, 
+                    speed, and reliability, while making every delivery a seamless experience for individuals and businesses alike.</p>
                 </header>
 
 
@@ -232,7 +236,8 @@ const Home = () => {
             <section className={[home.block, home.container].join(" ")}>
                 <header className={home.block__header}>
                     <h2>Driven by Purpose</h2>
-                    <p>We don’t just move parcels — we move possibilities.</p>
+                    <p>We don’t just move parcels — we move possibilities. 
+                        Every route we take strengthens businesses, builds trust, and connects destinies.</p>
                 </header>
 
 
@@ -240,12 +245,12 @@ const Home = () => {
                     title: "Strong Team Support",
                     img: "/images/team@1x.png",
                     icon: "team",
-                    text: "Our team stands as the backbone of every success story..."
+                    text: "Our team stands as the backbone of every success story we create. With experienced professionals across every department, we ensure that every challenge is met with collaboration, dedication, and innovation. Together, we deliver excellence and reliability you can count on."
                 }, {
                     title: "Designed for Simplicity",
                     img: "/images/target@1x.png",
                     icon: "easy",
-                    text: "Every feature we build is crafted with simplicity..."
+                    text: "Every feature we build is crafted with simplicity in mind. From clean interfaces to seamless functionality, our design ensures that users can focus on what truly matters — getting things done effortlessly. "
                 }].map((item, i) => (
                     <article key={i} className={[home.grid, home["grid--1x2"], home.feature].join(" ")}
                         style={{ alignItems: "center", gap: "2rem" }}>
