@@ -162,6 +162,9 @@ const AddDeliveryRequest = () => {
     }),
 
  item: object({
+     name: string()
+    .max(15, "Name must not exceed 15 characters"),
+   
     weight: string()
       .max(5, "Weight must not exceed 5 characters")
       .required("weight is required"),
@@ -253,6 +256,7 @@ const AddDeliveryRequest = () => {
 
  const initialValues = {
                     item: {
+                    name: "",
                     weight: "",
                     type: "",
                     description: "",
@@ -1068,6 +1072,31 @@ const AddDeliveryRequest = () => {
                       {step === 1 && 
                       (
                         <>
+
+                          <TextField
+                              label="Item Name"
+                              variant="outlined"
+                              fullWidth
+                              margin="normal"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.item?.name}
+                              name="item.name"
+                              error={touched.item?.name && Boolean(errors.item?.name)}
+                              helperText={touched.item?.name && errors.item?.name}
+                              slotProps={{
+                                formHelperText: {
+                                  sx: { fontSize: 15 },
+                                },
+                                input: {
+                                  style: { fontSize: 18 },
+                                },
+                                inputLabel: {
+                                  style: { fontSize: 16 },
+                                },
+                              }}
+                            />
+                            
                          <TextField
                         select
                         label="Type"

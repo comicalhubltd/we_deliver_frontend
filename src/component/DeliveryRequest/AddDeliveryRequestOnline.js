@@ -160,6 +160,9 @@ const AddDeliveryRequestOnline = () => {
     }),
 
  item: object({
+   name: string()
+      .max(15, "Name must not exceed 15 characters"),
+
     type: string()
     .max(15, "Type must not exceed 15 characters"),
     description: string()
@@ -231,6 +234,7 @@ const AddDeliveryRequestOnline = () => {
 
  const initialValues = {
                     item: {
+                    name: "",
                     type: "",
                     description: "",
                     value: 0
@@ -766,6 +770,31 @@ const calculateDistance = useCallback(async () => {
                       {step === 1 && 
                       (
                         <>
+
+
+                          <TextField
+                                                      label="Item Name"
+                                                      variant="outlined"
+                                                      fullWidth
+                                                      margin="normal"
+                                                      onChange={handleChange}
+                                                      onBlur={handleBlur}
+                                                      value={values.item?.name}
+                                                      name="item.name"
+                                                      error={touched.item?.name && Boolean(errors.item?.name)}
+                                                      helperText={touched.item?.name && errors.item?.name}
+                                                      slotProps={{
+                                                        formHelperText: {
+                                                          sx: { fontSize: 15 },
+                                                        },
+                                                        input: {
+                                                          style: { fontSize: 18 },
+                                                        },
+                                                        inputLabel: {
+                                                          style: { fontSize: 16 },
+                                                        },
+                                                      }}
+                                                    />
                          <TextField
                         select
                         label="Type"

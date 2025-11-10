@@ -622,6 +622,7 @@ const CustomerViewFeedback = () => {
                                   View Feedback
                                 </StyledTableCell>
                                 <StyledTableCell>Item Type</StyledTableCell>
+ <StyledTableCell>Item Name</StyledTableCell>
 <StyledTableCell>Trk ID</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
@@ -668,7 +669,12 @@ const CustomerViewFeedback = () => {
                                   <StyledTableCell component="th" scope="row">
                                     {row.payment?.status}
                                   </StyledTableCell>
-                                  <StyledTableCell align="left">
+                                 
+				 <StyledTableCell component="th" scope="row">
+                                    {row.item?.name}
+                                  </StyledTableCell>
+
+                                   <StyledTableCell align="left">
                                     {row.trackingId}
                                   </StyledTableCell>  
 

@@ -234,6 +234,15 @@ const DeliveryDetails = () => {
                     {state.item?.type}
                   </div>
 
+                      <div
+                    style={{ whiteSpace: "normal" }}
+                    class={dashboard["card--details"]}
+                  >
+                    <span>Type:</span>
+
+                    {state.item?.name}
+                  </div>
+
 
                    <div
                     style={{ whiteSpace: "normal" }}

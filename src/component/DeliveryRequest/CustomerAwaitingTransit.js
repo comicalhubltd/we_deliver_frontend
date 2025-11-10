@@ -653,6 +653,7 @@ const CustomerAwatingTransit = () => {
                             <TableHead>
                               <TableRow>
                                 <StyledTableCell>Item Type</StyledTableCell>
+ <StyledTableCell>Item Name</StyledTableCell>
 <StyledTableCell>Trk ID</StyledTableCell>
                                 <StyledTableCell align="left">
                                   From(State/City) 
@@ -683,7 +684,12 @@ const CustomerAwatingTransit = () => {
                                   <StyledTableCell component="th" scope="row">
                                     {row.item?.type}
                                   </StyledTableCell>
-                                  <StyledTableCell align="left">
+                                 
+				 <StyledTableCell component="th" scope="row">
+                                    {row.item?.name}
+                                  </StyledTableCell>
+
+                                   <StyledTableCell align="left">
                                     {row.trackingId}
                                   </StyledTableCell>  
 
