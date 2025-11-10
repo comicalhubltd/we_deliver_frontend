@@ -183,7 +183,7 @@ const CustomerProfile = () => {
 
     const handleEdit = (id) => {
     // Implement edit functionality
-    navigate(`/customer/customer-update/${customerId}`);
+    navigate(`/customer/customer-update/${state.customerId}`);
   };
 
   const handleClose = (event, reason) => {
