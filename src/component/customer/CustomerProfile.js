@@ -148,6 +148,7 @@ const CustomerProfile = () => {
   };
 
   const [state, setState] = useState({
+    customerId: "",
     profile: "",
     user: ""
   });
@@ -156,6 +157,9 @@ const CustomerProfile = () => {
     fetchData();
   }, [location.pathname]);
 
+
+ 
+
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -163,6 +167,7 @@ const CustomerProfile = () => {
         .unwrap()
         .then((result) => {
           setState({
+            customerId: result.id,
             profile: result.profile,
             user: result.userDto
           });
@@ -173,6 +178,12 @@ const CustomerProfile = () => {
       console.log(error.message);
     }
     setIsLoading(false);
+  };
+
+
+    const handleEdit = (id) => {
+    // Implement edit functionality
+    navigate(`/customer/customer-update/${customerId}`);
   };
 
   const handleClose = (event, reason) => {
@@ -249,14 +260,17 @@ const CustomerProfile = () => {
                     {state.profile?.phoneNumber}
                   </div>
 
-                  <div
-                    style={{ whiteSpace: "normal" }}
-                    class={dashboard["card--details"]}
+                         <button
+                 
+                    onClick={handleEdit}
+                    className={[
+                      style["btn"],
+                      style["btn--block"],
+                      style["btn--primary"],
+                    ].join(" ")}
                   >
-                    {/* <span>Email:</span>
-
-                    {state.user?.username} */}
-                  </div>
+                    {"Update"}
+                  </button>
                 </Card>
 
                 {/*This Area is for Snackbar*/}
