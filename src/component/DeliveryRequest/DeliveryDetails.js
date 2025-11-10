@@ -238,7 +238,7 @@ const DeliveryDetails = () => {
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}
                   >
-                    <span>Type:</span>
+                    <span>Name:</span>
 
                     {state.item?.name}
                   </div>
