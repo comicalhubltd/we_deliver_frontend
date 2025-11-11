@@ -772,30 +772,7 @@ const calculateDistance = useCallback(async () => {
                         <>
 
 
-                          <TextField
-                                                      label="Item Name"
-                                                      variant="outlined"
-                                                      fullWidth
-                                                      margin="normal"
-                                                      onChange={handleChange}
-                                                      onBlur={handleBlur}
-                                                      value={values.item?.name}
-                                                      name="item.name"
-                                                      error={touched.item?.name && Boolean(errors.item?.name)}
-                                                      helperText={touched.item?.name && errors.item?.name}
-                                                      slotProps={{
-                                                        formHelperText: {
-                                                          sx: { fontSize: 15 },
-                                                        },
-                                                        input: {
-                                                          style: { fontSize: 18 },
-                                                        },
-                                                        inputLabel: {
-                                                          style: { fontSize: 16 },
-                                                        },
-                                                      }}
-                                                    />
-                         <TextField
+                                     <TextField
                         select
                         label="Type"
                         variant="outlined"
@@ -841,6 +818,32 @@ const calculateDistance = useCallback(async () => {
                 Other
                </MenuItem>
                </TextField>
+
+
+                          <TextField
+                                                      label="Item Name"
+                                                      variant="outlined"
+                                                      fullWidth
+                                                      margin="normal"
+                                                      onChange={handleChange}
+                                                      onBlur={handleBlur}
+                                                      value={values.item?.name}
+                                                      name="item.name"
+                                                      error={touched.item?.name && Boolean(errors.item?.name)}
+                                                      helperText={touched.item?.name && errors.item?.name}
+                                                      slotProps={{
+                                                        formHelperText: {
+                                                          sx: { fontSize: 15 },
+                                                        },
+                                                        input: {
+                                                          style: { fontSize: 18 },
+                                                        },
+                                                        inputLabel: {
+                                                          style: { fontSize: 16 },
+                                                        },
+                                                      }}
+                                                    />
+            
 
                           <TextField
                                     label="Description"

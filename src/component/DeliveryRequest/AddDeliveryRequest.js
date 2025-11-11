@@ -1073,30 +1073,7 @@ const AddDeliveryRequest = () => {
                       (
                         <>
 
-                          <TextField
-                              label="Item Name"
-                              variant="outlined"
-                              fullWidth
-                              margin="normal"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              value={values.item?.name}
-                              name="item.name"
-                              error={touched.item?.name && Boolean(errors.item?.name)}
-                              helperText={touched.item?.name && errors.item?.name}
-                              slotProps={{
-                                formHelperText: {
-                                  sx: { fontSize: 15 },
-                                },
-                                input: {
-                                  style: { fontSize: 18 },
-                                },
-                                inputLabel: {
-                                  style: { fontSize: 16 },
-                                },
-                              }}
-                            />
-                            
+                       
                          <TextField
                         select
                         label="Type"
@@ -1143,6 +1120,33 @@ const AddDeliveryRequest = () => {
                 Other
                </MenuItem>
                </TextField>
+
+
+
+                  <TextField
+                              label="Item Name"
+                              variant="outlined"
+                              fullWidth
+                              margin="normal"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.item?.name}
+                              name="item.name"
+                              error={touched.item?.name && Boolean(errors.item?.name)}
+                              helperText={touched.item?.name && errors.item?.name}
+                              slotProps={{
+                                formHelperText: {
+                                  sx: { fontSize: 15 },
+                                },
+                                input: {
+                                  style: { fontSize: 18 },
+                                },
+                                inputLabel: {
+                                  style: { fontSize: 16 },
+                                },
+                              }}
+                            />
+                            
                   
                   
 
