@@ -284,7 +284,7 @@ const PayUS = () => {
       // }
       const paymentData = {
         ...values,
-        status: "Succesful",
+        status: "success",
         paymentRef: reference.reference,
       };
 
@@ -295,6 +295,7 @@ const PayUS = () => {
       setAlertType("success");
       setMessage("Payment Completed Successfully");
       setOpen(true);
+      navigate("/delivery/customer-view-feedback")
     } catch (error) {
       setAlertType("error");
       setMessage(

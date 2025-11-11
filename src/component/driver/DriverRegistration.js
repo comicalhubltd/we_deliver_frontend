@@ -512,6 +512,7 @@ const DriverRegistration = () => {
             <ReCAPTCHA
               sitekey="6Lf2k84rAAAAAE621IbyMYN7_MgrAcQTypvqpMTU"
               onChange={(token) => setFieldValue("user.captchaToken", token)}
+              size="compact"
             />
 
             <button

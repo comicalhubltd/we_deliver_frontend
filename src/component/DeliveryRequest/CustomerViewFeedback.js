@@ -621,7 +621,7 @@ const CustomerViewFeedback = () => {
                                    <StyledTableCell align="left">
                                   View Feedback
                                 </StyledTableCell>
-                                <StyledTableCell>Item Type</StyledTableCell>
+                                <StyledTableCell>Payment Status</StyledTableCell>
  <StyledTableCell>Item Name</StyledTableCell>
 <StyledTableCell>Trk ID</StyledTableCell>
                                 <StyledTableCell align="left">
