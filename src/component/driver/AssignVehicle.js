@@ -245,7 +245,8 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/admin/home"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Home
                         </a>
@@ -300,7 +301,8 @@ navigate("/customer/login")
                      
                         <a
                           href="#/customer/view-customers"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           View Customers
                         </a>
@@ -354,13 +356,15 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/driver/view-drivers"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           View Drivers
                         </a>
                         <a
                           href="#/driver/assign-vehicle"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                          Assign Vehicle
                         </a>
@@ -415,7 +419,8 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/vehicle/view-vehicles"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           View Vehicles
                         </a>
@@ -478,7 +483,8 @@ navigate("/customer/login")
     
                         <a
                           href="#/delivery/on-transit"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           On Transit 
                         </a>
@@ -486,14 +492,16 @@ navigate("/customer/login")
     
               <a
                           href="#/delivery/awaiting-transit"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Awaiting Transit
                         </a>
     
                         <a
                           href="#/delivery/delivered"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Delivered
                         </a>
@@ -501,14 +509,16 @@ navigate("/customer/login")
     
                           <a
                           href="#/delivery/pending"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Pending
                         </a>
     
                           <a
                           href="#/delivery/view-all-delivery"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           View All Deliveries
                         </a>
@@ -565,7 +575,8 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/location/show-locations"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Live Location
                         </a>
@@ -620,13 +631,15 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/payment/paid-deliveries"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Paid Deliveries
                         </a>
              <a
                           href="#/payment/unpaid-deliveries"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Unpaid Deliveries
                         </a>
@@ -682,13 +695,15 @@ navigate("/customer/login")
                       <div className={navbar["collapsible__content--drawer"]}>
                         <a
                           href="#/customer/profile"   
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Profile
                         </a>
                         <a
                           onClick={logout}
-                          className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                         className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                         >
                           Logout
                         </a>

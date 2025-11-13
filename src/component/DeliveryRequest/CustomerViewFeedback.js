@@ -366,7 +366,8 @@ const CustomerViewFeedback = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/customer/home"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Home
                     </a>
@@ -427,7 +428,8 @@ const CustomerViewFeedback = () => {
  <div className={navbar["collapsible__content--drawer"]}>
 
                    <a href="#/delivery/customer-pending"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Pending
                     </a>
@@ -435,14 +437,16 @@ const CustomerViewFeedback = () => {
 
                     
                      <a href="#/delivery/customer-awaiting-transit"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Awaiting Transit
                     </a>
 
 
                     <a href="#/delivery/customer-on-transit"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       On Transit 
                     </a>
@@ -452,7 +456,8 @@ const CustomerViewFeedback = () => {
 
 
                      <a href="#/delivery/customer-arrived"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Arrived
                     </a>
@@ -461,14 +466,16 @@ const CustomerViewFeedback = () => {
 
                     
                     <a href="#/delivery/customer-delivered"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Delivered
                     </a>
 
 
                     <a href="#/delivery/add-delivery-online"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Add Deliveries
                     </a>
@@ -521,7 +528,8 @@ const CustomerViewFeedback = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/location/show-locations"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Live Location
                     </a>
@@ -577,13 +585,14 @@ const CustomerViewFeedback = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/customer/profile"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Profile
                     </a>
                     <a
-                      onClick={logout}
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     onClick={logout}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Logout
                     </a>

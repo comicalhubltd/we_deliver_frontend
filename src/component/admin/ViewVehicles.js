@@ -333,13 +333,15 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                       <a href="#/admin/home"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Home
                     </a>
 
                      <a href="#/delivery/add-delivery"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Request Delivery
                     </a>
@@ -393,7 +395,8 @@ const {  driversCount } = driverState;
                   <div className={navbar["collapsible__content--drawer"]}>
                  
                     <a href="#/customer/view-customers"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       View Customers
                     </a>
@@ -446,19 +449,22 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                      <a href="#/driver/register"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Add Driver
                     </a>
 
 		   <a href="#/driver/view-drivers"  
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       View Drivers
                     </a>
                     
                     <a href="#/driver/assign-vehicle"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                      Assign Vehicle
                     </a>
@@ -512,7 +518,8 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/vehicle/view-vehicles"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       View Vehicles
                     </a>
@@ -571,7 +578,8 @@ const {  driversCount } = driverState;
                     <div className={navbar["collapsible__content--drawer"]}>
 
                   <a href="#/delivery/pending"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Pending
                     </a>     
@@ -579,14 +587,16 @@ const {  driversCount } = driverState;
 
                     
                    <a href="#/delivery/awaiting-transit"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Awaiting Transit
                     </a>
 
 
                     <a href="#/delivery/on-transit"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       On Transit 
                     </a>
@@ -594,20 +604,23 @@ const {  driversCount } = driverState;
 
 
                     <a href="#/delivery/arrived"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Arrived
                     </a>
 
 
                     <a href="#/delivery/delivered"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Delivered
                     </a>
 
                       <a href="#/delivery/view-all-delivery"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       View All Deliveries
                     </a>
@@ -663,7 +676,8 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/location/show-locations"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Live Location
                     </a>
@@ -717,12 +731,14 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/payment/paid-deliveries"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Paid Deliveries
                     </a>
          <a href="#/payment/unpaid-deliveries"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Unpaid Deliveries
                     </a>
@@ -777,13 +793,14 @@ const {  driversCount } = driverState;
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/customer/profile"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Profile
                     </a>
                     <a
-                      onClick={logout}
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     onClick={logout}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Logout
                     </a>

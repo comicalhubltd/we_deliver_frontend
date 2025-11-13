@@ -130,6 +130,11 @@ const UpdateCustomer = () => {
     setOpen(false);
   };
 
+
+   const navigateToProfile = () => {
+    navigate("/customer/profile");
+  };
+
   const togglePasswordVisibility = () => {
     setVisibility(!visibility);
     if (inputType === "password") {
@@ -394,6 +399,18 @@ const UpdateCustomer = () => {
                     ].join(" ")}
                   >
                     {isSubmitting ? "Updating..." : "Update"}
+                  </button>
+
+                   <button
+                  
+                    onClick={navigateToProfile}
+                    className={[
+                      style["btn"],
+                      style["btn--block"],
+                      style["btn--secondary"],
+                    ].join(" ")}
+                  >
+                    {"Back To Profile"}
                   </button>
                 </Card>
               )

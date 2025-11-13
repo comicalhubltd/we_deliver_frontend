@@ -376,18 +376,21 @@ const AdminProfile = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                       <a href="#/admin/home"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Home
                     </a>
 
                      <a href="#/delivery/add-delivery"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Request Delivery
                     </a>
                     <a href="#/admin/schools"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Schools
                     </a>
@@ -439,13 +442,14 @@ const AdminProfile = () => {
 
                   <div className={navbar["collapsible__content--drawer"]}>
                     <a href="#/admin/profile"   
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                     >
                       Profile
                     </a>
                     <a
-                      onClick={logout}
-                      className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                     onClick={logout}
+                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
                     >
                       Logout
                     </a>

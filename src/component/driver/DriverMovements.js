@@ -442,7 +442,8 @@ const DriverMovements = () => {
                             <div className={navbar["collapsible__content--drawer"]}>
                               <a
                                 href="#/driver/home"   
-                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                               >
                                 Home
                               </a>
@@ -497,7 +498,8 @@ const DriverMovements = () => {
                             <div className={navbar["collapsible__content--drawer"]}>
                               <a
                                 href="#/vehicle/view-driver-vehicle"   
-                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                               >
                                 View Vehicles
                               </a>
@@ -557,7 +559,8 @@ const DriverMovements = () => {
           
                             <a
                                 href="#/driver/driver-movements"   
-                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                               >
                                 Transit 
                               </a>
@@ -615,13 +618,15 @@ const DriverMovements = () => {
                             <div className={navbar["collapsible__content--drawer"]}>
                               <a
                                 href="#/driver/driver-profile"   
-                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                               >
                                 Profile
                               </a>
                               <a
                                 onClick={logout}
-                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
+onClick={(e) => e.stopPropagation()}
                               >
                                 Logout
                               </a>
