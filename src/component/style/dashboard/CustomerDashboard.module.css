@@ -1157,6 +1157,11 @@
     color: #fff;
  }
 
+  .link--drawer:active {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+
  .collapsible__header:hover .collapsible__heading {
     color: #fff;
  }
