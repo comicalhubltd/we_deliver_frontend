@@ -1137,6 +1137,10 @@
  
  
  /*Collapsible*/
+
+ .collapsible {
+    -webkit-tap-highlight-color: transparent;
+   }
  
  .collapsible__header {
      display: flex;
