@@ -163,7 +163,7 @@ const AddDeliveryRequest = () => {
 
  item: object({
      name: string()
-    .max(15, "Name must not exceed 15 characters"),
+    .max(25, "Name must not exceed 25 characters"),
    
     weight: string()
       .max(5, "Weight must not exceed 5 characters")
@@ -253,6 +253,33 @@ const AddDeliveryRequest = () => {
     }
     setOpen(false);
   };
+
+
+
+  
+const [displayValue, setDisplayValue] = useState('');
+
+
+const formatNaira = (value) => {
+  if (!value) return '';
+  
+  const numericValue = value.toString().replace(/[^\d.]/g, '');
+  // Format with commas
+  return new Intl.NumberFormat('en-NG').format(numericValue);
+};
+
+// Add this handler for the price input
+const handlePriceChange = (e, setFieldValue) => {
+  const inputValue = e.target.value;
+  
+  const numericValue = inputValue.replace(/[^\d.]/g, '');
+  
+
+  setFieldValue('item.value', numericValue ? parseFloat(numericValue) : 0);
+  
+  
+  setDisplayValue(numericValue);
+};
 
  const initialValues = {
                     item: {
@@ -1044,7 +1071,7 @@ onClick={(e) => e.stopPropagation()}
                              <a
                                onClick={logout}
                               className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
+
                              >
                                Logout
                              </a>
@@ -1496,29 +1523,29 @@ onClick={(e) => e.stopPropagation()}
 
                     <FormControl sx={{ m: 1, minWidth: "30%" }}>
 
-                        <TextField
-                        label="Price Value (N)"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.item?.value}
-                        name="item.value"
-                        error={touched.item?.value && Boolean(errors.item?.value)}
-                        helperText={touched.item?.value && errors.item?.value}
-                        slotProps={{
-                          formHelperText: {
-                            sx: { fontSize: 15 },
-                          },
-                          input: {
-                            style: { fontSize: 18 },
-                          },
-                          inputLabel: {
-                            style: { fontSize: 16 },
-                          },
-                        }}
-                     />
+                     <TextField
+  label="Price Value (₦)"
+  variant="outlined"
+  fullWidth
+  margin="normal"
+  onChange={(e) => handlePriceChange(e, setFieldValue)}
+  onBlur={handleBlur}
+  value={displayValue ? formatNaira(displayValue) : ''}
+  name="item.value"
+  error={touched.item?.value && Boolean(errors.item?.value)}
+  helperText={touched.item?.value && errors.item?.value}
+  slotProps={{
+    formHelperText: {
+      sx: { fontSize: 15 },
+    },
+    input: {
+      style: { fontSize: 18 },
+    },
+    inputLabel: {
+      style: { fontSize: 16 },
+    },
+  }}
+/>
 
                     </FormControl>
 
