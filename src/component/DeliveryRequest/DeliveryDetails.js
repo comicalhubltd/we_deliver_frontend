@@ -264,6 +264,18 @@ const DeliveryDetails = () => {
                   </div>
 
 
+
+                   <div
+                    style={{ whiteSpace: "normal" }}
+                    class={dashboard["card--details"]}
+                  >
+                    <span>Quantity:</span>
+
+                    {state.item?.quantity}
+                  </div>
+
+
+
                     <div
                     style={{ whiteSpace: "normal" }}
                     class={dashboard["card--details"]}

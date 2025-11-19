@@ -140,7 +140,7 @@ const AddDeliveryRequestOnline = () => {
         .max(42, "City must not exceed 42 characters")
         .required("City is required"),
      street: string()
-        .max(42, "Street must not exceed 42 characters")
+        .max(100, "Street must not exceed 100 characters")
         .required("Street is required"),
        }),
 
@@ -161,13 +161,18 @@ const AddDeliveryRequestOnline = () => {
 
  item: object({
    name: string()
-      .max(25, "Name must not exceed 25 characters"),
+      .max(25, "Name must not exceed 25 characters")
+      .required("Name required"),
 
     type: string()
-    .max(15, "Type must not exceed 15 characters"),
+    .max(15, "Type must not exceed 15 characters")
+    .required("Type Required"),
+    
     description: string()
-    .max(200, "Description must not exceed 200 characters"),
-     value: number()
+    .max(200, "Description must not exceed 200 characters")
+    .required("Description Required"),
+    
+    value: number()
     .min(0.01, "Value must be greater than 0")
     .required("Value is required")
     }),
@@ -195,8 +200,8 @@ const AddDeliveryRequestOnline = () => {
   }, []);
 
   const generateTrackingId = () => {
-  const date = new Date().toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
-  const randomCode = Math.random().toString(36).substr(2, 6).toUpperCase(); // 6-char alphanumeric
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const randomCode = Math.random().toString(36).substr(2, 6).toUpperCase();
   return `DLV_${date}_${randomCode}`;
 };
 
@@ -232,7 +237,53 @@ const AddDeliveryRequestOnline = () => {
     setOpen(false);
   };
 
+  // VALIDATION HANDLER FOR NEXT BUTTON
+  const handleNext = async (currentStep, nextStep, validateForm, setTouched, values) => {
+    const stepFields = {
+      1: ['item.type', 'item.name', 'item.description'],
+      2: ['from.state', 'from.lga', 'from.city', 'from.street'],
+      3: ['to.state', 'to.lga', 'to.city', 'to.street'],
+      4: ['item.value']
+    };
 
+    const fieldsToCheck = stepFields[currentStep];
+    const allErrors = await validateForm();
+    
+    let hasStepErrors = false;
+    const stepTouched = {};
+    
+    fieldsToCheck.forEach(fieldPath => {
+      const parts = fieldPath.split('.');
+      let errorValue = allErrors;
+      let touchValue = stepTouched;
+      
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        
+        if (i === parts.length - 1) {
+          if (errorValue && errorValue[part]) {
+            hasStepErrors = true;
+            touchValue[part] = true;
+          }
+        } else {
+          if (errorValue) {
+            errorValue = errorValue[part];
+          }
+          if (!touchValue[part]) {
+            touchValue[part] = {};
+          }
+          touchValue = touchValue[part];
+        }
+      }
+    });
+    
+    if (hasStepErrors) {
+      setTouched(stepTouched, true);
+      return;
+    }
+    
+    setStep(nextStep);
+  };
 
   
 const [displayValue, setDisplayValue] = useState('');
@@ -242,7 +293,6 @@ const formatNaira = (value) => {
   if (!value) return '';
 
   const numericValue = value.toString().replace(/[^\d.]/g, '');
-  // Format with commas
   return new Intl.NumberFormat('en-NG').format(numericValue);
 };
 
@@ -252,7 +302,6 @@ const handlePriceChange = (e, setFieldValue) => {
 
   const numericValue = inputValue.replace(/[^\d.]/g, '');
   
-  // Set the actual numeric value in Formik
   setFieldValue('item.value', numericValue ? parseFloat(numericValue) : 0);
   
 
@@ -293,43 +342,29 @@ const handlePriceChange = (e, setFieldValue) => {
                     }
                   };
 
-  // Function to calculate delivery fees
   const calculateDeliveryFees = (values) => {
     const itemValue = parseFloat(values.item?.value) || 0;
     const distance = distanceInfo?.distance ? parseFloat(distanceInfo.distance) : 0;
 
     let deliveryFee = 0;
-
-    // Distance charge calculation
-    // 0-100km: 2% of item value
-    // 100-300km: 2% + 0.5% per additional 100km
-    // Above 300km: accumulated from above + 1% per 100km
     
     if (distance <= 100) {
-      // 0-100km: 2%
       deliveryFee = (2 / 100) * itemValue;
     } else if (distance <= 300) {
-      // 100-300km: 2% base + 0.5% per 100km
       const baseCharge = (2 / 100) * itemValue;
       const additionalDistance = distance - 100;
       const additionalCharge = (Math.ceil(additionalDistance / 100) * 0.5 / 100) * itemValue;
       deliveryFee = baseCharge + additionalCharge;
     } else {
-      // Above 300km: 2% + (200km worth at 0.5%) + remaining at 1%
-      const baseCharge = (2 / 100) * itemValue; // 0-100km
-      const midRangeCharge = (2 * 0.5 / 100) * itemValue; // 100-300km (2 x 100km blocks at 0.5%)
+      const baseCharge = (2 / 100) * itemValue;
+      const midRangeCharge = (2 * 0.5 / 100) * itemValue;
       const additionalDistance = distance - 300;
       const highRangeCharge = (Math.ceil(additionalDistance / 100) * 1 / 100) * itemValue;
       deliveryFee = baseCharge + midRangeCharge + highRangeCharge;
     }
 
-    // Insurance (2% of value)
     const insurance = (2 / 100) * itemValue;
-
-    // VAT (7.5% of delivery fee)
     const vat = (7.5 / 100) * deliveryFee;
-
-    // Total amount
     const totalAmount = deliveryFee + insurance + vat;
 
     return {
@@ -357,7 +392,6 @@ const calculateDistance = useCallback(async () => {
       );
       
       if (!result.success) {
-        // Show error to user
         setAlertType("error");
         setMessage("Failed to calculate distance. Please try again.");
         setOpen(true);
@@ -542,7 +576,7 @@ const calculateDistance = useCallback(async () => {
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#dashboard"   ></use>
+                        <use href="../images/sprite.svg#dashboard"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>
                         Dashboard
@@ -561,7 +595,7 @@ const calculateDistance = useCallback(async () => {
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -596,7 +630,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#request"   ></use>
+                        <use href="../images/sprite.svg#request"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Deliveries</p>
                     </div>
@@ -613,7 +647,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -677,7 +711,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#location"   ></use>
+                        <use href="../images/sprite.svg#location"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Locations</p>
                     </div>
@@ -694,7 +728,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -729,7 +763,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["icon--primary"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#profile"   ></use>
+                        <use href="../images/sprite.svg#profile"></use>
                       </svg>
                       <p className={navbar["collapsible__heading"]}>Profile</p>
                     </div>
@@ -746,7 +780,7 @@ onClick={(e) => e.stopPropagation()}
                           navbar["collapsible--chevron"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#chevron"   ></use>
+                        <use href="../images/sprite.svg#chevron"></use>
                       </svg>
                     </span>
                   </header>
@@ -792,7 +826,9 @@ onClick={(e) => e.stopPropagation()}
                     isSubmitting,
                     touched,
                     handleBlur,
-                    setFieldValue
+                    setFieldValue,
+                    validateForm,
+                    setTouched
                   }) => { 
                     return ( 
                     <Card>
@@ -806,9 +842,7 @@ onClick={(e) => e.stopPropagation()}
                       {step === 1 && 
                       (
                         <>
-
-
-                                     <TextField
+                         <TextField
                         select
                         label="Type"
                         variant="outlined"
@@ -855,7 +889,6 @@ onClick={(e) => e.stopPropagation()}
                </MenuItem>
                </TextField>
 
-
                           <TextField
                                                       label="Item Name"
                                                       variant="outlined"
@@ -879,7 +912,6 @@ onClick={(e) => e.stopPropagation()}
                                                         },
                                                       }}
                                                     />
-            
 
                           <TextField
                                     label="Description"
@@ -907,7 +939,7 @@ onClick={(e) => e.stopPropagation()}
                                   />
 
                       <button
-                        onClick={() => setStep(2)}
+                        onClick={() => handleNext(1, 2, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1044,7 +1076,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(3)}
+                        onClick={() => handleNext(2, 3, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1181,7 +1213,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(4)}
+                        onClick={() => handleNext(3, 4, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1269,7 +1301,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(5)}
+                        onClick={() => handleNext(4, 5, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1412,7 +1444,7 @@ onClick={(e) => e.stopPropagation()}
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"   ></use>
+                                <use href="../images/sprite.svg#success-icon"></use>
                               </svg>
                             </span>
           
@@ -1444,7 +1476,7 @@ onClick={(e) => e.stopPropagation()}
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"   ></use>
+                                <use href="../images/sprite.svg#error-icon"></use>
                               </svg>
                             </span>
           
@@ -1503,7 +1535,7 @@ onClick={(e) => e.stopPropagation()}
                           dashboard["icon--success"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#success-icon"   ></use>
+                        <use href="../images/sprite.svg#success-icon"></use>
                       </svg>
                     </span>
 
@@ -1539,7 +1571,7 @@ onClick={(e) => e.stopPropagation()}
                           dashboard["icon--error"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#error-icon"   ></use>
+                        <use href="../images/sprite.svg#error-icon"></use>
                       </svg>
                     </span>
                     <Typography sx={{ fontSize: 21 }}>
@@ -1563,7 +1595,6 @@ export default AddDeliveryRequestOnline;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
-    // Use the correct backend domain
     const url = `https://api.wedeleever.com/v1/api/routing/distance?fromLat=${fromLat}&fromLon=${fromLon}&toLat=${toLat}&toLon=${toLon}`;
     const response = await fetch(url);
     

@@ -132,7 +132,8 @@ const AddDeliveryRequest = () => {
 
    const deliveryRegistrationSchema = object({
      from: object({
-     state: string()
+     
+      state: string()
             .max(45, "State must not exceed 30 characters")
             .required("State is required"),
      lga: string()
@@ -142,7 +143,7 @@ const AddDeliveryRequest = () => {
         .max(42, "City must not exceed 42 characters")
         .required("City is required"),
      street: string()
-        .max(42, "Street must not exceed 42 characters")
+        .max(100, "Street must not exceed 100 characters")
         .required("Street is required"),
        }),
 
@@ -163,15 +164,26 @@ const AddDeliveryRequest = () => {
 
  item: object({
      name: string()
-    .max(25, "Name must not exceed 25 characters"),
+    .max(25, "Name must not exceed 25 characters")
+    .required("Name Require"),
    
+    quantity: number()
+      .positive("Must be positive number")
+      .min(1, "Quantity must be at least 1")
+      .required("Quantity is required"),
+
     weight: string()
       .max(5, "Weight must not exceed 5 characters")
       .required("weight is required"),
+    
     type: string()
-    .max(15, "Type must not exceed 15 characters"),
+    .max(15, "Type must not exceed 15 characters")
+    .required("Type Required"),
+
     description: string()
-    .max(200, "Description must not exceed 200 characters"),
+    .max(200, "Description must not exceed 200 characters")
+    .required("Description Required"),
+
      size: object({ 
      unit: string()
       .max(5, "Unit must not exceed 5 characters")
@@ -254,7 +266,62 @@ const AddDeliveryRequest = () => {
     setOpen(false);
   };
 
+  // VALIDATION HANDLER FOR NEXT BUTTON
+  const handleNext = async (currentStep, nextStep, validateForm, setTouched, values) => {
+    
+    const stepFields = {
+      1: ['item.type', 'item.name', 'item.quantity', 'item.description'],
+      2: ['from.state', 'from.lga', 'from.city', 'from.street'],
+      3: ['to.state', 'to.lga', 'to.city', 'to.street'],
+      4: ['item.value', 'item.weight', 'item.size.unit', 'item.size.height', 'item.size.width', 'item.size.length']
+    };
 
+    // Get fields for current step
+    const fieldsToCheck = stepFields[currentStep];
+    
+    // Validate entire form to get all errors
+    const allErrors = await validateForm();
+    
+    // Check if current step has errors
+    let hasStepErrors = false;
+    const stepTouched = {};
+    
+    fieldsToCheck.forEach(fieldPath => {
+      const parts = fieldPath.split('.');
+      let errorValue = allErrors;
+      let touchValue = stepTouched;
+      
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        
+        if (i === parts.length - 1) {
+          
+          if (errorValue && errorValue[part]) {
+            hasStepErrors = true;
+            touchValue[part] = true;
+          }
+        } else {
+        
+          if (errorValue) {
+            errorValue = errorValue[part];
+          }
+          if (!touchValue[part]) {
+            touchValue[part] = {};
+          }
+          touchValue = touchValue[part];
+        }
+      }
+    });
+    
+    if (hasStepErrors) {
+      // Mark fields as touched to show errors
+      setTouched(stepTouched, true);
+      return;
+    }
+    
+    // No errors, proceed to next step
+    setStep(nextStep);
+  };
 
   
 const [displayValue, setDisplayValue] = useState('');
@@ -268,7 +335,7 @@ const formatNaira = (value) => {
   return new Intl.NumberFormat('en-NG').format(numericValue);
 };
 
-// Add this handler for the price input
+
 const handlePriceChange = (e, setFieldValue) => {
   const inputValue = e.target.value;
   
@@ -284,6 +351,7 @@ const handlePriceChange = (e, setFieldValue) => {
  const initialValues = {
                     item: {
                     name: "",
+                    quantity: 1,
                     weight: "",
                     type: "",
                     description: "",
@@ -411,16 +479,12 @@ const handlePriceChange = (e, setFieldValue) => {
     setSelectedFromState(value);
     setFieldValue('from.state', value);
     setFieldValue("from.lga", "");
-    // setFieldValue('calculatedDistance', '');
-    // setFieldValue('estimatedDuration', '');
   };
 
   const handleToStateChange = async (value, setFieldValue) => {
     setSelectedToState(value);
     setFieldValue('to.state', value);
     setFieldValue("to.lga", "");
-    // setFieldValue('calculatedDistance', '');
-    // setFieldValue('estimatedDuration', '');
   };
 
   const handleFormSubmit = async (values, { resetForm }) => {
@@ -560,524 +624,523 @@ const handlePriceChange = (e, setFieldValue) => {
             )}
           </Box>
 
-           <List>
-                         {/* Dashboard Navbar Content */}
-                         {/* Dashboard Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-0")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-0"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#dashboard"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>
-                                 Dashboard
-                               </p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-0")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                               <a href="#/admin/home"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Home
-                             </a>
-         
-                              <a href="#/delivery/add-delivery"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Request Delivery
-                             </a>
-                          
-                           </div>
-                         </div>
-         
-                         {/* Customer Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-1")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-1"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#customer"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>Customers</p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-1")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                          
-                             <a href="#/customer/view-customers"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               View Customers
-                             </a>
-                        
-                           </div>
-                         </div>
-         
-                         {/* Driver Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-2")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-2"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#driver"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>Drivers</p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-2")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                              <a href="#/driver/register"   
-                     className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                    >
-                      Add Driver
-                    </a>
-
-		   <a href="#/driver/view-drivers"  
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               View Drivers
-                             </a>
-                               <a href="#/driver/assign-vehicle"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                              Assign Vehicle
-                             </a>
-                           
-                            
-                           </div>
-                         </div>
-         
-                         {/* Vehicle Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-3")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-3"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#vehicle"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>Vehicles</p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-3")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                             <a href="#/vehicle/view-vehicles"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               View Vehicles
-                             </a>
-                            
-                           </div>
-                         </div>
-         
-                     
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-4")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-4"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#request"   ></use>
-                               </svg>
-                                <p className={navbar["collapsible__heading"]}>Delivery Status</p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-4")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-         
-                           <a href="#/delivery/pending"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Pending
-                             </a>     
-         
-         
-                             
-                            <a href="#/delivery/awaiting-transit"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Awaiting Transit
-                             </a>
-         
-         
-                             <a href="#/delivery/on-transit"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               On Transit 
-                             </a>
-                             
-         
-         
-                             <a href="#/delivery/arrived"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Arrived
-                             </a>
-         
-         
-                             <a href="#/delivery/delivered"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Delivered
-                             </a>
-         
-                               <a href="#/delivery/view-all-delivery"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               View All Deliveries
-                             </a>
-                           
-                           
-                           </div>
-                         </div>
-         
-                      
-         
-                         {/* Location Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-6")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-6"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#location"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>Locations</p>
-                             </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-6")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                             <a href="#/location"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Live Location
-                             </a>
-                           </div>
-                         </div>
-         
-                         {/* Payment Navbar Content */}
+              <List>
+                           {/* Dashboard Navbar Content */}
+                           {/* Dashboard Navbar Content */}
                            <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-7")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-7"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-0")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-0"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#dashboard"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>
+                                   Dashboard
+                                 </p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-0")}
+                                 className={navbar["icon-container"]}
                                >
-                                 <use href="../images/sprite.svg#fee"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>
-                                 Payments
-                               </p>
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                                 <a href="#/admin/home"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Home
+                               </a>
+           
+                                <a href="#/delivery/add-delivery"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Request Delivery
+                               </a>
+                            
                              </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-7")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                             <a href="#/payment/paid-deliveries"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Paid Deliveries
-                             </a>
-                  <a href="#/payment/unpaid-deliveries"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Unpaid Deliveries
-                             </a>
                            </div>
-                         </div>
-         
-                         
+           
+                           {/* Customer Navbar Content */}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-1")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-1"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#customer"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>Customers</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-1")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                            
+                               <a href="#/customer/view-customers"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 View Customers
+                               </a>
+                          
+                             </div>
+                           </div>
+           
+                           {/* Driver Navbar Content */}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-2")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-2"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#driver"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>Drivers</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-2")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                                <a href="#/driver/register"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Add Driver
+                               </a>
+           
+                 <a href="#/driver/view-drivers"  
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 View Drivers
+                               </a>
+                                 <a href="#/driver/assign-vehicle"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                Assign Vehicle
+                               </a>
+                             
+                              
+                             </div>
+                           </div>
+           
+                           {/* Vehicle Navbar Content */}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-3")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-3"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#vehicle"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>Vehicles</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-3")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                               <a href="#/vehicle/view-vehicles"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 View Vehicles
+                               </a>
+                              
+                             </div>
+                           </div>
+           
                        
-         
-                         {/* Profile Navbar Content */}
-                         <div
-                           style={{ cursor: "pointer" }}
-                           onClick={() => toggleChevron("chevron-9")}
-                           className={[
-                             navbar["collapsible"],
-                             navbar[
-                               activeChevron === "chevron-9"
-                                 ? "collapsible--expanded"
-                                 : null
-                             ],
-                           ].join(" ")}
-                         >
-                           <header className={navbar["collapsible__header"]}>
-                             <div className={navbar["collapsible__icon"]}>
-                               <svg
-                                 class={[
-                                   navbar["collapsible--icon"],
-                                   navbar["icon--primary"],
-                                 ].join(" ")}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-4")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-4"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#request"   ></use>
+                                 </svg>
+                                  <p className={navbar["collapsible__heading"]}>Delivery Status</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-4")}
+                                 className={navbar["icon-container"]}
                                >
-                                 <use href="../images/sprite.svg#profile"   ></use>
-                               </svg>
-                               <p className={navbar["collapsible__heading"]}>Profile</p>
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+           
+                             <a href="#/delivery/pending"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Pending
+                               </a>     
+           
+           
+                               
+                              <a href="#/delivery/awaiting-transit"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Awaiting Transit
+                               </a>
+           
+           
+                               <a href="#/delivery/on-transit"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 On Transit 
+                               </a>
+                               
+           
+           
+                               <a href="#/delivery/arrived"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Arrived
+                               </a>
+           
+           
+                               <a href="#/delivery/delivered"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Delivered
+                               </a>
+           
+                                 <a href="#/delivery/view-all-delivery"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 View All Deliveries
+                               </a>
+                             
+                             
                              </div>
-         
-                             <span
-                               onClick={() => toggleChevron("chevron-9")}
-                               className={navbar["icon-container"]}
-                             >
-                               <svg
-                                 className={[
-                                   navbar["icon"],
-                                   navbar["icon--primary"],
-                                   navbar["icon--white"],
-                                   navbar["collapsible--chevron"],
-                                 ].join(" ")}
-                               >
-                                 <use href="../images/sprite.svg#chevron"   ></use>
-                               </svg>
-                             </span>
-                           </header>
-         
-                           <div className={navbar["collapsible__content--drawer"]}>
-                             <a href="#/customer/profile"   
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-onClick={(e) => e.stopPropagation()}
-                             >
-                               Profile
-                             </a>
-                             <a
-                               onClick={logout}
-                              className={[navbar["link--drawer"], navbar[""]].join(" ")}
-
-                             >
-                               Logout
-                             </a>
                            </div>
-                         </div>
-                       </List>
+           
+                        
+           
+                           {/* Location Navbar Content */}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-6")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-6"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#location"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>Locations</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-6")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                               <a href="#/location"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Live Location
+                               </a>
+                             </div>
+                           </div>
+           
+                           {/* Payment Navbar Content */}
+                             <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-7")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-7"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#fee"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>
+                                   Payments
+                                 </p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-7")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                               <a href="#/payment/paid-deliveries"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Paid Deliveries
+                               </a>
+                    <a href="#/payment/unpaid-deliveries"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Unpaid Deliveries
+                               </a>
+                             </div>
+                           </div>
+           
+                           
+                         
+           
+                           {/* Profile Navbar Content */}
+                           <div
+                             style={{ cursor: "pointer" }}
+                             onClick={() => toggleChevron("chevron-9")}
+                             className={[
+                               navbar["collapsible"],
+                               navbar[
+                                 activeChevron === "chevron-9"
+                                   ? "collapsible--expanded"
+                                   : null
+                               ],
+                             ].join(" ")}
+                           >
+                             <header className={navbar["collapsible__header"]}>
+                               <div className={navbar["collapsible__icon"]}>
+                                 <svg
+                                   class={[
+                                     navbar["collapsible--icon"],
+                                     navbar["icon--primary"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#profile"   ></use>
+                                 </svg>
+                                 <p className={navbar["collapsible__heading"]}>Profile</p>
+                               </div>
+           
+                               <span
+                                 onClick={() => toggleChevron("chevron-9")}
+                                 className={navbar["icon-container"]}
+                               >
+                                 <svg
+                                   className={[
+                                     navbar["icon"],
+                                     navbar["icon--primary"],
+                                     navbar["icon--white"],
+                                     navbar["collapsible--chevron"],
+                                   ].join(" ")}
+                                 >
+                                   <use href="../images/sprite.svg#chevron"   ></use>
+                                 </svg>
+                               </span>
+                             </header>
+           
+                             <div className={navbar["collapsible__content--drawer"]}>
+                               <a href="#/customer/profile"   
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+           onClick={(e) => e.stopPropagation()}
+                               >
+                                 Profile
+                               </a>
+                               <a
+                                onClick={logout}
+                                className={[navbar["link--drawer"], navbar[""]].join(" ")}
+                               >
+                                 Logout
+                               </a>
+                             </div>
+                           </div>
+                         </List>
         </Drawer>
 
         <Box
@@ -1103,7 +1166,9 @@ onClick={(e) => e.stopPropagation()}
                     isSubmitting,
                     touched,
                     handleBlur,
-                    setFieldValue
+                    setFieldValue,
+                    validateForm,
+                    setTouched
                   }) => { 
                     return ( 
                     <Card>
@@ -1117,8 +1182,6 @@ onClick={(e) => e.stopPropagation()}
                       {step === 1 && 
                       (
                         <>
-
-                       
                          <TextField
                         select
                         label="Type"
@@ -1166,8 +1229,6 @@ onClick={(e) => e.stopPropagation()}
                </MenuItem>
                </TextField>
 
-
-
                   <TextField
                               label="Item Name"
                               variant="outlined"
@@ -1191,9 +1252,32 @@ onClick={(e) => e.stopPropagation()}
                                 },
                               }}
                             />
-                            
-                  
-                  
+
+                  <TextField
+                              label="Quantity"
+                              variant="outlined"
+                              fullWidth
+                              type="number"
+                              margin="normal"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.item?.quantity}
+                              name="item.quantity"
+                              error={touched.item?.quantity && Boolean(errors.item?.quantity)}
+                              helperText={touched.item?.quantity && errors.item?.quantity}
+                              slotProps={{
+                                formHelperText: {
+                                  sx: { fontSize: 15 },
+                                },
+                                input: {
+                                  style: { fontSize: 18 },
+                                  inputProps: { min: 1 }
+                                },
+                                inputLabel: {
+                                  style: { fontSize: 16 },
+                                },
+                              }}
+                            />
 
                           <TextField
                                     label="Description"
@@ -1221,7 +1305,7 @@ onClick={(e) => e.stopPropagation()}
                                   />
 
                       <button
-                        onClick={() => setStep(2)}
+                        onClick={() => handleNext(1, 2, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1358,7 +1442,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(3)}
+                        onClick={() => handleNext(2, 3, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1495,7 +1579,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(4)}
+                        onClick={() => handleNext(3, 4, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1510,9 +1594,6 @@ onClick={(e) => e.stopPropagation()}
                        {step === 4 && 
                       (
                        <>
-
-
-                       
                             <div
                              style={{
                                width: "100%",
@@ -1617,13 +1698,6 @@ onClick={(e) => e.stopPropagation()}
                     </FormControl>
 
                            </div>
-
-                       
-                   
-
-                     
-
-               
 
                             <div
                              style={{
@@ -1760,7 +1834,7 @@ onClick={(e) => e.stopPropagation()}
                       </button>
 
                       <button
-                        onClick={() => setStep(5)}
+                        onClick={() => handleNext(4, 5, validateForm, setTouched, values)}
                         className={[
                           style["btn"],
                           style["btn--block"],
@@ -1903,7 +1977,7 @@ onClick={(e) => e.stopPropagation()}
                                   dashboard["icon--success"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#success-icon"   ></use>
+                                <use href="../images/sprite.svg#success-icon"></use>
                               </svg>
                             </span>
           
@@ -1935,7 +2009,7 @@ onClick={(e) => e.stopPropagation()}
                                   dashboard["icon--error"],
                                 ].join(" ")}
                               >
-                                <use href="../images/sprite.svg#error-icon"   ></use>
+                                <use href="../images/sprite.svg#error-icon"></use>
                               </svg>
                             </span>
           
@@ -1994,7 +2068,7 @@ onClick={(e) => e.stopPropagation()}
                           dashboard["icon--success"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#success-icon"   ></use>
+                        <use href="../images/sprite.svg#success-icon"></use>
                       </svg>
                     </span>
 
@@ -2030,7 +2104,7 @@ onClick={(e) => e.stopPropagation()}
                           dashboard["icon--error"],
                         ].join(" ")}
                       >
-                        <use href="../images/sprite.svg#error-icon"   ></use>
+                        <use href="../images/sprite.svg#error-icon"></use>
                       </svg>
                     </span>
                     <Typography sx={{ fontSize: 21 }}>
@@ -2054,7 +2128,6 @@ export default AddDeliveryRequest;
 
 const calculateDrivingDistance = async (fromLat, fromLon, toLat, toLon) => {
   try {
-    // Use the correct backend domain
     const url = `https://api.wedeleever.com/v1/api/routing/distance?fromLat=${fromLat}&fromLon=${fromLon}&toLat=${toLat}&toLon=${toLon}`;
     const response = await fetch(url);
     
