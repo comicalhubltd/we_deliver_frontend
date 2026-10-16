@@ -1,74 +1,39 @@
-<<<<<<< HEAD
-# Getting Started with Create React App
+# We Deliver website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Publish the contents of this folder as a standalone GitHub repository. These are production-built static assets for the existing We Deliver business, vehicle owner/driver and separate administrator websites.
 
-## Available Scripts
+## Publish on GitHub Pages
 
-In the project directory, you can run:
+1. Create a GitHub repository, for example `we-deliver-web`.
+2. Upload this folder's contents to the repository root. Include the hidden `.github` folder and `.nojekyll` file. Do not upload the whole We Deliver workspace.
+3. Use `main` as the branch name. Open **Settings → Pages → Build and deployment → Source → GitHub Actions**.
+4. Open **Actions → Publish We Deliver website** and run it if needed. After deployment, GitHub displays the website address.
 
-### `npm start`
+Typical addresses:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Public website: `https://YOUR-USERNAME.github.io/we-deliver-web/`
+- Business registration: `https://YOUR-USERNAME.github.io/we-deliver-web/#/account/register/business`
+- Owner/driver registration: `https://YOUR-USERNAME.github.io/we-deliver-web/#/account/register/partner`
+- Separate admin website: `https://YOUR-USERNAME.github.io/we-deliver-web/admin/`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Relative assets and hash routing support repository subfolders. The admin URL is separate, but access control is enforced by the API, not by hiding the page.
 
-### `npm test`
+## Connect the live service
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Your supplied website domain is `https://wedeleever.com/`. The API health check at `https://wedeleever.com/api/health` could not be verified during preparation, so this export leaves the API configuration blank. The website domain alone does not confirm where the backend is hosted. If your host serves the API at `/api`, use `https://wedeleever.com/api`; otherwise use the actual API subdomain/path supplied by the API host.
 
-### `npm run build`
+To use your existing domain with GitHub Pages, set `wedeleever.com` under the repository's **Settings → Pages → Custom domain**, follow GitHub's displayed DNS instructions in your domain provider, and enable HTTPS when the certificate is ready. Changing DNS will move visitors away from the existing website, so do this only when you are ready to replace it. Until then, use the GitHub Pages address for preview.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Edit `config.js` and set `apiUrl` to the hosted HTTPS API address ending in `/api`, for example `https://api.yourdomain.com/api`. This is public configuration. Never include MySQL credentials, Flutterwave secrets, `.env`, SQL exports or database backups in this repository.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+GitHub Pages hosts the website only. MySQL and the Node API must run on another host. Without a configured API, this package displays a preview notice and online account/delivery/payment operations are unavailable.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Login across domains
 
-### `npm run eject`
+The existing API uses `SameSite=Lax` session cookies. A default `github.io` website and an API on an unrelated domain will not reliably support authenticated requests even if CORS is configured. For the existing session design, use a custom website domain such as `app.yourdomain.com` and an API such as `api.yourdomain.com`, both HTTPS. Add the exact website origin to API `ALLOWED_ORIGINS` and set `COOKIE_SECURE=true` on the API. Alternatively, arrange a reviewed same-origin API proxy. This package does not weaken the current cookie security settings.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Configure Flutterwave's webhook separately on the hosted API; the GitHub Pages address cannot receive payment webhook POST requests. Verify real sign-in, role permissions, uploads, deliveries and payments after connecting the API.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Update the website
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# we_deliver_frontend
->>>>>>> 1943bf955bdfa116f27eda469b1d51467c2b9555
+From the original workspace's `mobile-app` folder, run `node scripts/build-github.cjs` and upload the changed assets to this repository. An existing `config.js` is preserved unless `WEB_API_URL` is supplied when building. This export does not modify Android assets.
